@@ -1,0 +1,87 @@
+/* 기본 레이아웃 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.logo-img {
+  margin-right: 0.5rem;
+  width: 40px;
+  height: auto;
+}
+
+/* 내비게이션 스타일 */
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav ul li {
+  position: relative; /* 부모와 서브메뉴가 관계를 유지하도록 설정 */
+}
+
+.nav ul li a {
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+}
+
+/* 서브메뉴 기본 숨김 설정 */
+.dropdown {
+  display: none; /* 서브메뉴는 처음에 보이지 않음 */
+  position: absolute; /* 부모 항목 아래에 배치 */
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border: 1px solid #e5e5e5;
+  top: 100%; /* 부모 항목 바로 아래에 서브메뉴 위치 */
+  left: 0;
+  white-space: nowrap;
+  z-index: 1;
+  flex-direction: column;
+}
+
+/* 서브메뉴 항목 스타일 */
+.dropdown li {
+  margin-bottom: 0.5rem;
+}
+
+.dropdown li a {
+  color: #333;
+  text-decoration: none;
+  padding: 0.5rem;
+}
+
+.dropdown li a:hover {
+  text-decoration: underline;
+}
+
+/* 오른쪽 로그인/모바일 섹션 */
+.header-right {
+  display: flex;
+  gap: 0.5rem;
+  font-weight: bold;
+  align-items: center;
+}
+
+.header-right .divider {
+  margin: 0 0.3rem;
+}
+
+.header-right span:hover {
+  text-decoration: underline;
+}
