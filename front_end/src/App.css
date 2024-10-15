@@ -1,5 +1,4 @@
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
   min-width: 1280px;
 }
@@ -22,5 +21,4 @@ body {
 
 .body-content {
   flex: 1;
-  padding: 2rem;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import './Footer.css';
 import logoGray from '../../images/icon/ubisamlogoGray.png';
+import qr from '../../images/image/qr.gif'
 
 const Footer = () => {
   return (
@@ -42,7 +43,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <img src="/path-to-qr-code" alt="QR Code" className="qr-code" />
+        <img src={qr} alt="QR Code" className="qr-code" />
       </div>
 
       {/* 저작권 정보 */}
