@@ -34,15 +34,15 @@ const Header = () => {
           >
             <Link to="/">회사소개</Link>
             {hoveredMenu === 'company' && (
-              <ul className="dropdown">
-                <li><Link to="/">인사말</Link></li>
-                <li><Link to="/">사업개요</Link></li>
-                <li><Link to="/">회사연혁</Link></li>
-                <li><Link to="/">조직소개</Link></li>
-                <li><Link to="/">특허</Link></li>
-                <li><Link to="/">주요고객</Link></li>
-                <li><Link to="/">찾아오시는길</Link></li>
-              </ul>
+              <div class="dropdown">
+                <li><a href="/" class="menu-item">인사말</a></li>
+                <li><a href="/" class="menu-item">사업개요</a></li>
+                <li><a href="/" class="menu-item">회사연혁</a></li>
+                <li><a href="/" class="menu-item">조직소개</a></li>
+                <li><a href="/" class="menu-item">특허</a></li>
+                <li><a href="/" class="menu-item">주요고객</a></li>
+                <li><a href="/" class="menu-item">찾아오시는길</a></li>
+              </div>
             )}
           </li>
 
@@ -53,10 +53,10 @@ const Header = () => {
           >
             <Link to="/equipment">장비제어시스템</Link>
             {hoveredMenu === 'equipment' && (
-              <ul className="dropdown">
-                <li><Link to="/">제어솔루션</Link></li>
-                <li><Link to="/">제어사업실적</Link></li>
-              </ul>
+              <div class="dropdown">
+                <li><Link to="/" class="menu-item" >제어솔루션</Link></li>
+                <li><Link to="/" class="menu-item" >제어사업실적</Link></li>
+              </div>
             )}
           </li>
 
@@ -67,10 +67,10 @@ const Header = () => {
           >
             <Link to="/production">생산정보시스템</Link>
             {hoveredMenu === 'production' && (
-              <ul className="dropdown">
-                <li><Link to="/">자동화솔루션</Link></li>
-                <li><Link to="/">자동화사업실적</Link></li>
-              </ul>
+              <div className="dropdown">
+                <li><Link to="/" class="menu-item" >자동화솔루션</Link></li>
+                <li><Link to="/" class="menu-item" >자동화사업실적</Link></li>
+              </div>
             )}
           </li>
 
@@ -81,10 +81,10 @@ const Header = () => {
           >
             <Link to="/recruit">리쿠르트</Link>
             {hoveredMenu === 'recruit' && (
-              <ul className="dropdown">
-                <li><Link to="/">채용안내</Link></li>
-                <li><Link to="/">복지소개</Link></li>
-              </ul>
+              <div className="dropdown">
+                <li><Link to="/" class="menu-item" >채용안내</Link></li>
+                <li><Link to="/" class="menu-item" >복지소개</Link></li>
+              </div>
             )}
           </li>
 
@@ -95,11 +95,11 @@ const Header = () => {
           >
             <Link to="/support">고객지원</Link>
             {hoveredMenu === 'support' && (
-              <ul className="dropdown">
-                <li><Link to="/">공지사항 / 뉴스</Link></li>
-                <li><Link to="/">자료실</Link></li>
-                <li><Link to="/">Q & A</Link></li>
-              </ul>
+              <div className="dropdown">
+                <li><Link to="/" class="menu-item" >공지사항 / 뉴스</Link></li>
+                <li><Link to="/" class="menu-item" >자료실</Link></li>
+                <li><Link to="/" class="menu-item" >Q & A</Link></li>
+              </div>
             )}
           </li>
         </ul>
