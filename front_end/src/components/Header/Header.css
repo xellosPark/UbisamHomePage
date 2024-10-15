@@ -16,16 +16,22 @@
 }
 
 .logo-img {
-  margin-right: 0.5rem;
-  width: 40px;
+  margin-left: 28rem;
+  width: 180px;
   height: auto;
+  margin-bottom: 20px;
 }
+
+.nav  {
+  margin-right: 180px;
+}
+
 
 /* 내비게이션 스타일 */
 .nav ul {
   list-style: none;
   display: flex;
-  gap: 2rem; /* 메뉴 항목 간의 간격 설정 */
+  gap: 5rem; /* 메뉴 항목 간의 간격 설정 */
   margin: 0;
   padding: 0;
 }
@@ -35,50 +41,68 @@
 }
 
 .nav ul li a {
-  color: #333;
+  color: white;
   text-decoration: none;
   font-weight: bold;
-  padding: 0.5rem 1rem; /* 메뉴 항목에 패딩 추가 */
+}
+
+.nav ul li a:hover {
+  text-decoration: none; /* 링크 밑줄 제거 */
+}
+
+/* 회사소개 스타일 */
+.nav_title {
+  font-size: 18px; /* 폰트 크기 */
+  color: #666 !important; /* 폰트 색상 */
+}
+
+.nav_title:hover {
+  font-size: 18px; /* 폰트 크기 */
+  color: #FF8042 !important; /* 폰트 색상 */
 }
 
 /* 서브메뉴 기본 숨김 설정 */
 .dropdown {
-  display: none; /* 서브메뉴는 기본적으로 숨김 */
+  display: none;
   position: absolute;
-  background-color: #fde9e3;
+  background-color: #FEEAE0;
   border: 1px solid #e5e5e5;
-  top: 120%; /* 부모 항목 바로 아래에 위치 */
-  left: 0;
+  top: 105%; /* 부모 항목 바로 아래에 위치 */
+  left: 50%; /* 부모 요소의 중앙에 맞춤 */
+  transform: translateX(-50%); /* 부모 기준으로 가로 중앙 정렬 */
   white-space: nowrap; /* 텍스트 줄바꿈 방지 */
   flex-direction: column;
+  text-align: center; /* 서브메뉴 항목을 가운데 정렬 */
 }
 
+/* 서브메뉴 항목 스타일 */
 .menu-item {
   padding: 10px 10px; /* 위아래로 공간 추가 */
-  color: black; /* 글자 색상 검정으로 유지 */
+  color: #666 !important; /* 글자 색상 검정으로 유지 */
+  margin-right: 10px;
 }
 
 .dropdown .menu-item:last-child {
   border-bottom: none; /* 마지막 항목의 구분선 제거 */
 }
 
-/* 서브메뉴 항목 스타일 */
 .dropdown li {
-  padding: 10px 0px; 
-}
-
-.dropdown li:last-child {
-  border-bottom: none; /* 마지막 항목의 구분선 제거 */
+  padding: 10px 0px;
 }
 
 .dropdown li a {
-  color: black;
+  
   text-decoration: none; /* 링크 밑줄 제거 */
 }
 
-.dropdown li a:hover {
-  color: #d96d47; /* 마우스 오버 시 텍스트 색상 변경 */
+.dropdown li:hover {
+  background-color: #FF9000;
 }
+
+.dropdown li a:hover {
+  color:white !important; /* 글자 색상 검정으로 유지 */
+}
+
 
 /* 메인 메뉴에 마우스 오버 시 서브메뉴 표시 */
 .nav ul li:hover .dropdown {
@@ -91,8 +115,8 @@
   gap: 0.5rem;
   font-weight: bold;
   align-items: center;
-  color: #000;
-  margin-right: 30px;
+  color: #666;
+  margin-right: 100px;
 }
 
 .header-right .divider {

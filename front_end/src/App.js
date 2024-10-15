@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 import './App.css';
 import Header from './components/Header/Header';
+import Footer from './components/footer/Footer';
 
 const App = () => {
   return (
@@ -17,9 +18,7 @@ const App = () => {
         </div>
 
         {/* Footer */}
-        <footer className="footer">
-          <p>© 2024 Company Mart. All rights reserved.</p>
-        </footer>
+        <Footer />
       </div>
     </Router>
   );

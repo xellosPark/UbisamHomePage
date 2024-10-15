@@ -1,36 +1,13 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
+  min-width: 1280px;
 }
 
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #333;
-  padding: 1rem;
-  color: white;
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.nav ul {
-  list-style: none;
-  display: flex;
-  gap: 1rem;
-}
-
-.nav ul li {
-  display: inline;
 }
 
 .nav ul li a {
@@ -46,11 +23,4 @@ body {
 .body-content {
   flex: 1;
   padding: 2rem;
-}
-
-.footer {
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 1rem;
 }

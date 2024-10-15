@@ -1,6 +1,7 @@
 import React, { useState } from 'react'; // Import useState for managing hover state
 import { Link } from 'react-router-dom';
 import './Header.css';
+import logo from '../../images/icon/ubisamlogo.png';
 
 const Header = () => {
   // State to track which menu is being hovered
@@ -20,8 +21,7 @@ const Header = () => {
     <header className="header">
       <div className="header-left">
         <div className="logo">
-          <img src="/path-to-logo" alt="UbiSam Logo" className="logo-img" />
-          UbiSam
+          <img src={logo} alt="UbiSam Logo" className="logo-img" />
         </div>
       </div>
 
@@ -32,7 +32,7 @@ const Header = () => {
             onMouseEnter={() => handleMouseEnter('company')}
             onMouseLeave={handleMouseLeave}
           >
-            <Link to="/">회사소개</Link>
+            <Link to="/" className="nav_title" >회사소개</Link>
             {hoveredMenu === 'company' && (
               <div class="dropdown">
                 <li><a href="/" class="menu-item">인사말</a></li>
@@ -51,7 +51,7 @@ const Header = () => {
             onMouseEnter={() => handleMouseEnter('equipment')}
             onMouseLeave={handleMouseLeave}
           >
-            <Link to="/equipment">장비제어시스템</Link>
+            <Link to="/equipment" className="nav_title" >장비제어시스템</Link>
             {hoveredMenu === 'equipment' && (
               <div class="dropdown">
                 <li><Link to="/" class="menu-item" >제어솔루션</Link></li>
@@ -65,7 +65,7 @@ const Header = () => {
             onMouseEnter={() => handleMouseEnter('production')}
             onMouseLeave={handleMouseLeave}
           >
-            <Link to="/production">생산정보시스템</Link>
+            <Link to="/production" className="nav_title">생산정보시스템</Link>
             {hoveredMenu === 'production' && (
               <div className="dropdown">
                 <li><Link to="/" class="menu-item" >자동화솔루션</Link></li>
@@ -79,7 +79,7 @@ const Header = () => {
             onMouseEnter={() => handleMouseEnter('recruit')}
             onMouseLeave={handleMouseLeave}
           >
-            <Link to="/recruit">리쿠르트</Link>
+            <Link to="/recruit" className="nav_title">리쿠르트</Link>
             {hoveredMenu === 'recruit' && (
               <div className="dropdown">
                 <li><Link to="/" class="menu-item" >채용안내</Link></li>
@@ -93,7 +93,7 @@ const Header = () => {
             onMouseEnter={() => handleMouseEnter('support')}
             onMouseLeave={handleMouseLeave}
           >
-            <Link to="/support">고객지원</Link>
+            <Link to="/support" className="nav_title">고객지원</Link>
             {hoveredMenu === 'support' && (
               <div className="dropdown">
                 <li><Link to="/" class="menu-item" >공지사항 / 뉴스</Link></li>

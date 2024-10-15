@@ -1,0 +1,109 @@
+/* 푸터 네비게이션 */
+.footer{
+  background-color: white;
+}
+.footer-nav {
+  background-color: #F7F7F7;
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e5e5;
+  text-align: center;
+  margin: 0; 
+}
+
+.footer-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-nav ul li {
+  margin: 0 15px;
+}
+
+.footer-nav ul li a {
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.footer-nav ul li a:hover {
+  color: #d96d47;
+}
+
+/* 회사 정보 섹션 */
+.footer-content {
+  display: flex;
+  justify-content: center;
+  padding: 10px 30px;
+  align-items: center;
+  background-color: white;
+  
+}
+
+.footer-left {
+  max-width: 60%;
+  margin-left: 20px;
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.footer-logo {
+  width: 160px;
+  padding: 10px;
+}
+
+.footer-left p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.footer-right {
+  margin-left: 50px;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column; /* 세로로 정렬 */
+  gap: 5px; /* 행 간 간격 */
+}
+
+.contact-row {
+  display: flex;
+  justify-content: space-between; /* 좌우로 간격 맞춤 */
+  gap: 20px; /* 각 열 간 간격 */
+}
+
+.contact-row span {
+  font-size: 14px;
+  color: #555;
+}
+
+.contact-row span:first-child {
+  margin-right: auto; /* 첫 번째 span을 왼쪽 정렬 */
+}
+
+.qr-code{
+  margin-left: 50px;
+}
+
+/* 하단 저작권 정보 */
+.footer-bottom {
+  text-align: center;
+  background-color: white;
+  margin-bottom: 20px;
+}
+
+.footer-bottom p {
+  font-size: 13px;
+  color: #363636;
+}
+
+.separator {
+  width: 2px;
+  height: 15px;
+  background-color: #918c8c;
+  margin: 4px 10px;
+}
