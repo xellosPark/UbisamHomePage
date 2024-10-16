@@ -1,0 +1,85 @@
+.company-greetings-container {
+    padding: 1rem;
+    background-color: white;
+    max-width: 1200px; /* 최대 너비를 1200px로 제한 */
+    margin: 0 auto; /* 가운데 정렬을 위해 자동 마진 */
+    position: relative; /* relative로 설정하여 Top 링크를 기준으로 배치 */
+  }
+  
+  .company-greetings-header {
+    display: flex;
+    align-items: center; /* 수직으로 중앙 정렬 */
+    border-bottom: 1px solid #959292; /* 헤더 하단에 회색 선 추가 */
+    padding: 10px; /* 헤더 내부 여백 */
+  }
+  
+  .check-icon {
+    color: #2eb872; /* 아이콘 색상 설정 */
+    font-size: 1.5rem; /* 아이콘 크기 설정 */
+    margin-right: 0.5rem; /* 아이콘과 제목 사이의 간격 */
+  }
+  
+  .company-greetings-title {
+    font-size: 2rem; /* 제목의 폰트 크기 설정 */
+    color: #333; /* 제목 색상 */
+    margin: 0; /* 기본 마진 제거 */
+  }
+  
+  .top-link {
+    font-size: 0.9rem; /* 링크의 폰트 크기 */
+    color: #555; /* 링크 색상 */
+    text-decoration: none; /* 링크의 기본 밑줄 제거 */
+    position: absolute; /* 오른쪽 끝에 고정하기 위해 absolute 사용 */
+    right: 40px; /* 화면의 오른쪽에서 40px 떨어진 위치 */
+    font-size: 18px; /* 링크의 폰트 크기를 18px로 설정 */
+  }
+  
+  .top-link:hover {
+    text-decoration: underline; /* 마우스 호버 시 밑줄 표시 */
+  }
+  
+  .company-greetings-content {
+    margin-top: 1rem; /* 위쪽 마진 */
+    display: flex; /* 이미지와 텍스트를 가로로 배치하기 위해 flex 사용 */
+    flex-direction: row; /* flex 방향을 가로(row)로 설정 */
+    justify-content: space-between; /* 이미지와 텍스트 사이에 공간을 균등하게 분배 */
+  }
+  
+  .company-greetings-image {
+    width: 40%; /* 이미지가 전체 너비의 40%를 차지 */
+    height: auto; /* 이미지의 비율을 유지 */
+    margin-right: 2rem; /* 이미지와 텍스트 사이의 간격 */
+  }
+  
+  .greetings-text {
+    width: 60%; /* 텍스트가 전체 너비의 60%를 차지 */
+  }
+  
+  .greetings-intro {
+    font-size: 1.5rem; /* 소개 텍스트의 폰트 크기 */
+    font-weight: bold; /* 텍스트를 굵게 표시 */
+    color: #555; /* 텍스트 색상 */
+  }
+  
+  .greetings-highlight {
+    font-size: 2rem; /* 강조된 텍스트의 폰트 크기 */
+    color: #0056b3; /* 강조된 텍스트 색상 */
+    margin-bottom: 1rem; /* 아래쪽 마진 */
+  }
+  
+  p {
+    font-size: 1.1rem; /* 일반 텍스트의 폰트 크기 */
+    line-height: 1.5; /* 줄 간격 */
+    color: #555; /* 텍스트 색상 */
+    margin-bottom: 1rem; /* 텍스트 간의 아래쪽 간격 */
+  }
+  
+  strong {
+    color: #0056b3; /* 강조된 텍스트 색상 */
+  }
+  
+  hr {
+    margin: 1rem 0; /* 위아래 간격 */
+    border: none; /* 테두리 없음 */
+    border-top: 1px solid #e5e5e5; /* 위쪽 테두리만 추가 */
+  }

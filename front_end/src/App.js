@@ -4,11 +4,12 @@ import './App.css';
 import Header from './components/Header/Header';
 import Footer from './components/footer/Footer';
 import CompanyIntroduction from './components/Body/CompanyIntroduction';
+import CompanyGreetings from './components/Body/Companygreetings';
 
 const App = () => {
   return (
     <Router>
-      <div className="app-container">
+      <>
         {/* Header with Navigation */}
         <Header />
 
@@ -16,12 +17,13 @@ const App = () => {
         <div className="body-content">
           <Routes>
             <Route path="/" element={<CompanyIntroduction />} />
+            <Route path="/greetings" element={<CompanyGreetings />} />
           </Routes>
         </div>
 
         {/* Footer */}
         <Footer />
-      </div>
+      </>
     </Router>
   );
 }

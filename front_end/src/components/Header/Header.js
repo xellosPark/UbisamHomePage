@@ -35,7 +35,7 @@ const Header = () => {
             <Link to="/" className="nav_title" >회사소개</Link>
             {hoveredMenu === 'company' && (
               <div class="dropdown">
-                <li><a href="/" class="menu-item">인사말</a></li>
+                <li><a href="/greetings" class="menu-item">인사말</a></li>
                 <li><a href="/" class="menu-item">사업개요</a></li>
                 <li><a href="/" class="menu-item">회사연혁</a></li>
                 <li><a href="/" class="menu-item">조직소개</a></li>
