@@ -15,9 +15,12 @@ const CompanyGreetings = () => {
                 <img src={companyImage} alt="Company Building" className="company-greetings-image" />
                 <div className="greetings-text">
                     <p className="greetings-intro">앞서가는 기술력과 노하우!</p>
-                    <h2 className="greetings-highlight">"유비샘"이 함께 하겠습니다.</h2>
+                    <h2 className="greetings-highlight"><strong>"유비샘"</strong>이 함께 하겠습니다.</h2>
                     <p>
-                        (주)유비샘을 찾아주셔서 감사합니다. 유비샘은 1980년대 중반부터 설비와 공정관리 분야의 SI사업,
+                        (주)유비샘을 찾아주셔서 감사합니다.
+                    </p>
+                    <p>
+                        유비샘은 1980년대 중반부터 설비와 공정관리 분야의 SI사업,
                         Embedded program 및 다양한 HMI, 자동화 장비 제어 등 충분한 경험을 보유한
                         <strong>자동화 시스템 개발 전문 기업</strong>입니다.
                     </p>
@@ -37,9 +40,9 @@ const CompanyGreetings = () => {
                     </p>
                     <p>
                         저희 유비샘의 구성원 모두는 고객님들과 같은 목표를 향해 끊임없는 노력으로
-                        <strong>industry 4.0 시대를 선도하는 세계적인 기업으로 함께 성장</strong>하겠습니다.
+                        industry 4.0 시대를 선도하는 세계적인 기업으로 <strong>함께 성장</strong>하겠습니다.
                     </p>
-                    <p className="ceo-signature">대표이사 박진갑</p>
+                    <p className="ceo-signature"><strong>대표이사</strong> 박진갑</p>
                 </div>
             </div>
         </div>
