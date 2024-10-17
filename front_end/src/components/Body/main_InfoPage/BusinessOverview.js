@@ -1,6 +1,7 @@
 import React from 'react';
 import './BusinessOverview.css'; // CSS 파일 임포트
 import { FaCheckCircle } from 'react-icons/fa';
+import businessImage from '../../../images/image/02_01.png'
 
 const BusinessOverview = () => {
   return (
@@ -50,7 +51,7 @@ const BusinessOverview = () => {
 
       {/* 이미지 */}
       <div className="business-image">
-        {/* <img src={businessImage} alt="Business Overview" /> */}
+        <img src={businessImage} alt="Business Overview" />
       </div>
 
       {/* Solution R&D 부분 */}

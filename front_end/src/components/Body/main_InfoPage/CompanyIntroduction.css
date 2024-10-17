@@ -3,7 +3,6 @@ html, body, #root {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
 }
 
 /* 슬라이드쇼 컨테이너가 전체 화면을 차지하도록 설정 */
@@ -34,7 +33,7 @@ html, body, #root {
   justify-content: center;
   width: 100%;
   padding-top: 0px;
-  margin: 10px;
+  margin: 20px;
 }
 
 /* 네비게이션 점 */
@@ -54,15 +53,4 @@ html, body, #root {
   background-color: black; /* 활성화된 점 색상 변경 */
 }
 
-/* 현재 이미지 인덱스 표시 */
-.current-index {
-  position: absolute;
-  top: 10px; /* 화면 상단에 인덱스를 표시 */
-  right: 20px;
-  color: white;
-  font-size: 18px;
-  background: rgba(0, 0, 0, 0.5); /* 투명한 배경으로 텍스트 강조 */
-  padding: 5px 10px;
-  border-radius: 5px;
-}
 

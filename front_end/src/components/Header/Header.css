@@ -4,38 +4,35 @@
   justify-content: space-between;
   align-items: center;
   background-color: white;
-  padding: 5px;
-  border-bottom: 1px solid #e5e5e5;
+  padding-top: 5px;
   max-width: 1200px;
+  
   margin: 0 auto;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  font-size: 1.2rem;
   font-weight: bold;
-  margin-right: 40px;
+  margin-right: 50px;
 }
 
 .logo-img {
-  margin-left: 1rem;
   width: 180px;
-  height: auto;
-  margin-bottom: 20px;
+  
 }
 
 .nav  {
-  margin-right: 180px;
+  margin-right: 300px;
+  font-weight: bold;
 }
-
 
 /* 내비게이션 스타일 */
 .nav ul {
   list-style: none;
   display: flex;
   gap: 5rem; /* 메뉴 항목 간의 간격 설정 */
-  margin: 0;
+  margin-top: 25px;
   padding: 0;
 }
 
@@ -46,9 +43,11 @@
 
 .nav ul li a {
   color: white;
-  text-decoration: none;
+  text-decoration: none;  /* 밑줄 */
   font-weight: bold;
   white-space: nowrap;
+  
+  
 }
 
 .nav ul li a:hover {
@@ -124,6 +123,7 @@
   align-items: center;
   color: #666;
   margin-right: 100px;
+  margin-bottom: 20px;
 }
 
 .header-right .divider {

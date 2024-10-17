@@ -42,7 +42,8 @@ const Header = () => {
             onMouseEnter={() => handleMouseEnter('company')}
             onMouseLeave={handleMouseLeave}
           >
-            <Link to="/greetings" className="nav_title" >회사소개</Link>
+            {/* <Link to="/greeting" className="nav_title" >회사소개</Link> */}
+            <li><span onClick={() => handleNavigate('greeting')} className="nav_title">회사소개</span></li>
             {hoveredMenu === 'company' && (
               <div class="dropdown">
                 {/* <li><a href="/greetings" class="menu-item">인사말</a></li>
@@ -67,7 +68,8 @@ const Header = () => {
             onMouseEnter={() => handleMouseEnter('equipment')}
             onMouseLeave={handleMouseLeave}
           >
-            <Link to="/control-solution" className="nav_title" >장비제어시스템</Link>
+            {/* <Link to="/control-solution" className="nav_title" >장비제어시스템</Link> */}
+            <li><span onClick={() => handleNavigate('equipment-system')}            className="nav_title">장비제어시스템</span></li>
             {hoveredMenu === 'equipment' && (
               <div class="dropdown">
                 <li><span onClick={() => handleNavigate('control-solution')}            className="menu-item">제어솔루션</span></li>

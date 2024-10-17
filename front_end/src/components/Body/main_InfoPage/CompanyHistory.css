@@ -1,0 +1,52 @@
+.history-container {
+  width: 100%;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+.history-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.year-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.year {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-right: 20px;
+  color: #1e90ff;
+}
+
+.image-container {
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.events {
+  list-style: none;
+  padding: 0;
+}
+
+.events li {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}

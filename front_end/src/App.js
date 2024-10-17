@@ -8,11 +8,14 @@ import CompanyGreetings from './components/Body/main_InfoPage/Companygreetings';
 import BusinessOverview from './components/Body/main_InfoPage/BusinessOverview';
 import ControlSolution from './components/Body/main_Control/ControlSolution';
 import ControlBusinessPerformance from './components/Body/main_Control/ControlBusinessPerformance';
+import CompanyHistory from './components/Body/main_InfoPage/CompanyHistory';
 
 const MainContent = () => {  // 각 섹션에 대한 ref 선언
   const greetingsRef = useRef(null);         // 인사말 섹션 참조
+  const greetingRef = useRef(null);          // 회사소개 타이틀
   const businessOverviewRef = useRef(null);  // 사업개요 섹션 참조
   const historyRef = useRef(null);           // 회사연혁 섹션 참조
+  const equipmentsystemRef = useRef(null);   // 장비제어시스템
   const controlSolutionRef = useRef(null);   // 제어 솔루션 섹션 참조
   const controlBusinessPerformanceRef = useRef(null); // 제어 사업 성과 섹션 참조
   const location = useLocation();            // 현재 경로 감지
@@ -29,13 +32,17 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
     console.log('Current pathname: 위치', location.hash);
   }, [location]);
 
-  // 컴포넌트가 렌더링된 후 스크롤 동작 처리
-  useEffect(() => {
+   // 컴포넌트가 렌더링된 후 스크롤 동작 처리
+   useEffect(() => {
     if (!isLoaded) {
       setIsLoaded(true); // 컴포넌트가 렌더링된 후 true로 설정
-  
+
       // 해시 값에 따라 스크롤 동작
-      if (location.hash === '#greetings' && greetingsRef.current) {
+      if (location.hash === '#greeting') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });  
+      } else if (location.hash === '#equipment-system') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });  
+      } else if (location.hash === '#greetings' && greetingsRef.current) {
         greetingsRef.current.scrollIntoView({ behavior: 'smooth' }); // 인사말 섹션으로 스크롤
       } else if (location.hash === '#businessOverview' && businessOverviewRef.current) {
         businessOverviewRef.current.scrollIntoView({ behavior: 'smooth' }); // 사업개요 섹션으로 스크롤
@@ -51,7 +58,8 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
 
   return (
     <div className="body-content" style={{ padding: '0px'}}>
-      <Routes>
+      {
+       <Routes>
         {location.hash === '' && (
           <>
             <Route path="/" element={<CompanyIntroduction />} />
@@ -59,12 +67,14 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
             <Route path="/control-solution" element={ <ControlSolution />} />
           </>
         )}
-      </Routes>
+      </Routes> 
+      }
 
       {/* 경로가 "/"가 아닐 때만 컴포넌트 렌더링 */}
       {location.hash !== '' && 
-      (location.pathname === '/greetings' || location.hash === '#greetings' || location.hash === '#businessOverview' || location.hash === '#history') && (
+      (location.hash === '#greeting' || location.hash === '#greetings' || location.hash === '#businessOverview' || location.hash === '#history') && (
         <>
+          
           {/* 인사말 섹션 */}
           <div ref={greetingsRef} id="greetings" style={{ marginTop: '10px' }}>
             <CompanyGreetings />
@@ -77,13 +87,12 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
 
           {/* 회사연혁 섹션 */}
           <div ref={historyRef} id="history" style={{ marginTop: '10px' }}>
-            <h2>회사연혁</h2>
-            <p>여기에 회사연혁 내용을 입력하세요.</p>
+            <CompanyHistory />
           </div>
         </>
       )}
       {location.hash !== '' &&
-        (location.hash === '#control-solution' || location.hash === '#control-BusinessPerformance') && (
+        (location.hash === '#equipment-system' || location.hash === '#control-solution' || location.hash === '#control-BusinessPerformance') && (
           <>
             {/* 제어솔루션 섹션 */}
             <div ref={controlSolutionRef} id="control-solution" style={{ marginTop: '10px' }}>
@@ -103,11 +112,18 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
 const App = () => {
   return (
     <Router>
-      <>
+      <div className="full-screen-container">
+        {/* 헤더 */}
         <Header />
-        <MainContent />
+
+        {/* 메인 콘텐츠 */}
+        <div className="full-screen-content">
+          <MainContent />
+        </div>
+
+        {/* 푸터 */}
         <Footer />
-      </>
+      </div>
     </Router>
   );
 };
