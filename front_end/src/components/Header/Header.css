@@ -4,8 +4,10 @@
   justify-content: space-between;
   align-items: center;
   background-color: white;
-  padding: 1rem;
+  padding: 5px;
   border-bottom: 1px solid #e5e5e5;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .logo {
@@ -13,10 +15,11 @@
   align-items: center;
   font-size: 1.2rem;
   font-weight: bold;
+  margin-right: 40px;
 }
 
 .logo-img {
-  margin-left: 25rem;
+  margin-left: 1rem;
   width: 180px;
   height: auto;
   margin-bottom: 20px;
@@ -38,12 +41,14 @@
 
 .nav ul li {
   position: relative; /* 서브메뉴와 관계를 유지하도록 설정 */
+  white-space: nowrap;
 }
 
 .nav ul li a {
   color: white;
   text-decoration: none;
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .nav ul li a:hover {
@@ -67,7 +72,7 @@
   position: absolute;
   background-color: white;
   border: 1px solid #e5e5e5;
-  top: 105%; /* 부모 항목 바로 아래에 위치 */
+  top: 102%; /* 부모 항목 바로 아래에 위치 */
   left: 50%; /* 부모 요소의 중앙에 맞춤 */
   transform: translateX(-50%); /* 부모 기준으로 가로 중앙 정렬 */
   white-space: nowrap; /* 텍스트 줄바꿈 방지 */
@@ -127,4 +132,15 @@
 
 .header-right span:hover {
   text-decoration: underline;
+}
+
+/* 화면이 작아졌을 때도 가로 정렬을 유지 */
+@media (max-width: 768px) {
+  .nav {
+    justify-content: space-between; /* 줄어든 화면에서 간격을 균등하게 유지 */
+  }
+
+  .nav li {
+    margin: 0 10px;
+  }
 }

@@ -1,0 +1,117 @@
+/* 전체 컨테이너 */
+.business-overview-container {
+    padding: 1rem;
+    background-color: white;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  /* 상단 제목 */
+  .business-overview-header {
+    display: flex;
+    align-items: center; /* 수직으로 중앙 정렬 */
+    border-bottom: 1px solid #333232; /* 헤더 하단에 회색 선 추가 */
+    padding: 10px; /* 헤더 내부 여백 */
+    max-width: 1200px; /* 최대 너비를 1200px로 고정 */
+    height: 64px; /* 높이를 64px로 고정 */
+    margin: 0 auto; /* 가운데 정렬 */
+  }
+  
+  .check-icon {
+    color: #2eb872; /* 아이콘 색상 설정 */
+    font-size: 1.5rem; /* 아이콘 크기 설정 */
+    margin-right: 0.5rem; /* 아이콘과 제목 사이의 간격 */
+  }
+  
+  .business-title {
+    font-size: 2rem;
+    color: #333;
+    margin: 0; /* 기본 마진 제거 */
+  }
+
+  .top-link {
+    font-size: 0.9rem; /* 링크의 폰트 크기 */
+    color: #555; /* 링크 색상 */
+    text-decoration: none; /* 링크의 기본 밑줄 제거 */
+    position: absolute; /* 오른쪽 끝에 고정하기 위해 absolute 사용 */
+    right: 40px; /* 화면의 오른쪽에서 40px 떨어진 위치 */
+    font-size: 18px; /* 링크의 폰트 크기를 18px로 설정 */
+  }
+    
+  .top-link:hover {
+    text-decoration: underline; /* 마우스 호버 시 밑줄 표시 */
+  }
+  
+  /* 본문 설명 */
+  .business-content {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: #555;
+  }
+  
+  .highlight {
+    color: #0056b3;
+    font-weight: bold;
+  }
+  
+  /* 장비 제어 및 생산 자동화 섹션 */
+  .business-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+  }
+  
+  .left-section,
+  .right-section {
+    width: 48%;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+    color: #d14c32; /* 제목 색상 설정 */
+    margin-bottom: 1rem;
+  }
+  
+  .section-list {
+    list-style-type: none;
+    padding-left: 0;
+    line-height: 1.8;
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .section-list li {
+    margin-bottom: 0.5rem;
+  }
+  
+  /* 이미지 스타일 */
+  .business-image {
+    text-align: center;
+    margin: 2rem 0;
+  }
+  
+  .business-image img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Solution R&D 섹션 */
+  .business-rnd {
+    margin-top: 2rem;
+  }
+  
+  .business-rnd .section-title {
+    font-size: 1.5rem;
+    color: #d14c32;
+    margin-bottom: 1rem;
+  }
+  
+  .business-rnd .section-list {
+    list-style-type: none;
+    padding-left: 0;
+    line-height: 1.8;
+    font-size: 1rem;
+    color: #555;
+  }
+  

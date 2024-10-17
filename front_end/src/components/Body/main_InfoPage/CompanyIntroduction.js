@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './CompanyIntroduction.css'; // 슬라이드쇼를 위한 CSS 파일
 
 // 'image' 폴더에서 이미지 가져오기
-import mainImg1 from '../../images/image/main_img_01.jpg';
-import mainImg2 from '../../images/image/main_img_02.jpg';
-import mainImg3 from '../../images/image/main_img_03.jpg';
+import mainImg1 from '../../../images/image/main_img_01.jpg';
+import mainImg2 from '../../../images/image/main_img_02.jpg';
+import mainImg3 from '../../../images/image/main_img_03.jpg';
 
 const images = [mainImg1, mainImg2, mainImg3]; // 이미지 경로 배열
 

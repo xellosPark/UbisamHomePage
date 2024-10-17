@@ -1,7 +1,7 @@
 import React from 'react';
 import './Companygreetings.css';
 import { FaCheckCircle } from 'react-icons/fa'; // 아이콘 사용을 위해 react-icons 패키지 사용
-import companyImage from '../../images/image/intro_img.png'
+import companyImage from '../../../images/image/intro_img.png'
 
 const CompanyGreetings = () => {
     return (

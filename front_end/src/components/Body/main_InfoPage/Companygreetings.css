@@ -10,7 +10,10 @@
     display: flex;
     align-items: center; /* 수직으로 중앙 정렬 */
     border-bottom: 1px solid #959292; /* 헤더 하단에 회색 선 추가 */
-    padding: 10px; /* 헤더 내부 여백 */
+    padding: 10px ; /* 헤더 내부 여백 */
+    max-width: 1200px; /* 최대 너비를 1200px로 고정 */
+    height: 64px; /* 높이를 64px로 고정 */
+    margin: 0 auto; /* 가운데 정렬 */
   }
   
   .check-icon {

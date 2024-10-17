@@ -1,11 +1,13 @@
 import React, { useState } from 'react'; // Import useState for managing hover state
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Header.css';
 import logo from '../../images/icon/ubisamlogo.png';
 
 const Header = () => {
   // State to track which menu is being hovered
   const [hoveredMenu, setHoveredMenu] = useState(null);
+  const navigate = useNavigate();  // 페이지 이동을 위한 훅
+
 
   // Function to handle mouse entering a menu item
   const handleMouseEnter = (menu) => {
@@ -17,11 +19,19 @@ const Header = () => {
     setHoveredMenu(null); // Reset to null when the mouse leaves
   };
 
+  // 특정 섹션으로 이동하면서 페이지를 변경
+  const handleNavigate = (section) => {
+    navigate(`/#${section}`);
+  };
+
   return (
     <header className="header">
       <div className="header-left">
         <div className="logo">
-          <img src={logo} alt="UbiSam Logo" className="logo-img" />
+           {/* Link 컴포넌트를 사용하여 메인 경로로 이동 */}
+           <Link to="/">
+            <img src={logo} alt="UbiSam Logo" className="logo-img" />
+          </Link>
         </div>
       </div>
 
@@ -32,12 +42,18 @@ const Header = () => {
             onMouseEnter={() => handleMouseEnter('company')}
             onMouseLeave={handleMouseLeave}
           >
-            <Link to="/" className="nav_title" >회사소개</Link>
+            <Link to="/greetings" className="nav_title" >회사소개</Link>
             {hoveredMenu === 'company' && (
               <div class="dropdown">
-                <li><a href="/greetings" class="menu-item">인사말</a></li>
+                {/* <li><a href="/greetings" class="menu-item">인사말</a></li>
                 <li><a href="/" class="menu-item">사업개요</a></li>
-                <li><a href="/" class="menu-item">회사연혁</a></li>
+                <li><a href="/" class="menu-item">회사연혁</a></li> */}
+
+                {/* 경로 변경과 동시에 해시 값 설정 */}
+                <li><span onClick={() => handleNavigate('greetings')} className="menu-item">인사말</span></li>
+                <li><span onClick={() => handleNavigate('businessOverview')} className="menu-item">사업개요</span></li>
+                <li><span onClick={() => handleNavigate('history')} className="menu-item">회사연혁</span></li>
+
                 <li><a href="/" class="menu-item">조직소개</a></li>
                 <li><a href="/" class="menu-item">특허</a></li>
                 <li><a href="/" class="menu-item">주요고객</a></li>
@@ -51,11 +67,13 @@ const Header = () => {
             onMouseEnter={() => handleMouseEnter('equipment')}
             onMouseLeave={handleMouseLeave}
           >
-            <Link to="/equipment" className="nav_title" >장비제어시스템</Link>
+            <Link to="/control-solution" className="nav_title" >장비제어시스템</Link>
             {hoveredMenu === 'equipment' && (
               <div class="dropdown">
-                <li><Link to="/" class="menu-item" >제어솔루션</Link></li>
-                <li><Link to="/" class="menu-item" >제어사업실적</Link></li>
+                <li><span onClick={() => handleNavigate('control-solution')}            className="menu-item">제어솔루션</span></li>
+                <li><span onClick={() => handleNavigate('control-BusinessPerformance')} className="menu-item">제어사업실적</span></li>
+                {/* <li><Link to="/" class="menu-item" >제어솔루션</Link></li> */}
+                {/* <li><Link to="/" class="menu-item" >제어사업실적</Link></li> */}
               </div>
             )}
           </li>
