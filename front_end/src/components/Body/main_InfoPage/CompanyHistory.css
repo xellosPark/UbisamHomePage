@@ -1,52 +1,145 @@
+/* 전체 요소에 기본 여백과 패딩을 없애고, 박스 크기 모델을 설정 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 기본 바디 폰트와 배경색 설정 */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f7f9fc;
+}
+
+/* 타임라인 컨테이너 크기 및 마진 설정 */
 .history-container {
-  width: 100%;
-  padding: 20px;
-  background-color: #f8f9fa;
+  width: 90%;
+  margin: 0 auto;
+  padding: 50px 0;
 }
 
-.history-title {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 30px;
-}
-
+/* 타임라인 기본 레이아웃 설정 */
 .timeline {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  position: relative;
+  padding-left: 50px;
 }
 
+/* 원과 원 사이에 연결된 선을 추가 */
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 50px; /* 첫 번째 원 아래에서 시작 */
+  bottom: 0;
+  left: 175px; /* 원의 중앙에 맞추어 선을 위치 */
+  width: 2px;
+  background-color: #ccc;
+  z-index: -1; /* 선이 원 뒤에 나타나도록 함 */
+}
+
+/* 각 연도 섹션(원과 텍스트 포함) 레이아웃 설정 */
 .year-section {
   display: flex;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
+  position: relative;
 }
 
-.year {
+/* 연도 말풍선 모양 설정: 오른쪽으로 삼각형이 밖으로 향하게 함 */
+.year-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
   font-size: 1.5rem;
   font-weight: bold;
-  margin-right: 20px;
-  color: #1e90ff;
+  position: relative;
+  z-index: 1;
+  margin-right: 50px;
+  background-color: #0070c9; /* 기본 배경색 */
 }
 
-.image-container {
-  width: 80px;
-  height: 80px;
-  margin-right: 20px;
+/* 삼각형을 추가하여 말풍선 모양을 완성 */
+.year-circle::after {
+  content: '';
+  position: absolute;
+  right: -30px; /* 삼각형을 원 오른쪽에 배치 */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 30px solid #0070c9; /* 삼각형의 색상을 원과 동일하게 */
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
 }
 
-.image-container img {
-  width: 100%;
-  height: auto;
-  border-radius: 50%;
+/* 각 연도별 색상 지정 */
+.year-circle:nth-child(1) {
+  background-color: #6ab5ff; /* 연도별 색상: 2007 */
 }
 
+.year-circle:nth-child(2) {
+  background-color: #6b9eff; /* 연도별 색상: 2006 */
+}
+
+.year-circle:nth-child(3) {
+  background-color: #a97aff; /* 연도별 색상: 2003 */
+}
+
+.year-circle:nth-child(4) {
+  background-color: #ba77ff; /* 연도별 색상: 2002 */
+}
+
+/* 삼각형 색상도 각 연도별 색상에 맞춰 변경 */
+.year-circle:nth-child(1)::after {
+  border-left-color: #6ab5ff;
+}
+
+.year-circle:nth-child(2)::after {
+  border-left-color: #6b9eff;
+}
+
+.year-circle:nth-child(3)::after {
+  border-left-color: #a97aff;
+}
+
+.year-circle:nth-child(4)::after {
+  border-left-color: #ba77ff;
+}
+
+/* 텍스트 내용 설정 */
 .events {
-  list-style: none;
-  padding: 0;
+  text-align: left;
+  flex: 1;
+  padding-left: 30px;
 }
 
-.events li {
+/* 이벤트 텍스트 스타일 설정 */
+p {
   font-size: 1.1rem;
-  margin-bottom: 5px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* 모바일 디바이스에서의 반응형 디자인 */
+@media (max-width: 768px) {
+  .timeline {
+    padding-left: 0;
+  }
+
+  .year-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .year-circle {
+    margin-bottom: 10px;
+  }
+
+  /* 모바일에서는 선을 가운데에 맞춤 */
+  .timeline::before {
+    left: 50%;
+  }
 }
