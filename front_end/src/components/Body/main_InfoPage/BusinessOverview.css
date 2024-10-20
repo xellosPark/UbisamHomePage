@@ -5,6 +5,7 @@
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
+    padding: 0px 500px;
   }
   
   /* 상단 제목 */
@@ -115,3 +116,10 @@
     color: #555;
   }
   
+  /* 레이아웃 축소 방지 */
+@media screen and (max-width: 1200px) {
+  .business-container {
+   width: 1200px; /* 고정된 너비 유지 */
+   padding: 0 20px;
+ }
+}

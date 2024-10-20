@@ -1,7 +1,4 @@
 
-body {
-  min-width: 1280px;
-}
 
 /* 전체 화면을 채우기 위한 스타일 적용 */
 .full-screen-container {
@@ -17,7 +14,8 @@ body {
   flex-grow: 1; /* 남은 공간을 메인 콘텐츠가 채우도록 설정 */
   padding: 10px;
   display: flex;
-  justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
+  background-color: white;
 }
+
 

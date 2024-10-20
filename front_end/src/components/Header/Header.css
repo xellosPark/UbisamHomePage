@@ -2,7 +2,6 @@
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   background-color: white;
   padding-top: 5px;
   max-width: 1200px;
@@ -12,7 +11,7 @@
 
 .logo {
   display: flex;
-  align-items: center;
+  
   font-weight: bold;
   margin-right: 50px;
 }
@@ -84,7 +83,6 @@
 /* 서브메뉴 항목 스타일 */
 .menu-item {
   padding: 10px 10px; /* 위아래로 공간 추가 */
-  color: #666 !important; /* 글자 색상 검정으로 유지 */
   margin-right: 10px;
 }
 
@@ -103,10 +101,11 @@
 
 .dropdown li:hover {
   background-color: #2D97F7;
+  color: white;
 }
 
 .dropdown li a:hover {
-  color:white !important; /* 글자 색상 검정으로 유지 */
+  color:white; /* 글자 색상 검정으로 유지 */
 }
 
 
@@ -135,12 +134,16 @@
 }
 
 /* 화면이 작아졌을 때도 가로 정렬을 유지 */
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
   .nav {
     justify-content: space-between; /* 줄어든 화면에서 간격을 균등하게 유지 */
   }
 
-  .nav li {
+  .nav li{
     margin: 0 10px;
+  }
+
+  .logo {
+    margin: 0 30px;
   }
 }

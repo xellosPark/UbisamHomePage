@@ -5,6 +5,7 @@ import businessImage from '../../../images/image/02_01.png'
 
 const BusinessOverview = () => {
   return (
+    <div div className="business-container">
       <div className="business-overview-container">
         {/* 상단 인사말 */}
         <div className="business-overview-header">
@@ -64,6 +65,7 @@ const BusinessOverview = () => {
           <li>SME PDM system</li>
         </ul>
       </div>
+    </div>
     </div>
   );
 };
