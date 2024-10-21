@@ -4,6 +4,14 @@ import { FaCheckCircle } from 'react-icons/fa';
 import businessImage from '../../../images/image/02_01.png'
 
 const BusinessOverview = () => {
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0, // Scroll to the top
+      behavior: 'smooth' // Smooth scroll behavior
+    });
+  };
+
   return (
     <div div className="business-container">
       <div className="business-overview-container">
@@ -11,7 +19,7 @@ const BusinessOverview = () => {
         <div className="business-overview-header">
             <FaCheckCircle className="check-icon" /> {/* 체크 아이콘 */}
             <h1 className="business-overview-title">사업개요</h1>
-            <a href="#top" className="top-link">Top</a> {/* Top 링크 */}
+            <button className="top-link" onClick={scrollToTop}>Top</button> {/* "Top" 버튼 클릭 시 scrollToTop 함수 호출 */} 
         </div>
 
       {/* 본문 설명 */}

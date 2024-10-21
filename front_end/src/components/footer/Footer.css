@@ -12,7 +12,7 @@
 
 .footer-nav ul {
   list-style: none;
-  padding: 0;
+  padding: 10px;
   margin: 0;
   display: flex;
   justify-content: center;
@@ -96,7 +96,7 @@
 }
 
 .footer-bottom p {
-  font-size: 13px;
+  font-size: 14px;
   color: #363636;
 }
 
@@ -114,9 +114,6 @@
     padding: 0 20px;
   }
 
-  .footer-left, .footer-right {
-    text-align: center; /* 텍스트 정렬을 중앙으로 */
-  }
 
   .qr-code {
     margin: 20px auto;

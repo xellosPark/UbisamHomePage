@@ -96,13 +96,21 @@ const companyHistory = [
     active: true
   }
 ];
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0, // Scroll to the top
+    behavior: 'smooth' // Smooth scroll behavior
+  });
+};
+
 const CompanyHistory = () => {
   return (
     <div className="history-container">
       <div className="history-header">
         <FaCheckCircle className="check-icon" /> {/* 체크 아이콘 */}
         <h1 className="history-title">회사연혁</h1>
-        <a href="#top" className="top-link">Top</a> {/* Top 링크 */}
+        <button className="top-link" onClick={scrollToTop}>Top</button> {/* "Top" 버튼 클릭 시 scrollToTop 함수 호출 */} 
       </div>
       <div className="timeline">
         {companyHistory.map((item, index) => (

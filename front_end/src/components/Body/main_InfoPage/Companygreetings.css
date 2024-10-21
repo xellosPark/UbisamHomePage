@@ -5,13 +5,14 @@
   margin: 0 auto; /* 중앙 정렬 */
   position: relative;
   overflow: hidden; /* 오버플로 방지 */
+  
 }
 
 .company-greetings-header {
   display: flex;
   align-items: center; /* 수직 정렬 */
   border-bottom: 1px solid #959292; /* 하단에 회색 선 */
-  padding: 10px;
+  
   max-width: 1200px; /* 최대 너비 1200px */
   height: 64px; /* 고정 높이 */
   margin: 0; /* 중앙 정렬 해제 */
@@ -35,8 +36,9 @@
   color: #555;
   text-decoration: none;
   position: absolute; /* 우측 끝에 고정 */
-  right: 40px; /* 오른쪽에서 40px 떨어짐 */
+  border: none;
   font-size: 18px;
+  background-color: white;
 }
 
 .top-link:hover {
@@ -53,7 +55,7 @@
 }
 
 .company-greetings-image {
-  width: 400px; /* 고정된 너비를 400px로 설정 */
+  width: 500px; /* 고정된 너비를 400px로 설정 */
   flex-shrink: 0; /* 이미지가 축소되지 않도록 설정 */
   height: auto; /* 비율 유지 */
   margin-right: 2rem;
@@ -92,14 +94,4 @@ strong {
 .ceo-signature {
   text-align: right; /* 우측 정렬 */
   margin-top: 2rem;
-}
-
-/* 반응형 스타일 - 창이 줄어들 때에도 왼쪽 고정 요소 유지 */
-@media screen and (max-width: 1200px) {
-  .company-greetings-container {
-      width: 1200px; /* 창이 줄어들 때 너비 100% */
-;
-  }
-
-
 }

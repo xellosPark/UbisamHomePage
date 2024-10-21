@@ -23,6 +23,7 @@
 .nav  {
   margin-right: 300px;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
 /* 내비게이션 스타일 */
@@ -30,7 +31,7 @@
   list-style: none;
   display: flex;
   gap: 5rem; /* 메뉴 항목 간의 간격 설정 */
-  margin-top: 30px;
+  margin-top: 40px;
   padding: 0;
 }
 
