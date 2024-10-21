@@ -1,11 +1,11 @@
 /* 전체 컨테이너 */
 .business-overview-container {
-    padding: 1rem;
-    background-color: white;
-    max-width: 1200px;
-    margin: 0 auto;
-    position: relative;
-    padding: 0px 500px;
+  padding: 1rem;
+  background-color: white;
+  max-width: 1200px; /* 최대 너비를 1200px로 고정 */
+  margin: 0 auto; /* 중앙 정렬 */
+  position: relative;
+  overflow: hidden; /* 오버플로 방지 */
   }
   
   /* 상단 제목 */

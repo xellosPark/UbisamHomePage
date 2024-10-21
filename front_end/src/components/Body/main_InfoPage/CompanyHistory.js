@@ -1,5 +1,6 @@
 import React from 'react';
 import './CompanyHistory.css'; // Ensure the CSS file is connected
+import { FaCheckCircle } from 'react-icons/fa';
 
 const companyHistory = [
   {
@@ -98,6 +99,11 @@ const companyHistory = [
 const CompanyHistory = () => {
   return (
     <div className="history-container">
+      <div className="history-header">
+        <FaCheckCircle className="check-icon" /> {/* 체크 아이콘 */}
+        <h1 className="history-title">회사연혁</h1>
+        <a href="#top" className="top-link">Top</a> {/* Top 링크 */}
+      </div>
       <div className="timeline">
         {companyHistory.map((item, index) => (
           <div key={index} className="year-section">

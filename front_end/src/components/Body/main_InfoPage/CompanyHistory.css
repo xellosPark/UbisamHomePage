@@ -6,10 +6,34 @@
   padding: 50px 0;
 }
 
+.history-header {
+  display: flex;
+  align-items: center; /* 수직 정렬 */
+  border-bottom: 1px solid #959292; /* 하단에 회색 선 */
+  padding: 10px;
+  max-width: 1200px; /* 최대 너비 1200px */
+  height: 64px; /* 고정 높이 */
+  margin: 0; /* 중앙 정렬 해제 */
+  
+}
+
+.check-icon {
+  color: #2eb872;
+  font-size: 1.5rem; /* 아이콘 크기 */
+  margin-right: 0.5rem; /* 아이콘과 제목 사이 여백 */
+}
+
+.history-title {
+  font-size: 2rem; /* 제목 크기 */
+  color: #333;
+  margin: 0;
+}
+
 /* 타임라인 기본 레이아웃 설정 */
 .timeline {
   position: relative;
-  padding-left: 50px;
+  padding: 40px;
+  
 }
 
 /* 원과 원 사이에 연결된 선을 추가 */
@@ -30,6 +54,7 @@
   align-items: center;
   margin-bottom: 50px;
   position: relative;
+  
 }
 
 /* 연도 말풍선 모양 설정: 오른쪽으로 삼각형이 밖으로 향하게 함 */
@@ -101,7 +126,8 @@
 .events {
   text-align: left;
   flex: 1;
-  padding-left: 30px;
+  padding-left: 20px;
+  border-bottom: solid 1px rgb(166, 165, 165);
 }
 
 /* 이벤트 텍스트 스타일 설정 */
