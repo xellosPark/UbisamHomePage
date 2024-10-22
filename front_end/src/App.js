@@ -9,16 +9,22 @@ import BusinessOverview from './components/Body/main_InfoPage/BusinessOverview';
 import ControlSolution from './components/Body/main_Control/ControlSolution';
 import ControlBusinessPerformance from './components/Body/main_Control/ControlBusinessPerformance';
 import CompanyHistory from './components/Body/main_InfoPage/CompanyHistory';
+import OrganizationIntroduction from './components/Body/main_InfoPage/OrganizationIntroduction';
+import Patent from './components/Body/main_InfoPage/Patent';
 
 const MainContent = () => {  // 각 섹션에 대한 ref 선언
   const greetingsRef = useRef(null);         // 인사말 섹션 참조
   const greetingRef = useRef(null);          // 회사소개 타이틀
   const businessOverviewRef = useRef(null);  // 사업개요 섹션 참조
   const historyRef = useRef(null);           // 회사연혁 섹션 참조
+  const OrganizationIntroductionRef = useRef(null); // 조직 소개
+  const PatentRef = useRef(null);            //특허
+  const MainCustomerRef = useRef(null);       // 주요 고객
   const equipmentsystemRef = useRef(null);   // 장비제어시스템
   const controlSolutionRef = useRef(null);   // 제어 솔루션 섹션 참조
   const controlBusinessPerformanceRef = useRef(null); // 제어 사업 성과 섹션 참조
   const location = useLocation();            // 현재 경로 감지
+
 
   const [isLoaded, setIsLoaded] = useState(false); // 컴포넌트 렌더링 플래그
 
@@ -48,11 +54,20 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
         businessOverviewRef.current.scrollIntoView({ behavior: 'smooth' }); // 사업개요 섹션으로 스크롤
       } else if (location.hash === '#history' && historyRef.current) {
         historyRef.current.scrollIntoView({ behavior: 'smooth' }); // 회사연혁 섹션으로 스크롤
+      } else if (location.hash === '#OrganizationIntroduction' && OrganizationIntroductionRef.current) {
+        OrganizationIntroductionRef.current.scrollIntoView({ behavior: 'smooth' }); // 조직소개
+      } else if (location.hash === '#Patent' && PatentRef.current) {
+        PatentRef.current.scrollIntoView({ behavior: 'smooth' }); // 특허
+      } else if (location.hash === '#MainCustomer' && MainCustomerRef.current) {
+        MainCustomerRef.current.scrollIntoView({ behavior: 'smooth' }); // 주요고객
+        
+
       } else if (location.hash === '#control-solution' && controlSolutionRef.current) {
         controlSolutionRef.current.scrollIntoView({ behavior: 'smooth' }); // 제어솔루션 섹션으로 스크롤
       } else if (location.hash === '#control-BusinessPerformance' && controlBusinessPerformanceRef.current) {
         controlBusinessPerformanceRef.current.scrollIntoView({ behavior: 'smooth' }); // 제어 사업 성과 섹션으로 스크롤
       }
+
     }
   }, [isLoaded, location.hash]); // isLoaded와 location.hash에 의존
 
@@ -72,7 +87,8 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
 
       {/* 경로가 "/"가 아닐 때만 컴포넌트 렌더링 */}
       {location.hash !== '' && 
-      (location.hash === '#greeting' || location.hash === '#greetings' || location.hash === '#businessOverview' || location.hash === '#history') && (
+      ( location.hash === '#greeting' || location.hash === '#greetings' || location.hash === '#businessOverview' || location.hash === '#history' ||
+        location.hash === '#OrganizationIntroduction' || location.hash === '#Patent' || location.hash === '#MainCustomerRef' ) && (
         <>
           
           {/* 인사말 섹션 */}
@@ -89,6 +105,18 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
           <div ref={historyRef} id="history" style={{ marginTop: '10px' }}>
             <CompanyHistory />
           </div>
+
+          {/* 조직 소개 */}
+          <div ref={OrganizationIntroductionRef} id="OrganizationIntroduction" style={{ marginTop: '10px' }}>
+            <OrganizationIntroduction />
+          </div>
+          
+          {/* 특허*/}
+          <div ref={PatentRef} id="PatentRef" style={{ marginTop: '10px' }}>
+            <Patent />
+          </div>
+
+
         </>
       )}
       {location.hash !== '' &&

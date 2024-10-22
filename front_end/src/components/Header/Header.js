@@ -54,10 +54,10 @@ const Header = () => {
                 <li><span onClick={() => handleNavigate('greetings')} className="menu-item">인사말</span></li>
                 <li><span onClick={() => handleNavigate('businessOverview')} className="menu-item">사업개요</span></li>
                 <li><span onClick={() => handleNavigate('history')} className="menu-item">회사연혁</span></li>
-
-                <li><a href="/" class="menu-item">조직소개</a></li>
-                <li><a href="/" class="menu-item">특허</a></li>
-                <li><a href="/" class="menu-item">주요고객</a></li>
+                <li><span onClick={() => handleNavigate('OrganizationIntroduction')} className="menu-item">조직소개</span></li>
+                <li><span onClick={() => handleNavigate('Patent')} className="menu-item">특허</span></li>
+                <li><span onClick={() => handleNavigate('MainCustomer')} className="menu-item">주요고객</span></li>
+              
                 <li><a href="/" class="menu-item">찾아오시는길</a></li>
               </div>
             )}

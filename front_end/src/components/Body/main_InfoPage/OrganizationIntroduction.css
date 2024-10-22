@@ -1,0 +1,56 @@
+.organization-overview-container {
+    padding: 1rem;
+    background-color: white;
+    max-width: 1200px; /* 최대 너비를 1200px로 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+    position: relative;
+    overflow: hidden; /* 오버플로우 방지 */
+}
+
+/* 타이틀 영역 설정 */
+.organization-overview-header {
+    display: flex;
+    align-items: center; /* 수직 가운데 정렬 */
+    border-bottom: 1px solid #333232; /* 하단에 회색 선 추가 */
+    padding: 10px; /* 내부 여백 설정 */
+    max-width: 1200px; /* 최대 너비 1200px */
+    height: 64px; /* 높이 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+}
+
+/* 체크 아이콘 설정 */
+.check-icon {
+    color: #2eb872;
+    font-size: 1.5rem; /* 아이콘 크기 설정 */
+    margin-right: 0.5rem; /* 아이콘과 제목 사이의 여백 */
+}
+
+/* 타이틀 텍스트 설정 */
+.organization-overview-title {
+    font-size: 2rem; /* 제목 크기 설정 */
+    color: #333;
+    margin: 0;
+}
+
+/* 두 이미지가 나란히 배치되도록 설정 */
+.organization-overview-content { 
+    display: flex; 
+    justify-content: space-around; /* 이미지 사이에 여백을 줌 */
+    align-items: center; /* 이미지와 텍스트를 수직 가운데 정렬 */ 
+     
+}
+
+/* 첫 번째 이미지 크기 설정 */
+.MapImage-image {
+    width: 500px; /* 첫 번째 이미지 가로 크기 */
+    height: 600px; /* 이미지 비율 유지 */
+    margin-top: 30px;
+}
+
+/* 두 번째 이미지 크기 설정 */
+.organization-image {
+    width: 800px; /* 두 번째 이미지 가로 크기 */
+    height: 600px; /* 이미지 비율 유지 */
+    margin-top: 30px;
+}
+  
