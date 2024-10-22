@@ -11,6 +11,8 @@ import ControlBusinessPerformance from './components/Body/main_Control/ControlBu
 import CompanyHistory from './components/Body/main_InfoPage/CompanyHistory';
 import OrganizationIntroduction from './components/Body/main_InfoPage/OrganizationIntroduction';
 import Patent from './components/Body/main_InfoPage/Patent';
+import MainCustomer from './components/Body/main_InfoPage/MainCustomer';
+import ContentWithImages from './components/Body/main_InfoPage/ContentWithImages';
 
 const MainContent = () => {  // 각 섹션에 대한 ref 선언
   const greetingsRef = useRef(null);         // 인사말 섹션 참조
@@ -20,6 +22,8 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
   const OrganizationIntroductionRef = useRef(null); // 조직 소개
   const PatentRef = useRef(null);            //특허
   const MainCustomerRef = useRef(null);       // 주요 고객
+  const ContentWithImagesRef = useRef(null);  // 찾자오시는길
+
   const equipmentsystemRef = useRef(null);   // 장비제어시스템
   const controlSolutionRef = useRef(null);   // 제어 솔루션 섹션 참조
   const controlBusinessPerformanceRef = useRef(null); // 제어 사업 성과 섹션 참조
@@ -60,6 +64,9 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
         PatentRef.current.scrollIntoView({ behavior: 'smooth' }); // 특허
       } else if (location.hash === '#MainCustomer' && MainCustomerRef.current) {
         MainCustomerRef.current.scrollIntoView({ behavior: 'smooth' }); // 주요고객
+      } else if (location.hash === '#ContentWithImages' && ContentWithImagesRef.current) {
+        ContentWithImagesRef.current.scrollIntoView({ behavior: 'smooth' }); // 주요고객
+
         
 
       } else if (location.hash === '#control-solution' && controlSolutionRef.current) {
@@ -88,7 +95,8 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
       {/* 경로가 "/"가 아닐 때만 컴포넌트 렌더링 */}
       {location.hash !== '' && 
       ( location.hash === '#greeting' || location.hash === '#greetings' || location.hash === '#businessOverview' || location.hash === '#history' ||
-        location.hash === '#OrganizationIntroduction' || location.hash === '#Patent' || location.hash === '#MainCustomerRef' ) && (
+        location.hash === '#OrganizationIntroduction' || location.hash === '#Patent' || location.hash === '#MainCustomer' ||
+        location.hash === '#ContentWithImages' ) && (
         <>
           
           {/* 인사말 섹션 */}
@@ -116,9 +124,18 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
             <Patent />
           </div>
 
+          {/* 주요 고객 */}
+          <div ref={MainCustomerRef} id="MainCustomer" style={{ marginTop: '10px' }}>
+            <MainCustomer />
+          </div>
 
+          {/* 찾자오는길 */}
+          <div ref={ContentWithImagesRef} id="ContentWithImages" style={{ marginTop: '10px' }}>
+            <ContentWithImages />
+          </div>
         </>
       )}
+      
       {location.hash !== '' &&
         (location.hash === '#equipment-system' || location.hash === '#control-solution' || location.hash === '#control-BusinessPerformance') && (
           <>

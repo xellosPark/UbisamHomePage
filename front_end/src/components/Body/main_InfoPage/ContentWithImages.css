@@ -1,0 +1,141 @@
+/* 콘텐츠 컨테이너 */
+.content-overview-container {
+  padding: 1rem;
+  background-color: white;
+  max-width: 1200px; /* 최대 너비 1200px 설정 */
+  margin: 0 auto; /* 가운데 정렬 */
+  position: relative;
+  overflow: hidden; /* 오버플로우 방지 */
+}
+
+/* 타이틀 및 헤더 설정 */
+.content-overview-header {
+  display: flex;
+  align-items: center; /* 수직 가운데 정렬 */
+  border-bottom: 1px solid #333232; /* 하단에 회색 선 추가 */
+  padding: 10px; /* 내부 여백 설정 */
+  max-width: 1200px; /* 최대 너비 1200px */
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+.check-icon {
+  color: #2eb872;
+  font-size: 1.5rem; /* 아이콘 크기 */
+  margin-right: 0.5rem; /* 아이콘과 제목 사이의 여백 */
+}
+
+/* 타이틀 텍스트 설정 */
+.content-overview-title {
+  font-size: 2rem; /* 제목 크기 */
+  color: #333;
+  margin: 0;
+}
+
+/* 그리드 설정 */
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 좌우로 두 개의 칸을 배치 */
+  gap: 20px; /* 각 아이템 사이의 간격 */
+  margin-top: 20px;
+}
+
+/* 각 content-item에 대한 설정 */
+.content-item {
+  margin: 10px 0; /* 위아래 간격을 10px로 줄임 */
+  padding: 0; /* 추가적인 내부 여백을 없앰 */
+  
+}
+
+/* 이미지 설정 */
+.place-image {
+  width: 600px;
+  height: auto; /* 이미지 비율을 유지하면서 크기 조정 */
+  margin-bottom: 5px; /* 이미지와 텍스트 간의 간격을 5px로 줄임 */
+}
+
+/* 각 텍스트 줄에 대한 설정 */
+.content-item p {
+  margin: 5px 0; /* 텍스트 상하 간격을 5px로 설정하여 줄 간격을 줄임 */
+  font-size: 1rem; /* 표준 글꼴 크기 */
+}
+
+/* 지도 컨테이너 스타일 */
+.map-container {
+  width: 600px; /* 가로 크기 */
+  height: 300px; /* 세로 크기 */
+  display: block; /* 블록 요소로 설정 */
+  margin: 40px auto; /* 가운데 정렬 */
+  border: solid 1px #888;
+}
+
+/* 커스텀 오버레이 스타일 */
+.customoverlay {
+  position: relative;
+  bottom: 60px; /* 마커 위에 위치 */
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+  white-space: nowrap;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.customoverlay .title {
+  display: block;
+  font-weight: bold;
+  font-size: 16px;
+  color: #0044cc;
+}
+
+.customoverlay::before {
+  content: '';
+  position: absolute;
+  bottom: -10px; /* 아래쪽에 삼각형 위치 */
+  left: 50%;
+  margin-left: -8px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 8px 0 8px;
+  border-color: #ffffff transparent transparent transparent;
+}
+
+/* 지도 컨테이너 스타일 */
+.map-container {
+  width: 600px;
+  height: 300px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* 지도 하단 툴바 스타일 */
+.map-tools {
+  text-align: left;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.tool-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.map-tools a {
+  color: #333;
+  text-decoration: none;
+  margin-right: 5px;
+}
+
+.map-tools a:hover {
+  text-decoration: underline;
+}
+
+/* 반응형 스타일 */
+@media screen and (max-width: 1200px) {
+  .content-overview-container {
+    width: 1200px; /* 고정된 너비 유지 */  
+  }
+}

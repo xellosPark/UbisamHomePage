@@ -1,4 +1,5 @@
-/* 특허 개요 컨테이너 */.patent-overview-container {
+/* 특허 개요 컨테이너 */
+.patent-overview-container {
     padding: 1rem;
     background-color: white;
     max-width: 1200px; /* 최대 너비를 1200px로 설정 */
@@ -7,7 +8,8 @@
     overflow: hidden; /* 오버플로우 방지 */
 }
 
-/* 타이틀 영역 설정 */.patent-overview-header {
+/* 타이틀 영역 설정 */
+.patent-overview-header {
     display: flex;
     align-items: center; /* 수직 가운데 정렬 */
     border-bottom: 1px solid #333232; /* 하단에 회색 선 추가 */
@@ -17,19 +19,22 @@
     margin: 0 auto; /* 가운데 정렬 */
 }
 
-/* 체크 아이콘 설정 */.check-icon {
+/* 체크 아이콘 설정 */
+.check-icon {
     color: #2eb872;
     font-size: 1.5rem; /* 아이콘 크기 설정 */
     margin-right: 0.5rem; /* 아이콘과 제목 사이의 여백 */
 }
 
-/* 타이틀 텍스트 설정 */.patent-overview-title {
+/* 타이틀 텍스트 설정 */
+.patent-overview-title {
     font-size: 2rem; /* 제목 크기 설정 */
     color: #333;
     margin: 0;
 }
 
-/* 특허 개요 내용 (이미지 섹션) */.patent-overview-content {
+/* 특허 개요 내용 (이미지 섹션) */
+.patent-overview-content {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 특허 이미지가 4개씩 가로로 나열되도록 설정 */
     gap: 20px; /* 이미지 사이 간격 설정 */
@@ -38,34 +43,30 @@
     padding: 30px;
 }
 
-/* 특허 아이템 설정 */.patent-item {
+/* 특허 아이템 설정 */
+.patent-item {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* 특허 이미지 설정 */.patent-image {
+/* 특허 이미지 설정 */
+.patent-image {
     width: 200px; /* 특허 이미지 가로 크기 */
     height: auto; /* 이미지 비율 유지 */
     object-fit: contain; /* 이미지가 잘리지 않도록 설정 */
 }
 
-/* 특허 설명 텍스트 설정 */.patent-caption {
+/* 특허 설명 텍스트 설정 */
+.patent-caption {
     font-size: 1rem;
     color: #333;
     margin-top: 10px; /* 이미지와 설명 사이 여백 */
     text-align: center; /* 설명 텍스트 가운데 정렬 */
 }
 
-/* 반응형 스타일 - 창이 줄어들 때 이미지가 적절히 배치되도록 설정 */
-@media screen and (max-width: 800px) {
-    .patent-overview-content {
-        grid-template-columns: repeat(2, 1fr); /* 화면이 작아질 경우 가로로 2개씩 배치 */
-    }
-}
-
-@media screen and (max-width: 500px) {
-    .patent-overview-content {
-        grid-template-columns: 1fr; /* 화면이 더 작아질 경우 한 줄에 하나씩 배치 */
+@media screen and (max-width: 1200px) {
+    .patent-overview-container {
+      width: 1200px; /* 고정된 너비 유지 */  
     }
 }

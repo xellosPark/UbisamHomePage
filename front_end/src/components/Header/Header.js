@@ -57,8 +57,7 @@ const Header = () => {
                 <li><span onClick={() => handleNavigate('OrganizationIntroduction')} className="menu-item">조직소개</span></li>
                 <li><span onClick={() => handleNavigate('Patent')} className="menu-item">특허</span></li>
                 <li><span onClick={() => handleNavigate('MainCustomer')} className="menu-item">주요고객</span></li>
-              
-                <li><a href="/" class="menu-item">찾아오시는길</a></li>
+                <li><span onClick={() => handleNavigate('ContentWithImages')} className="menu-item">찾아오시는길</span></li>
               </div>
             )}
           </li>

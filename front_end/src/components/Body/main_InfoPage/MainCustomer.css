@@ -33,47 +33,33 @@
     margin: 0;
 }
 
-/* 메인 고객 개요 내용 (이미지 섹션) */
+/* 두 이미지가 나란히 배치되도록 설정 */
+.customer-overview-content { 
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row; /* 가로 정렬 */
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    align-items: flex-start; /* 상단 맞춤 */
+    overflow: hidden; /* 오버플로 방지 */
+}
+
+/* 단일 이미지 전체 화면에 표시 */
 .customer-overview-content {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 고객 이미지가 4개씩 가로로 나열되도록 설정 */
-    gap: 20px; /* 이미지 사이 간격 설정 */
-    justify-items: center; /* 이미지 중앙 정렬 */
+    display: flex;
+    justify-content: center; /* 이미지 중앙 정렬 */
     align-items: center; /* 수직 중앙 정렬 */
     padding: 30px;
 }
 
-/* 고객 아이템 설정 */
-.customer-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 /* 고객 이미지 설정 */
 .customer-image {
-    width: 200px; /* 고객 이미지 가로 크기 */
+    width: 100%; /* 이미지가 가로로 전체 화면을 채우도록 설정 */
     height: auto; /* 이미지 비율 유지 */
     object-fit: contain; /* 이미지가 잘리지 않도록 설정 */
 }
 
-/* 고객 설명 텍스트 설정 */
-.customer-caption {
-    font-size: 1rem;
-    color: #333;
-    margin-top: 10px; /* 이미지와 설명 사이 여백 */
-    text-align: center; /* 설명 텍스트 가운데 정렬 */
-}
-
-/* 반응형 스타일 - 창이 줄어들 때 이미지가 적절히 배치되도록 설정 */
-@media screen and (max-width: 800px) {
-    .customer-overview-content {
-        grid-template-columns: repeat(2, 1fr); /* 화면이 작아질 경우 가로로 2개씩 배치 */
-    }
-}
-
-@media screen and (max-width: 500px) {
-    .customer-overview-content {
-        grid-template-columns: 1fr; /* 화면이 더 작아질 경우 한 줄에 하나씩 배치 */
+@media screen and (max-width: 1200px) {
+    .customer-overview-container {
+      width: 1200px; /* 고정된 너비 유지 */  
     }
 }

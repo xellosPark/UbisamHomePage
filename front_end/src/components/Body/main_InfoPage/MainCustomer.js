@@ -1,7 +1,7 @@
 import React from 'react';
 import './MainCustomer.css'; // CSS 파일 연결
 import { FaCheckCircle } from 'react-icons/fa'; // 체크 아이콘을 사용하기 위해 react-icons 패키지 사용
-// import customerImage from '../../../images/customer_image.png'; // 고객 이미지 불러오기
+import customerImage from '../../../images/image/MainCustomer.png'; // 고객 이미지 불러오기
 
 const MainCustomer = () => {
 
@@ -24,12 +24,9 @@ const MainCustomer = () => {
 
       {/* 메인 고객 이미지를 8개 보여주는 섹션 */}
       <div className="customer-overview-content">
-        {[...Array(8)].map((_, index) => (
-          <div key={index} className="customer-item">
-            {/* <img src={customerImage} alt={`Customer ${index + 1}`} className="customer-image" /> 고객 이미지 */}
-            <p className="customer-caption">고객 {index + 1}</p> {/* 고객 설명 */}
-          </div>
-        ))}
+        <div className="customer-item">
+          <img src={customerImage} alt="Customer" className="customer-image" /> 
+        </div>
       </div>
     </div>
   );

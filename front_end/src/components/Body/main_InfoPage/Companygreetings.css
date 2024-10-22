@@ -95,3 +95,11 @@ strong {
   text-align: right; /* 우측 정렬 */
   margin-top: 2rem;
 }
+
+/* 레이아웃 축소 방지 */
+@media screen and (max-width: 1200px) {
+  .company-greetings-container {
+    width: 1200px; /* 고정된 너비 유지 */
+    padding: 0 20px;
+  }
+}

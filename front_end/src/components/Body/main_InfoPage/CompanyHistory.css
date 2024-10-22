@@ -144,3 +144,11 @@
   font-size: 1.2rem; /* 점 크기 설정 */
   color: #333; /* 점 색상 설정 */
 }
+
+/* 레이아웃 축소 방지 */
+@media screen and (max-width: 1200px) {
+  .history-container {
+    width: 1200px; /* 고정된 너비 유지 */
+    padding: 0 20px;
+  }
+}
