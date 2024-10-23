@@ -1,0 +1,55 @@
+/* 컴포넌트 전체 컨테이너 스타일 */
+.map-url-generator-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+/* 상단 제목 영역 스타일 */
+.map-url-generator-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* 제목 스타일 */
+.map-url-generator-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin-left: 10px;
+}
+
+/* 체크 아이콘 스타일 */
+.check-icon {
+    color: #2eb872;
+    font-size: 1.8rem;
+}
+
+/* 버튼 스타일 */
+.map-button {
+    background-color: #2eb872;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+/* 버튼 호버 효과 */
+.map-button:hover {
+    background-color: #249760;
+}
+
+/* 버튼들을 감싸는 레이아웃 스타일 */
+.map-tools {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}

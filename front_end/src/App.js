@@ -13,6 +13,7 @@ import OrganizationIntroduction from './components/Body/main_InfoPage/Organizati
 import Patent from './components/Body/main_InfoPage/Patent';
 import MainCustomer from './components/Body/main_InfoPage/MainCustomer';
 import ContentWithImages from './components/Body/main_InfoPage/ContentWithImages';
+import MapUrlGenerator from './components/Body/main_InfoPage/MapUrlGenerator';
 
 const MainContent = () => {  // 각 섹션에 대한 ref 선언
   const greetingsRef = useRef(null);         // 인사말 섹션 참조
@@ -131,6 +132,7 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
 
           {/* 찾자오는길 */}
           <div ref={ContentWithImagesRef} id="ContentWithImages" style={{ marginTop: '10px' }}>
+            {/* <MapUrlGenerator /> */}
             <ContentWithImages />
           </div>
         </>

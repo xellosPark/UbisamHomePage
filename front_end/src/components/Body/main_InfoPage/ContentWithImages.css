@@ -105,17 +105,36 @@
 
 /* 지도 컨테이너 스타일 */
 .map-container {
-  width: 600px;
+  width: 550px;
   height: 300px;
   display: block;
-  margin: 0 auto;
+  margin: 40px 10px 10px 0px;
 }
 
-/* 지도 하단 툴바 스타일 */
 .map-tools {
-  text-align: left;
-  font-size: 14px;
-  margin-top: 5px;
+  display: flex;
+  justify-content: space-between; /* 요소 간에 공간을 분배 */
+  align-items: center; /* 세로 중앙 정렬 */
+  padding: 10px;
+  margin-right: 30px;
+}
+
+.map-subbut {
+  display: flex;
+  justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+  gap: 10px; /* 버튼 간격 설정 */
+}
+
+.map-subbut button {
+  padding: 10px 15px; /* 버튼에 패딩 적용 */
+  background-color: white; /* 버튼 배경색 설정 */
+  border: 1px solid #ddd; /* 버튼 테두리 설정 */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.map-subbut button:hover {
+  background-color: #e0e0e0; /* 마우스 호버 시 배경색 변경 */
 }
 
 .tool-label {
