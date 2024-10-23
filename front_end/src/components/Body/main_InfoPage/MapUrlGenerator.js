@@ -4,10 +4,23 @@ import { FaCheckCircle } from 'react-icons/fa'; // 체크 아이콘을 불러옵
 
 const MapUrlGenerator = () => {
     // 가산 A1 타워의 기본 위도와 경도를 상태값으로 정의합니다.
-    const [latitude, setLatitude] = useState(37.480);   // 가산 A1 타워의 위도
-    const [longitude, setLongitude] = useState(126.87791); // 가산 A1 타워의 경도
+    // const [latitude, setLatitude] = useState(37.480);   // 가산 A1 타워의 위도
+    // const [longitude, setLongitude] = useState(126.87791); // 가산 A1 타워의 경도
 
-    // 안전하게 길찾기 URL을 생성하는 함수입니다.
+    //  위치의 위도: 36.15077275876612, 경도: 128.44280770441802
+    //  위치의 위도: 36.15054498410671, 경도: 128.4430146408213
+    //  위치의 위도: 36.150817269538784, 경도: 128.44285296409822
+    //  위치의 위도: 36.15056460907705, 경도: 128.44288166817537
+    //  위치의 위도: 36.150689667533236, 경도: 128.44297284770875
+
+  // 파주지사 좌표 (위도, 경도)
+  // 클릭한 위치의 위도: 37.8114953726438, 경도: 126.77778280514735
+    const pajuLatitude = 37.8114953726438;
+    const pajuLongitude = 126.77778280514735;
+    const [latitude, setLatitude] = useState(pajuLatitude);   
+    const [longitude, setLongitude] = useState(pajuLongitude);
+
+    //  길찾기 URL을 생성하는 함수입니다.
     const generateDirectionUrl = (pharmacyName, lat, lng) => {
         const baseUrl = 'https://map.kakao.com/link/map/';
         const params = `${pharmacyName},${lat},${lng}`;
@@ -15,10 +28,11 @@ const MapUrlGenerator = () => {
         console.log('Generated Direction URL:', url); // 생성된 URL을 로그로 출력
         return url;
     };
+    
 
     // 안전하게 로드뷰 URL을 생성하는 함수입니다.
     const generateRoadViewUrl = (lat, lng) => {
-        const baseUrl = 'https://map.kakao.com/?map_type=TYPE_MAP&map_attribute=ROADVIEW&panoid=1183968051&pan=276.1&tilt=-5.3&zoom=0&urlLevel=4&urlX=473206&urlY=1105823&q=%EA%B0%80%EC%82%B0%EC%96%B4%EB%B0%98%EC%9B%8C%ED%81%AC1';
+        const baseUrl = 'https://map.kakao.com/link/roadview/'; // 카카오 지도 로드뷰 기본 URL
         const url = `${baseUrl}${lat},${lng}`; // 위도와 경도를 연결하여 로드뷰 URL 생성
         console.log('Generated Road View URL:', url); // 생성된 URL을 로그로 출력
         return url;

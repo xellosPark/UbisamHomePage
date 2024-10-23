@@ -1,19 +1,124 @@
 .control-solution-container {
-    padding: 20px;
-    background-color: #e8f5e9; /* 밝은 녹색 배경 */
-    border-radius: 10px;
-    max-width: 800px;
-    margin: 20px auto;
-    text-align: center;
+  padding: 1rem;
+  background-color: white;
+  max-width: 1200px; /* 최대 너비를 1200px로 고정 */
+  margin: 0 auto; /* 중앙 정렬 */
+  position: relative;
+  overflow: hidden; /* 오버플로 방지 */
+  }
+  
+  /* 상단 제목 */
+  .control-solution-overview-header {
+    display: flex;
+    align-items: center; /* 수직으로 중앙 정렬 */
+    border-bottom: 1px solid #333232; /* 헤더 하단에 회색 선 추가 */
+    padding: 10px; /* 헤더 내부 여백 */
+    max-width: 1200px; /* 최대 너비를 1200px로 고정 */
+    height: 64px; /* 높이를 64px로 고정 */
+    margin: 0 auto; /* 가운데 정렬 */
+  }
+  
+  .check-icon {
+    color: #2eb872; /* 아이콘 색상 설정 */
+    font-size: 1.5rem; /* 아이콘 크기 설정 */
+    margin-right: 0.5rem; /* 아이콘과 제목 사이의 간격 */
   }
   
   .control-solution-title {
     font-size: 2rem;
-    color: #1b5e20; /* 진한 녹색 */
-    margin-bottom: 10px;
+    color: #333;
+    margin: 0; /* 기본 마진 제거 */
+  }
+
+  .top-link {
+    font-size: 0.9rem; /* 링크의 폰트 크기 */
+    color: #555; /* 링크 색상 */
+    text-decoration: none; /* 링크의 기본 밑줄 제거 */
+    position: absolute; /* 오른쪽 끝에 고정하기 위해 absolute 사용 */
+    right: 40px; /* 화면의 오른쪽에서 40px 떨어진 위치 */
+    font-size: 18px; /* 링크의 폰트 크기를 18px로 설정 */
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
   }
   
-  .control-solution-description {
-    font-size: 1.2rem;
-    color: #2e7d32; /* 짙은 녹색 */
+  .solution-button {
+    background-color: white;
+    width: 300px;
+    border: none;
+    padding: 10px 0px;
+    color: #222;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
   }
+  
+  .solution-button:hover {
+    color: #ffa07a;
+  }
+
+  .solution-button.active {
+    background-color: #ffa07a; /* 선택된 버튼의 배경색 */
+    color: white; /* 선택된 버튼의 텍스트 색상 */
+  }
+/* 콘텐츠 레이아웃 설정 */
+.content-layout {
+  padding: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 상단 섹션 */
+.top-section h2 {
+  font-size: 2rem;
+  color: #1f3a87;
+  margin-bottom: 0px;
+}
+
+.top-section p {
+  font-size: 1.1rem;
+  
+}
+
+/* 이미지와 텍스트 나란히 배치 */
+.content-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px; /* 이미지와 리스트 간격 */
+}
+
+.framework-image {
+  max-width: 300px; /* 이미지 크기 고정 */
+  height: auto;
+}
+
+.content-inner ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+/* Framework architecture 섹션 */
+.framework-section h3 {
+  font-size: 1.8rem;
+  color: #d35400;
+  margin-top: 30px;
+}
+
+.framework-section img {
+  width: 100%;
+  max-width: 800px; /* 최대 너비를 800px로 제한 */
+  margin-top: 20px;
+}
+
+.small-text {
+  font-size: 1rem; /* 글자 크기를 작게 설정 */
+  color: #333; /* 검정색으로 설정 */
+  font-weight: normal; /* 굵기 조정 */
+  margin-left: 10px;
+  
+}

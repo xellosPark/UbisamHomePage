@@ -48,8 +48,8 @@
 
 /* 이미지 설정 */
 .place-image {
-  width: 600px;
-  height: auto; /* 이미지 비율을 유지하면서 크기 조정 */
+  width:  600px;
+  height: 350px;
   margin-bottom: 5px; /* 이미지와 텍스트 간의 간격을 5px로 줄임 */
 }
 
@@ -106,9 +106,25 @@
 /* 지도 컨테이너 스타일 */
 .map-container {
   width: 550px;
-  height: 300px;
+  height: 350px;
   display: block;
-  margin: 40px 10px 10px 0px;
+  margin: 0px 10px 10px 0px;
+}
+
+.map-Gumicontainer {
+  width: 550px;
+  height: 350px;
+  display: block;
+  margin: 0px 10px 10px 0px;
+  border: solid 1px black;
+}
+
+.map-pajucontainer {
+  width: 550px;
+  height: 350px;
+  display: block;
+  margin: 0px 10px 10px 0px;
+  border: solid 1px black;
 }
 
 .map-tools {
