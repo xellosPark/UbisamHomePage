@@ -7,12 +7,13 @@ import step1Image from '../../../images/image/03_03.png';
 import step2Image from '../../../images/image/03_04.png';
 import step3Image from '../../../images/image/03_05.png';
 import step4Image from '../../../images/image/03_06.png';
-
 import step5Image from  '../../../images/image/03_07.png';
 import step6Image from  '../../../images/image/03_08.png';
 import step7Image from  '../../../images/image/03_09.png';
 import step8Image from  '../../../images/image/03_10.png';
 import step9Image from  '../../../images/image/03_11.png';
+import step10Image from  '../../../images/image/03_12.png';
+import step11Image from  '../../../images/image/03_13.png';
 
 
 const ControlSolution = () => {
@@ -31,6 +32,11 @@ const ControlSolution = () => {
 
   // 스크롤에 따른 버튼 상태 업데이트
   useEffect(() => {
+
+    const mcFrameworkNode = mcFrameworkRef.current;
+    const vmSimulatorNode = vmSimulatorRef.current;
+    const driversNode = driversRef.current;
+  
     const observerOptions = {
       root: null,
       rootMargin: '0px',
@@ -52,15 +58,16 @@ const ControlSolution = () => {
     }, observerOptions);
 
     // 각 섹션을 관찰
-    if (mcFrameworkRef.current) observer.observe(mcFrameworkRef.current);
-    if (vmSimulatorRef.current) observer.observe(vmSimulatorRef.current);
-    if (driversRef.current) observer.observe(driversRef.current);
+    if (mcFrameworkNode) observer.observe(mcFrameworkNode);
+    if (vmSimulatorNode) observer.observe(vmSimulatorNode);
+    if (driversNode) observer.observe(driversNode);
 
     return () => {
       // 컴포넌트 언마운트 시 observer 해제
-      if (mcFrameworkRef.current) observer.unobserve(mcFrameworkRef.current);
-      if (vmSimulatorRef.current) observer.unobserve(vmSimulatorRef.current);
-      if (driversRef.current)     observer.unobserve(driversRef.current);
+      // Cleanup observer when component is unmounted
+      if (mcFrameworkNode) observer.unobserve(mcFrameworkNode);
+      if (vmSimulatorNode) observer.unobserve(vmSimulatorNode);
+      if (driversNode) observer.unobserve(driversNode);
     };
   }, []);
 
@@ -103,7 +110,6 @@ const ControlSolution = () => {
                   Drivers
                 </button>
               </div>
-
 
               <div className="top-section">
                 <h2>
@@ -152,7 +158,7 @@ const ControlSolution = () => {
                   <div className="step-item">
                     <p>Step 2: Apply action ( Draw action flows and script commands )</p>
                     <div className="step-content">
-                      <img src={step2Image} alt="Step 2" />
+                      <img src={step2Image} alt="Step 2" className="step-image" />
                       <ul>
                         <li>Open Architecture - 100% Embracement of Customer Codes</li>
                       </ul>
@@ -162,11 +168,18 @@ const ControlSolution = () => {
                   <div className="step-item">
                     <p>Step 3: Attach UI/UX Controls</p>
                     <div className="step-content">
-                      <img src={step3Image} alt="Step 2" />
+                      <img src={step3Image} alt="Step 3" className="step-image"/>
                       <ul>
                         <li>Rapid Prototyping - Ready-Made UI/UX Controls</li>
                         <li>Familiar Environment - Fully Integrated Into VisualStudio™</li>
                       </ul>
+                    </div>
+                  </div>
+
+                  <div className="step-item">
+                    <p>Step 4: Build & Go!</p>
+                    <div className="step-content">
+                      <img src={step4Image} alt="Step 4" className="step-image2" />
                     </div>
                   </div>
                 </div>
@@ -239,8 +252,6 @@ const ControlSolution = () => {
 
           {/* Drivers 섹션 */}
           <div id="driversSection" ref={driversRef} style={{ marginTop: '50px' }}> {/* Drivers 섹션에 useRef 연결 */}
-            <div className="content-layout">
-
             <div className="button-group">
               <button
                 className={`solution-button ${activeButton === 'mcFramework' ? '' : ''}`}
@@ -262,13 +273,49 @@ const ControlSolution = () => {
               </button>
             </div>
 
-              <h2>Drivers - Machine Control Drivers</h2>
-              <p>장비 및 센서와의 연결을 위한 드라이버 패키지</p>
-              <img src={step2Image} alt="Step 2" className="framework-image" />
-              <ul>
-                <li>장비 간 데이터 통신</li>
-                <li>센서와의 연결을 위한 드라이버</li>
-              </ul>
+            <div className="content-layout">
+              <div className="top-section">
+                  <h2> Drivers - <span className="small-text">Equipment & Host interface developing software kit </span> </h2>
+                  <p>SEMI 표준인 반도체 장비 통신 표준(Semiconductor Equipment Communication Standard)을 간단하고 쉽게 개발할 수 있도록 도와 주는 소프트웨어 개발 킷</p>
+              </div>
+
+              <div className="framework-section">
+                <h3><span className="red-symbol">▨</span> ubiCom.net</h3>
+                <p>반도체 제조 장비의 표준 통신 프로토콜인 SECS/HSMS을 지원하는 통신 드라이버 솔루션</p>
+              </div>
+
+              <img src={step10Image} alt="Step 10" className="step-image2" />
+              <div className="gui-environment">
+                <ul>
+                  <li>손쉬운 GUI 환경</li>
+                  <ul>
+                    <li>통신 설정 지원</li>
+                    <li>SECS 메시지 드래그 & 드롭 구성</li>
+                  </ul>
+                  <li> SEMI 표준 메시지 구조 템플릿 제공</li>
+                  <li> 래퍼 생성 기능</li>
+                  <ul>
+                    <li>메시지 구조 기반 래퍼 생성 -{'>'} 생산성 향상</li>
+                    <li>(.net, C++/CLI, 네이티브 C++ 지원)</li>
+                  </ul>
+                </ul>
+              </div>
+
+              <div className="framework-section">
+                <h3><span className="red-symbol">▨</span>  ubiCom.net Simulator</h3>
+                <p>ubiCom.net을 이용하여 통신 software 개발을 위해 활용할 수 있는 Host 및 장비 통신 simulator</p>
+              </div>
+              <img src={step11Image} alt="Step 11" className="step-image2" />
+              <div className="gui-environment">
+                <ul>
+                  <li>손쉬운 GUI 통신 설정 환경 지원</li>
+                  <li>간편한 Message Structure 수정 기능</li>
+                </ul>
+              </div>
+              <div className="framework-section">
+                <h3><span className="red-symbol">▨</span>  ubiGem.net</h3>
+                <p>SECS-GEM 프로토콜을 지원하는 일반 제조장비용 통신 드라이버 솔루션</p>
+              </div>
             </div>
           </div>
         </div>
