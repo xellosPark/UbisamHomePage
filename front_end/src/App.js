@@ -66,7 +66,7 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
       } else if (location.hash === '#MainCustomer' && MainCustomerRef.current) {
         MainCustomerRef.current.scrollIntoView({ behavior: 'smooth' }); // 주요고객
       } else if (location.hash === '#ContentWithImages' && ContentWithImagesRef.current) {
-        ContentWithImagesRef.current.scrollIntoView({ behavior: 'smooth' }); // 주요고객
+        ContentWithImagesRef.current.scrollIntoView({ behavior: 'smooth' }); // 찾자는 오는 길
 
         
 
