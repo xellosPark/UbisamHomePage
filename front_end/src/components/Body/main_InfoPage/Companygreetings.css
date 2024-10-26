@@ -12,17 +12,17 @@
   display: flex;
   align-items: center; /* 수직 정렬 */
   border-bottom: 1px solid #959292; /* 하단에 회색 선 */
-  
   max-width: 1200px; /* 최대 너비 1200px */
   height: 64px; /* 고정 높이 */
   margin: 0; /* 중앙 정렬 해제 */
   
 }
 
-.check-icon {
+.company-greetings-check-icon {
   color: #2eb872;
   font-size: 1.5rem; /* 아이콘 크기 */
   margin-right: 0.5rem; /* 아이콘과 제목 사이 여백 */
+  margin-bottom: 3px;
 }
 
 .company-greetings-title {

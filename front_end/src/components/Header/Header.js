@@ -84,11 +84,12 @@ const Header = () => {
             onMouseEnter={() => handleMouseEnter('production')}
             onMouseLeave={handleMouseLeave}
           >
-            <Link to="/production" className="nav_title">생산정보시스템</Link>
+            {/* <Link to="/production" className="nav_title">생산정보시스템</Link> */}
+            <li><span onClick={() => handleNavigate('Production-Information-System')}            className="nav_title">생산정보시스템</span></li>
             {hoveredMenu === 'production' && (
               <div className="dropdown">
-                <li><Link to="/" class="menu-item" >자동화솔루션</Link></li>
-                <li><Link to="/" class="menu-item" >자동화사업실적</Link></li>
+                <li><span onClick={() => handleNavigate('Automation-Solutions')}                  className="menu-item">자동화솔루션</span></li>
+                <li><span onClick={() => handleNavigate('Automation-business-performanceRef')}    className="menu-item">자동화사업실적</span></li>
               </div>
             )}
           </li>

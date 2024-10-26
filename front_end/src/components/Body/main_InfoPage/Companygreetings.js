@@ -15,7 +15,7 @@ const CompanyGreetings = () => {
     return (
         <div className="company-greetings-container">
             <div className="company-greetings-header">
-                <FaCheckCircle className="check-icon" /> {/* 체크 아이콘 */}
+                <FaCheckCircle className="company-greetings-check-icon" /> {/* 체크 아이콘 */}
                 <h1 className="company-greetings-title">인사말</h1>
                  {/* href="#top" 삭제하고 onClick만 사용 */}
                  <button className="top-link" onClick={scrollToTop}>Top</button> {/* "Top" 버튼 클릭 시 scrollToTop 함수 호출 */} 

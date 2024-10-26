@@ -1,0 +1,81 @@
+ .automation-solution-overview-container {
+    padding: 1rem;
+    background-color: white;
+    max-width: 1200px; /* 최대 너비를 1200px로 고정 */
+    margin: 0 auto; /* 중앙 정렬 */
+    position: relative;
+    overflow: hidden; /* 오버플로 방지 */
+  }
+  
+  /* 상단 제목 */
+  .automation-solution-overview-header {
+    display: flex;
+    align-items: center; /* 수직으로 중앙 정렬 */
+    border-bottom: 1px solid #333232; /* 헤더 하단에 회색 선 추가 */
+    padding: 10px; /* 헤더 내부 여백 */
+    max-width: 1200px; /* 최대 너비를 1200px로 고정 */
+    height: 64px; /* 높이를 64px로 고정 */
+    margin: 0 auto; /* 가운데 정렬 */
+  }
+  
+  .check-icon {
+    color: #2eb872; /* 아이콘 색상 설정 */
+    font-size: 1.5rem; /* 아이콘 크기 설정 */
+    margin-right: 0.5rem; /* 아이콘과 제목 사이의 간격 */
+    margin-top: 20px;
+  }
+  
+  .control-solution-title {
+    font-size: 2rem;
+    color: #333;
+    margin: 0; /* 기본 마진 제거 */
+  }
+  
+  .top-link {
+    font-size: 0.9rem; /* 링크의 폰트 크기 */
+    color: #555; /* 링크 색상 */
+    text-decoration: none; /* 링크의 기본 밑줄 제거 */
+    position: absolute; /* 오른쪽 끝에 고정하기 위해 absolute 사용 */
+    right: 40px; /* 화면의 오른쪽에서 40px 떨어진 위치 */
+    font-size: 18px; /* 링
+    크의 폰트 크기를 18px로 설정 */
+  }
+
+  .top-section ul{
+    margin-top: -25px;
+  }
+
+    /* Framework architecture 섹션 */
+.framework-section h3 {
+    font-size: 1.8rem;
+    color: #222;
+    margin-top: 30px;
+  }
+  
+  .framework-section p {
+    margin-top: -25px;
+  }
+  
+  .framework-section img {
+    width: 800px;
+    max-width: 1200px; /* 최대 너비를 800px로 제한 */
+    margin-left: 50px;
+    margin-top: -5px;
+  }
+  
+  .framework-section ul {
+    margin-bottom: 10px;
+  }
+  
+  .framework-section ul li {
+    margin-bottom: 3px;
+    margin-right: 10px;
+  }
+
+    /* 레이아웃 축소 방지 */
+@media screen and (max-width: 1200px) {
+    .automation-solution-overview-container {
+      width: 1200px; /* 고정된 너비 유지 */
+      padding: 0 20px;
+    }
+  }

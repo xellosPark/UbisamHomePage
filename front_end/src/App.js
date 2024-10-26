@@ -13,11 +13,13 @@ import OrganizationIntroduction from './components/Body/main_InfoPage/Organizati
 import Patent from './components/Body/main_InfoPage/Patent';
 import MainCustomer from './components/Body/main_InfoPage/MainCustomer';
 import ContentWithImages from './components/Body/main_InfoPage/ContentWithImages';
+import Automationbusinessperformance from './components/Body/main-ProductionInformationSystem/Automationbusinessperformance';
+import AutomationSolution from './components/Body/main-ProductionInformationSystem/AutomationSolution';
 // import MapUrlGenerator from './components/Body/main_InfoPage/MapUrlGenerator';
 
 const MainContent = () => {  // 각 섹션에 대한 ref 선언
   const greetingsRef = useRef(null);         // 인사말 섹션 참조
-  const greetingRef = useRef(null);          // 회사소개 타이틀
+  //const greetingRef = useRef(null);          // 회사소개 타이틀
   const businessOverviewRef = useRef(null);  // 사업개요 섹션 참조
   const historyRef = useRef(null);           // 회사연혁 섹션 참조
   const OrganizationIntroductionRef = useRef(null); // 조직 소개
@@ -25,10 +27,14 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
   const MainCustomerRef = useRef(null);       // 주요 고객
   const ContentWithImagesRef = useRef(null);  // 찾자오시는길
 
-  const equipmentsystemRef = useRef(null);   // 장비제어시스템
   const controlSolutionRef = useRef(null);   // 제어 솔루션 섹션 참조
   const controlBusinessPerformanceRef = useRef(null); // 제어 사업 성과 섹션 참조
+  
+  const AutomationSolutionRef = useRef(null); //자동화솔루션
+  const AutomationbusinessperformanceRef = useRef(null); //자동화 사업 실적   
+  
   const location = useLocation();            // 현재 경로 감지
+  
 
 
   const [isLoaded, setIsLoaded] = useState(false); // 컴포넌트 렌더링 플래그
@@ -52,7 +58,10 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
       if (location.hash === '#greeting') {
         window.scrollTo({ top: 0, behavior: 'smooth' });  
       } else if (location.hash === '#equipment-system') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });  
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (location.hash === '#Production-Information-System') {
+        window.scrollTo({ top: 0, behavior: 'smooth' }); 
+
       } else if (location.hash === '#greetings' && greetingsRef.current) {
         greetingsRef.current.scrollIntoView({ behavior: 'smooth' }); // 인사말 섹션으로 스크롤
       } else if (location.hash === '#businessOverview' && businessOverviewRef.current) {
@@ -74,8 +83,14 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
         controlSolutionRef.current.scrollIntoView({ behavior: 'smooth' }); // 제어솔루션 섹션으로 스크롤
       } else if (location.hash === '#control-BusinessPerformance' && controlBusinessPerformanceRef.current) {
         controlBusinessPerformanceRef.current.scrollIntoView({ behavior: 'smooth' }); // 제어 사업 성과 섹션으로 스크롤
+      
+      } else if (location.hash === '#Automation-Solutions' && AutomationSolutionRef.current) {
+        AutomationSolutionRef.current.scrollIntoView({ behavior: 'smooth' }); // 자동화 솔루션
+      } else if (location.hash === '#Automation-business-performanceRef' && AutomationbusinessperformanceRef.current) {
+        AutomationbusinessperformanceRef.current.scrollIntoView({ behavior: 'smooth' }); // 자동화사업부실적
+      
+        
       }
-
     }
   }, [isLoaded, location.hash]); // isLoaded와 location.hash에 의존
 
@@ -149,6 +164,22 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
             {/* 제어 사업 성과 섹션 */}
             <div ref={controlBusinessPerformanceRef} id="control-BusinessPerformance" style={{ marginTop: '10px' }}>
               <ControlBusinessPerformance />
+            </div>
+          </>
+        )}
+
+      {location.hash !== '' &&
+        (location.hash === '#Production-Information-System' || location.hash === '#Automation-Solutions' || location.hash === '#Automation-business-performanceRef') 
+        && (
+          <>
+            {/* 자동화 솔루션 */}
+            <div ref={AutomationSolutionRef} id="Automation-Solutions" style={{ marginTop: '10px' }}>
+              <AutomationSolution />
+            </div>
+
+            {/* 자동화 사업 실적 */}
+            <div ref={AutomationbusinessperformanceRef} id="Automation-business-performanceRef" style={{ marginTop: '10px' }}>
+              <Automationbusinessperformance />
             </div>
           </>
         )}
