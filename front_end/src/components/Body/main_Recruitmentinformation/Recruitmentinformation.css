@@ -1,0 +1,73 @@
+.recruitment-overview-container {
+  padding: 1rem;
+  background-color: white;
+  max-width: 1200px;          /* 최대 너비를 1200px로 고정 */
+  margin: 0 auto;             /* 중앙 정렬 */
+  position: relative;
+  overflow: hidden;           /* 오버플로 방지 */
+}
+
+  /* 상단 제목 */
+  .recruitment-overview-header {
+  display: flex;
+  align-items: center; /* 수직으로 중앙 정렬 */
+  border-bottom: 1px solid #333232; /* 헤더 하단에 회색 선 추가 */
+  padding: 10px; /* 헤더 내부 여백 */
+  max-width: 1200px; /* 최대 너비를 1200px로 고정 */
+  height: 64px; /* 높이를 64px로 고정 */
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+.check-icon {
+  color: #2eb872; /* 아이콘 색상 설정 */
+  font-size: 1.5rem; /* 아이콘 크기 설정 */
+  margin-right: 0.5rem; /* 아이콘과 제목 사이의 간격 */
+}
+
+.top-link {
+  font-size: 0.9rem; /* 링크의 폰트 크기 */
+  color: #555; /* 링크 색상 */
+  text-decoration: none; /* 링크의 기본 밑줄 제거 */
+  position: absolute; /* 오른쪽 끝에 고정하기 위해 absolute 사용 */
+  right: 40px; /* 화면의 오른쪽에서 40px 떨어진 위치 */
+  font-size: 18px; /* 링크의 폰트 크기를 18px로 설정 */
+}
+  
+.top-link:hover {
+  text-decoration: underline; /* 마우스 호버 시 밑줄 표시 */
+}
+
+/* 소개 텍스트를 위한 컨테이너 */
+.intro-text {
+    color: #999999; /* 일반 텍스트 색상 */
+    line-height: 1.5; /* 줄 간격 */
+    font-family: 'Arial', sans-serif; /* 폰트 설정 */
+    text-align: left; /* 왼쪽 정렬 */
+    margin: 30px 0; /* 위아래 여백 */
+}
+
+.intro-text p {
+  font-size: 25px;
+}
+
+/* 굵은 텍스트 스타일 */
+.intro-text strong {
+    font-weight: bold; /* 글자 굵기 강조 */
+    color: #333333; /* 강조를 위한 어두운 색상 */
+}
+
+/* 이미지 중앙 정렬 */
+.RecruitmentInformation-image {
+  display: block;
+  margin: auto;            /* 가로 중앙 정렬 */
+  max-width: 100%;           /* 반응형으로 이미지가 컨테이너에 맞게 조정됨 */
+}
+
+    /* 레이아웃 축소 방지 */
+@media screen and (max-width: 1200px) {
+.recruitment-container {
+  width: 1200px; /* 고정된 너비 유지 */
+  padding: 0 20px;
+}
+
+}

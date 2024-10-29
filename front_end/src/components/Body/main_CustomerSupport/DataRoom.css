@@ -1,0 +1,98 @@
+/* Container */
+.data-room-container {
+    padding: 1rem;
+    background-color: white;
+    max-width: 1200px; /* 최대 너비를 1200px로 고정 */
+    margin: 0 auto; /* 중앙 정렬 */
+    position: relative;
+    overflow: hidden; /* 오버플로 방지 */
+  }
+  
+  /* Header */
+  .data-room-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .icon {
+    color: #2eb872;
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  /* Total info text */
+  .total-info {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+  }
+  
+  /* Table */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+  }
+  
+  .data-table th, .data-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: solid 1px #ddd;
+  }
+  
+  .data-table th {
+    background-color: #E5ECEF;
+    color: #333;
+    font-weight: bold;
+   
+  }
+  
+  .heart-icon, .file-icon {
+    color: #ff5a5a;
+    font-size: 0.9rem;
+    margin-left: 0.3rem;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center-align the search bar horizontally */
+    gap: 0.5rem;
+    margin-top: 1rem; /* Add some margin at the top for spacing */
+  }
+  
+  .search-category {
+    padding: 7px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    margin-right: 0.5rem;
+  }
+  
+  .search-input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    width: 200px;
+    margin-right: 0.5rem;
+  }
+  
+  .search-button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #ff5a5f;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .search-button:hover {
+    background-color: #e04a4f;
+  }

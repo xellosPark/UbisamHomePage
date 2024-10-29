@@ -1,0 +1,131 @@
+/* 전체 컨테이너 스타일 */
+.introduction-welfare-container {
+  padding: 1rem;
+  background-color: white;
+  max-width: 1200px;          /* 최대 너비를 1200px로 고정 */
+  margin: 0 auto;             /* 중앙 정렬 */
+  position: relative;
+  overflow: hidden;           /* 오버플로 방지 */
+}
+
+  /* 상단 제목 */
+.introduction-overview-header {
+  display: flex;
+  align-items: center; /* 수직으로 중앙 정렬 */
+  border-bottom: 1px solid #333232; /* 헤더 하단에 회색 선 추가 */
+  padding: 10px; /* 헤더 내부 여백 */
+  max-width: 1200px; /* 최대 너비를 1200px로 고정 */
+  height: 64px; /* 높이를 64px로 고정 */
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+.body-list{
+  background-image: url('../../../images/image/recruit.png'); 
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 800px;
+}
+
+.body-list li{
+  padding: 5px;
+}
+
+.check-icon {
+  color: #2eb872; /* 아이콘 색상 설정 */
+  font-size: 1.5rem; /* 아이콘 크기 설정 */
+  margin-right: 0.5rem; /* 아이콘과 제목 사이의 간격 */
+}
+
+.top-link {
+  font-size: 0.9rem; /* 링크의 폰트 크기 */
+  color: #555; /* 링크 색상 */
+  text-decoration: none; /* 링크의 기본 밑줄 제거 */
+  position: absolute; /* 오른쪽 끝에 고정하기 위해 absolute 사용 */
+  right: 40px; /* 화면의 오른쪽에서 40px 떨어진 위치 */
+  font-size: 18px; /* 링크의 폰트 크기를 18px로 설정 */
+}
+  
+.top-link:hover {
+  text-decoration: underline; /* 마우스 호버 시 밑줄 표시 */
+}
+
+.benefits-list {
+  color: #333;
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.benefits-list li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.circle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.large {
+  background-color: #62a4f3;
+  width: 150px;
+  height: 150px;
+}
+
+.medium {
+  background-color: #66cda6;
+  width: 120px;
+  height: 120px;
+}
+
+.small {
+  background-color: #8bcaf3;
+  width: 100px;
+  height: 100px;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.footer-item {
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  border-radius: 50%;
+  background-color: #f6f6f6;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 레이아웃 축소 방지 */
+@media screen and (max-width: 1200px) {
+.recruitment-container {
+  width: 1200px; /* 고정된 너비 유지 */
+  padding: 0 20px;
+}
+}

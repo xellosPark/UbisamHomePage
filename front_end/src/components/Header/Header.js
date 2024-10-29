@@ -94,16 +94,17 @@ const Header = () => {
             )}
           </li>
 
-          {/* 리쿠르트 */}
+          {/* 채용 정보 */}
           <li
             onMouseEnter={() => handleMouseEnter('recruit')}
             onMouseLeave={handleMouseLeave}
           >
-            <Link to="/recruit" className="nav_title">리쿠르트</Link>
+            <li><span onClick={() => handleNavigate('Recruitment-Information-System')} className="nav_title">채용정보</span></li>
             {hoveredMenu === 'recruit' && (
               <div className="dropdown">
-                <li><Link to="/" class="menu-item" >채용안내</Link></li>
-                <li><Link to="/" class="menu-item" >복지소개</Link></li>
+                {/* <li><Link to="/" class="menu-item" >채용안내</Link></li> */}
+                <li><span onClick={() => handleNavigate('Recruitment-Information')} className="menu-item">채용안내</span></li>
+                <li><span onClick={() => handleNavigate('Introductiontowelfare')}   className="menu-item">복지소개</span></li>
               </div>
             )}
           </li>
@@ -114,10 +115,11 @@ const Header = () => {
             onMouseLeave={handleMouseLeave}
           >
             <Link to="/support" className="nav_title">고객지원</Link>
+            {/* <li><span onClick={() => handleNavigate('Customer-Support-System')} className="nav_title">고객지원</span></li> */}
             {hoveredMenu === 'support' && (
               <div className="dropdown">
-                <li><Link to="/" class="menu-item" >공지사항 / 뉴스</Link></li>
-                <li><Link to="/" class="menu-item" >자료실</Link></li>
+                <li><Link to="/support" class="menu-item" >공지사항 / 뉴스</Link></li>
+                <li><Link to="/DataRoom" class="menu-item" >자료실</Link></li>
                 <li><Link to="/" class="menu-item" >Q & A</Link></li>
               </div>
             )}

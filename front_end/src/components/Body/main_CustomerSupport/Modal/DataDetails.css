@@ -1,0 +1,52 @@
+
+/* DataDetails.css */
+.data-detail-container {
+    padding: 1rem;
+    background-color: white;
+    max-width: 1200px; /* 최대 너비를 1200px로 고정 */
+    margin: 0 auto; /* 중앙 정렬 */
+    position: relative;
+    overflow: hidden; /* 오버플로 방지 */
+}
+.data-room-header{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.data-detail-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.data-detail-info {
+    display: flex;              /* Enable flexbox */
+    font-size: 1rem;
+    color: #666;
+    gap: 15px;                  /* Adds space between each item */
+}
+
+/* Style for each info element */
+.data-detail-info p {
+    margin: 0;                  /* Remove default margin */
+    white-space: nowrap;        /* Prevent text from wrapping */
+}
+  
+  .back-button {
+    background-color: #555;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    border-radius: 4px;
+  }
+  
+  .item-description {
+    margin-top: 20px;
+    line-height: 1.6;
+  }

@@ -15,23 +15,31 @@ import MainCustomer from './components/Body/main_InfoPage/MainCustomer';
 import ContentWithImages from './components/Body/main_InfoPage/ContentWithImages';
 import Automationbusinessperformance from './components/Body/main-ProductionInformationSystem/Automationbusinessperformance';
 import AutomationSolution from './components/Body/main-ProductionInformationSystem/AutomationSolution';
-// import MapUrlGenerator from './components/Body/main_InfoPage/MapUrlGenerator';
+import RecruitmentInformation from './components/Body/main_Recruitmentinformation/Recruitmentinformation';
+import IntroductionToWelfare from './components/Body/main_Recruitmentinformation/Introductiontowelfare';
+import Notice from './components/Body/main_CustomerSupport/Notice';
+import DataRoom from './components/Body/main_CustomerSupport/DataRoom';
+import DataDetails from './components/Body/main_CustomerSupport/Modal/DataDetails';
 
-const MainContent = () => {  // 각 섹션에 대한 ref 선언
-  const greetingsRef = useRef(null);         // 인사말 섹션 참조
+const MainContent = () => {                           // 각 섹션에 대한 ref 선언
+  const greetingsRef = useRef(null);                  // 인사말 섹션 참조
   //const greetingRef = useRef(null);          // 회사소개 타이틀
-  const businessOverviewRef = useRef(null);  // 사업개요 섹션 참조
-  const historyRef = useRef(null);           // 회사연혁 섹션 참조
-  const OrganizationIntroductionRef = useRef(null); // 조직 소개
-  const PatentRef = useRef(null);            //특허
-  const MainCustomerRef = useRef(null);       // 주요 고객
-  const ContentWithImagesRef = useRef(null);  // 찾자오시는길
+  const businessOverviewRef = useRef(null);           // 사업개요 섹션 참조
+  const historyRef = useRef(null);                    // 회사연혁 섹션 참조
+  const OrganizationIntroductionRef = useRef(null);   // 조직 소개
+  const PatentRef = useRef(null);                     // 특허
+  const MainCustomerRef = useRef(null);               // 주요 고객
+  const ContentWithImagesRef = useRef(null);          // 찾자오시는길
 
-  const controlSolutionRef = useRef(null);   // 제어 솔루션 섹션 참조
+  const controlSolutionRef = useRef(null);            // 제어 솔루션 섹션 참조
   const controlBusinessPerformanceRef = useRef(null); // 제어 사업 성과 섹션 참조
   
-  const AutomationSolutionRef = useRef(null); //자동화솔루션
+  const AutomationSolutionRef = useRef(null);            //자동화솔루션
   const AutomationbusinessperformanceRef = useRef(null); //자동화 사업 실적   
+
+  const RecruitmentInformationRef = useRef(null);  
+  const IntroductiontowelfareRef  = useRef(null);
+
   
   const location = useLocation();            // 현재 경로 감지
   
@@ -60,7 +68,11 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
       } else if (location.hash === '#equipment-system') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (location.hash === '#Production-Information-System') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (location.hash === '#Recruitment-Information-System') {
         window.scrollTo({ top: 0, behavior: 'smooth' }); 
+      } else if (location.hash === '#Customer-Support-System') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
 
       } else if (location.hash === '#greetings' && greetingsRef.current) {
         greetingsRef.current.scrollIntoView({ behavior: 'smooth' }); // 인사말 섹션으로 스크롤
@@ -89,8 +101,12 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
       } else if (location.hash === '#Automation-business-performanceRef' && AutomationbusinessperformanceRef.current) {
         AutomationbusinessperformanceRef.current.scrollIntoView({ behavior: 'smooth' }); // 자동화사업부실적
       
-        
+      } else if (location.hash === '#Recruitment-Information' && RecruitmentInformationRef.current) {
+        RecruitmentInformationRef.current.scrollIntoView({ behavior: 'smooth' }); // 자동화 솔루션
+      } else if (location.hash === '#Introductiontowelfare' && IntroductiontowelfareRef.current) {
+        IntroductiontowelfareRef.current.scrollIntoView({ behavior: 'smooth' }); // 자동화사업부실적
       }
+
     }
   }, [isLoaded, location.hash]); // isLoaded와 location.hash에 의존
 
@@ -103,6 +119,12 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
             <Route path="/" element={<CompanyIntroduction />} />
             <Route path="/greetings" element={<CompanyGreetings />} />
             <Route path="/control-solution" element={ <ControlSolution />} />
+            <Route path="/Production-Information-System" element={ <AutomationSolution />} />
+            <Route path="/Recruitment-Information-System" element={ <RecruitmentInformation />} />
+            <Route path="/support" element={ <Notice />} />
+            <Route path="/DataRoom" element={ <DataRoom />} />
+            <Route path="/data-room/:id" element={<DataDetails />} />
+            
           </>
         )}
       </Routes> 
@@ -183,6 +205,30 @@ const MainContent = () => {  // 각 섹션에 대한 ref 선언
             </div>
           </>
         )}
+
+      {location.hash !== '' &&
+          (location.hash === '#Recruitment-Information-System' || location.hash === '#Recruitment-Information' || location.hash === '#Introductiontowelfare') 
+          && (
+            <>
+              {/* 자동화 솔루션 */}
+              <div ref={RecruitmentInformationRef} id="Recruitment-Information" style={{ marginTop: '10px' }}>
+                <RecruitmentInformation />
+              </div>
+
+              {/* 자동화 사업 실적 */}
+              <div ref={IntroductiontowelfareRef} id="IntroductiontowelfareRef" style={{ marginTop: '10px' }}>
+                <IntroductionToWelfare />
+              </div>
+            </>
+          )}
+
+        {location.hash !== '' &&
+          (location.hash === '#Customer-Support-System' || location.hash === '#' || location.hash === '#') 
+          && (
+            <>
+           
+            </>
+          )}
     </div>
   );
 };
