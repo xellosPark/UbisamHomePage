@@ -10,7 +10,7 @@
   /* 배너 이미지 스타일 */
   .banner-image {
     width: 100%; /* 전체 너비 */
-    max-height: 150px; /* 최대 높이 */
+    max-height: 350px; /* 최대 높이 */
     object-fit: cover; /* 이미지가 영역에 맞도록 조정 */
   }
   
@@ -19,5 +19,10 @@
     font-size: 1rem; /* 텍스트 크기 */
     margin: 10px 0; /* 텍스트 위아래 여백 */
     color: #333; /* 텍스트 색상 */
+  }
+
+  .company-name {
+    color: #2E97F6; /* (주)유비샘 색상 */
+    font-weight: bold; /* 굵게 강조 */
   }
   

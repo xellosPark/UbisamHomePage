@@ -21,8 +21,10 @@ const MobileBanner = () => {
   return (
     <div className="mobile-banner">
       <img src={images[currentIndex]} alt="Company Slideshow" className="slide-image" />
-      <p>LCD/반도체 장비 제어분야의 선도업체</p>
-      <p>(주)유비샘이 함께합니다.</p>
+      <p> 장비/시스템 제어분야의 선도업체</p>
+      <p className="banner-text">
+        <span className="company-name">(주)유비샘</span>이 함께합니다.
+      </p>
     </div>
   );
 };

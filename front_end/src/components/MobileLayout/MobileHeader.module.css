@@ -38,7 +38,7 @@
     background-color: #fff; /* 배경색 */
     position: absolute; /* 화면 상단 고정 */
     top: 60px; /* 헤더 아래 위치 */
-    width: 90%; /* 전체 너비 */
+    width: 98%; /* 전체 너비 */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
   }
   
