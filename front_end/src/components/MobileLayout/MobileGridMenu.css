@@ -1,0 +1,44 @@
+/* MobileGridMenu 스타일 */
+
+/* 그리드 메뉴 컨테이너 */
+.grid-menu {
+    display: grid; /* 그리드 레이아웃 */
+    grid-template-columns: repeat(2, 1fr); /* 2열 레이아웃 */
+    gap: 10px; /* 아이템 간 간격 */
+    padding: 20px; /* 내부 여백 */
+  }
+  
+  /* 그리드 아이템 스타일 */
+  .grid-item {
+    text-align: center; /* 텍스트 중앙 정렬 */
+    padding: 15px; /* 내부 여백 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    font-size: 0.9rem; /* 텍스트 크기 */
+    font-weight: bold; /* 텍스트 굵게 */
+    color: #fff; /* 글자색 흰색 */
+  }
+  
+  /* 각 그리드 아이템의 색상 */
+  .grid-item.intro {
+    background-color: #ffa500; /* 주황색 */
+  }
+  
+  .grid-item.recruit {
+    background-color: #ff5733; /* 빨간색 */
+  }
+  
+  .grid-item.control-system {
+    background-color: #007bff; /* 파란색 */
+  }
+  
+  .grid-item.info-system {
+    background-color: #28a745; /* 초록색 */
+  }
+  
+  .grid-item.resources {
+    background-color: #6c757d; /* 회색 */
+  }
+  
+  .grid-item.qa {
+    background-color: #ffc107; /* 노란색 */
+  }
