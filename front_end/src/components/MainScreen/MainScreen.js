@@ -36,12 +36,14 @@ const MainScreen = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setIsLoaded(false);
+    setIsLoaded(false);  // 경로가 변경되면 다시 false로 설정
+    
   }, [location]);
 
   useEffect(() => {
     if (!isLoaded) {
       setIsLoaded(true);
+      console.log('Current pathname: 위치', location.hash);
       if (location.hash === '#greeting') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (location.hash === '#greetings' && greetingsRef.current) {
@@ -87,6 +89,106 @@ const MainScreen = () => {
         <Route path="/DataRoom" element={<DataRoom />} />
         <Route path="/data-room/:id" element={<DataDetails />} />
       </Routes>
+
+    {/* 경로가 "/"가 아닐 때만 컴포넌트 렌더링 */}
+    { location.hash !== '' && 
+      ( location.hash === '#greeting' || location.hash === '#greetings' || location.hash === '#businessOverview' || location.hash === '#history' ||
+        location.hash === '#OrganizationIntroduction' || location.hash === '#Patent' || location.hash === '#MainCustomer' ||
+        location.hash === '#ContentWithImages' ) && (
+        <>
+          
+          {/* 인사말 섹션 */}
+          <div ref={greetingsRef} id="greetings" style={{ marginTop: '10px' }}>
+            <CompanyGreetings />
+          </div>
+
+          {/* 사업개요 섹션 */}
+          <div ref={businessOverviewRef} id="businessOverview" style={{ marginTop: '10px' }}>
+            <BusinessOverview />
+          </div>
+
+          {/* 회사연혁 섹션 */}
+          <div ref={historyRef} id="history" style={{ marginTop: '10px' }}>
+            <CompanyHistory />
+          </div>
+
+          {/* 조직 소개 */}
+          <div ref={OrganizationIntroductionRef} id="OrganizationIntroduction" style={{ marginTop: '10px' }}>
+            <OrganizationIntroduction />
+          </div>
+          
+          {/* 특허*/}
+          <div ref={PatentRef} id="PatentRef" style={{ marginTop: '10px' }}>
+            <Patent />
+          </div>
+
+          {/* 주요 고객 */}
+          <div ref={MainCustomerRef} id="MainCustomer" style={{ marginTop: '10px' }}>
+            <MainCustomer />
+          </div>
+
+          {/* 찾자오는길 */}
+          <div ref={ContentWithImagesRef} id="ContentWithImages" style={{ marginTop: '10px' }}>
+            {/* <MapUrlGenerator /> */}
+            <ContentWithImages />
+          </div>
+        </>
+      )}
+      
+      {location.hash !== '' &&
+        (location.hash === '#equipment-system' || location.hash === '#control-solution' || location.hash === '#control-BusinessPerformance') && (
+          <>
+            {/* 제어솔루션 섹션 */}
+            <div ref={controlSolutionRef} id="control-solution" style={{ marginTop: '10px' }}>
+              <ControlSolution />
+            </div>
+
+            {/* 제어 사업 성과 섹션 */}
+            <div ref={controlBusinessPerformanceRef} id="control-BusinessPerformance" style={{ marginTop: '10px' }}>
+              <ControlBusinessPerformance />
+            </div>
+          </>
+        )}
+
+      {location.hash !== '' &&
+        (location.hash === '#Production-Information-System' || location.hash === '#Automation-Solutions' || location.hash === '#Automation-business-performanceRef') 
+        && (
+          <>
+            {/* 자동화 솔루션 */}
+            <div ref={AutomationSolutionRef} id="Automation-Solutions" style={{ marginTop: '10px' }}>
+              <AutomationSolution />
+            </div>
+
+            {/* 자동화 사업 실적 */}
+            <div ref={AutomationbusinessperformanceRef} id="Automation-business-performanceRef" style={{ marginTop: '10px' }}>
+              <Automationbusinessperformance />
+            </div>
+          </>
+        )}
+
+      {location.hash !== '' &&
+          (location.hash === '#Recruitment-Information-System' || location.hash === '#Recruitment-Information' || location.hash === '#Introductiontowelfare') 
+          && (
+            <>
+              {/* 자동화 솔루션 */}
+              <div ref={RecruitmentInformationRef} id="Recruitment-Information" style={{ marginTop: '10px' }}>
+                <RecruitmentInformation />
+              </div>
+
+              {/* 자동화 사업 실적 */}
+              <div ref={IntroductiontowelfareRef} id="IntroductiontowelfareRef" style={{ marginTop: '10px' }}>
+                <IntroductionToWelfare />
+              </div>
+            </>
+          )}
+
+        {location.hash !== '' &&
+          (location.hash === '#Customer-Support-System' || location.hash === '#' || location.hash === '#') 
+          && (
+            <>
+           
+            </>
+          )}
     </div>
   );
 };

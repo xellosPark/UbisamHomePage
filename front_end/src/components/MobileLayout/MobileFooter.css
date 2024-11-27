@@ -21,4 +21,18 @@
   .mobile-footer a:hover {
     text-decoration: underline; /* 호버 시 밑줄 추가 */
   }
+
+  .pc-version-button {
+    display: inline-block !important;
+    padding: 10px 30px !important;
+    font-size: 1rem !important;
+    font-weight: bold !important;
+    color: #333 !important;
+    background-color: #fff !important;
+    border: 2px solid #bbb !important;
+    border-radius: 50px !important;
+    cursor: pointer !important;
+    text-align: center !important;
+    transition: background-color 0.3s ease, color 0.3s ease !important;
+  }
   

@@ -12,12 +12,12 @@ const AppContent = () => {
 
   const currentHash = window.location.hash.replace('#', ''); // 해시를 제거하여 경로를 가져옵니다.
 
-  console.log('현재 경로:', currentHash); // 해시(#)를 제외한 정확한 현재 경로 출력
+  // console.log('현재 경로:', currentHash); // 해시(#)를 제외한 정확한 현재 경로 출력
 
   // 현재 경로가 "main", "/", "" 조건에 맞는지 확인
   const isMainPageCondition =
     currentHash === '/' || currentHash === '' || currentHash === 'main';
-  console.log('MainPage 조건 만족:', isMainPageCondition); // 조건 확인
+  // console.log('MainPage 조건 만족:', isMainPageCondition); // 조건 확인
 
   // 화면 크기를 감지하는 함수
   const detectDevice = () => {
