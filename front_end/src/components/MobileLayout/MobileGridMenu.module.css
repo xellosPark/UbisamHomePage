@@ -1,0 +1,69 @@
+/* 모바일 그리드 메뉴 스타일 */
+.gridMenu {
+  display: grid; /* 그리드 레이아웃 */
+  grid-template-columns: repeat(2, 1fr); /* 2개의 컬럼으로 배치 */
+  gap: 10px 10px; /* 항목 간 간격을 줄여서 좁게 설정 */
+  padding: 10px 20px; /* 내부 여백을 조금 줄여줌 */
+  margin-top: 5px;
+}
+
+/* 그리드 아이템 스타일 */
+.gridItem {
+  border-radius: 5px; /* 둥근 모서리 */
+  font-size: 15px; /* 글자 크기 조정 */
+  font-weight: bold; /* 글자 두껍게 */
+  color: #fff; /* 텍스트 색상을 흰색으로 */
+  width: 10.5rem; /* 아이템 너비를 줄여서 좀 더 좁게 설정 */
+  height: 60px; /* 높이를 적당히 설정 */
+  display: flex; /* 내부 텍스트를 중앙에 배치 */
+  align-items: center; /* 수직 중앙 정렬 */
+  justify-content: center; /* 수평 중앙 정렬 */
+}
+
+/* 아이템에 호버 효과 */
+.gridItem:hover {
+  transform: scale(1.05); /* 호버 시 아이템 확대 효과 */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+}
+
+/* 링크 스타일 */
+.gridMenu a {
+  color: #eee; /* 링크 색상 */
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+/* .blackText 스타일 */
+.blackText {
+  color: #888; /* Set the text color to #888 (a grayish color) */
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+/* 배경 색상 설정 */
+.intro {
+  background-color: #ffcc80; /* 밝은 주황색 */
+}
+
+.recruit {
+  background-color: #ff8666; /* 밝은 빨간색 */
+}
+
+.controlSystem {
+  background-color: #66b3ff; /* 밝은 파란색 */
+}
+
+.infoSystem {
+  background-color: #ffe066; /* 밝은 노란색 */
+}
+
+.resources {
+  background-color: #a6a6a6; /* 밝은 회색 */
+}
+
+.qa {
+  background-color: #5cd65c; /* 밝은 초록색 */
+}
+
+/* Ensure that the .blackText color applies to the span elements within the grid items */
+.gridItem span.blackText {
+  color: #888; /* Apply the gray color to these specific spans */
+}

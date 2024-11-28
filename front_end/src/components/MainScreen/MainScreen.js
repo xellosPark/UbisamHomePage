@@ -17,6 +17,7 @@ import IntroductionToWelfare from '../Body/main_Recruitmentinformation/Introduct
 import Notice from '../Body/main_CustomerSupport/Notice';
 import DataRoom from '../Body/main_CustomerSupport/DataRoom';
 import DataDetails from '../Body/main_CustomerSupport/Modal/DataDetails';
+import M_InfopageLayout from '../MobileLayout/MobileView/Mobile_Main_InfoPage/M_InfopageLayout';
 
 const MainScreen = () => {
   const greetingsRef = useRef(null);
@@ -88,6 +89,10 @@ const MainScreen = () => {
         <Route path="/support" element={<Notice />} />
         <Route path="/DataRoom" element={<DataRoom />} />
         <Route path="/data-room/:id" element={<DataDetails />} />
+
+        {/* Mobile 전용 라우터 */}
+        <Route path="/Mgreetings" element={<M_InfopageLayout />} />
+        
       </Routes>
 
     {/* 경로가 "/"가 아닐 때만 컴포넌트 렌더링 */}

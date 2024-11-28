@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./MobileBanner.css";
+import style from "./MobileBanner.module.css";
 import mainImg1 from '../../images/image/main_img_01.jpg';
 import mainImg2 from '../../images/image/main_img_02.jpg';
 import mainImg3 from '../../images/image/main_img_03.jpg';
@@ -19,11 +19,11 @@ const MobileBanner = () => {
   }, []);
 
   return (
-    <div className="mobile-banner">
-      <img src={images[currentIndex]} alt="Company Slideshow" className="slide-image-mobile" />
+    <div className={style.mobileBanner}>
+      <img src={images[currentIndex]} alt="Company Slideshow" className={style.slideImageMobile} />
       <p> 장비/시스템 제어분야의 선도업체</p>
-      <p className="banner-text">
-        <span className="company-name">(주)유비샘</span>이 함께합니다.
+      <p className={style.bannerText}>
+        <span className={style.companyName}>(주)유비샘</span>이 함께합니다.
       </p>
     </div>
   );

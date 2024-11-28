@@ -1,68 +1,66 @@
 /* 기본 레이아웃 */
 .header {
-  display: flex;
-  justify-content: space-between;
-  background-color: white;
-  padding-top: 5px;
-  max-width: 1200px;
-  
-  margin: 0 auto;
+   display: flex;
+   justify-content: space-between;
+   background-color: white;
+   padding-top: 5px;
+   max-width: 1200px;
+   margin: 0 auto;
 }
 
 .logo {
-  display: flex;
-  font-weight: bold;
-  margin-right: 50px;
+   display: flex;
+   font-weight: bold;
+   margin-right: 50px;
 }
 
 .logo-img {
-  width: 180px;
-  
+   width: 180px;
 }
 
-.nav  {
-  margin-right: 300px;
-  font-weight: bold;
-  margin-bottom: 10px;
+.nav {
+   margin-right: 300px;
+   font-weight: bold;
+   margin-bottom: 10px;
 }
 
 /* 내비게이션 스타일 */
 .nav ul {
-  list-style: none;
-  display: flex;
-  gap: 5rem; /* 메뉴 항목 간의 간격 설정 */
-  margin-top: 40px;
-  padding: 0;
+   list-style: none;
+   display: flex;
+   gap: 5rem; /* 메뉴 항목 간의 간격 설정 */
+   margin-top: 40px;
+   padding: 0;
 }
 
 .nav ul li {
-  position: relative; /* 서브메뉴와 관계를 유지하도록 설정 */
-  white-space: nowrap;
+   position: relative; /* 서브메뉴와 관계를 유지하도록 설정 */
+   white-space: nowrap;
 }
 
 .nav ul li a {
-  color: #222;
-  text-decoration: none;  /* 밑줄 */
-  font-weight: bold;
-  white-space: nowrap;
+   color: #222;
+   text-decoration: none;  /* 밑줄 */
+   font-weight: bold;
+   white-space: nowrap;
 }
 
 .nav ul li a:hover {
-  text-decoration: none; /* 링크 밑줄 제거 */
+   text-decoration: none; /* 링크 밑줄 제거 */
 }
 
 /* 회사소개 스타일 */
 .nav_title {
-  font-size: 18px; /* 폰트 크기 */
-  color: #666 !important; /* 폰트 색상 */
+   font-size: 18px; /* 폰트 크기 */
+   color: #666 !important; /* 폰트 색상 */
 }
 
 .nav_title:hover {
-  font-size: 18px; /* 폰트 크기 */
-  color: #FF8042 !important; /* 폰트 색상 */
+   font-size: 18px; /* 폰트 크기 */
+   color: #FF8042 !important; /* 폰트 색상 */
 }
 
-/* 서브메뉴 기본 숨김 설정 */
+/* 기존 서브메뉴 표시 및 숨김 */
 .dropdown {
   display: none;
   position: absolute;
@@ -73,77 +71,83 @@
   transform: translateX(-50%); /* 부모 기준으로 가로 중앙 정렬 */
   white-space: nowrap; /* 텍스트 줄바꿈 방지 */
   flex-direction: column;
-  text-align: center; /* 서브메뉴 항목을 가운데 정렬 */
+  text-align: center;
   z-index: 1;
-  
 }
 
 /* 서브메뉴 항목 스타일 */
 .menu-item {
-  padding: 10px 10px; /* 위아래로 공간 추가 */
-  margin-right: 10px;
-  align-items: center;
+  padding: 10px 20px;  /* 위아래로 공간 추가 */
+  font-size: 16px;
+  cursor: pointer;  /* 클릭 가능한 느낌 */
+}
 
+/* 메뉴 항목 hover 상태 */
+.menu-item:hover {
+  background-color: #2D97F7;  /* 호버시 배경 색상 변경 */
+  color: white;  /* 호버시 글자 색상 변경 */
+}
+
+/* 서브메뉴를 표시하려면 부모 li에서 hover했을 때 display: flex로 변경 */
+.nav ul li:hover .dropdown {
+  display: flex;
 }
 
 .dropdown .menu-item:last-child {
-  border-bottom: none; /* 마지막 항목의 구분선 제거 */
+   border-bottom: none; /* 마지막 항목의 구분선 제거 */
 }
 
 .dropdown li {
-  padding: 10px 30px;
-  font-size: 15px;
+   padding: 10px 30px;
+   font-size: 15px;
 }
 
 .dropdown li a {
-  text-decoration: none; /* 링크 밑줄 제거 */
+   text-decoration: none; /* 링크 밑줄 제거 */
 }
 
 .dropdown li:hover {
-  background-color: #2D97F7;
-  color: white;
+   background-color: #2D97F7;
+   color: white;
 }
-
-.dropdown li a:hover {
-  color:white; /* 글자 색상 검정으로 유지 */
-}
-
 
 /* 메인 메뉴에 마우스 오버 시 서브메뉴 표시 */
 .nav ul li:hover .dropdown {
-  display: flex; /* 서브메뉴를 표시 */
+   display: flex; /* 서브메뉴를 표시 */
+   opacity: 1; /* Show dropdown */
+   pointer-events: auto; /* Enable interactions */
 }
 
 /* 오른쪽 로그인/모바일 섹션 */
 .header-right {
-  display: flex;
-  gap: 0.5rem;
-  font-weight: bold;
-  align-items: center;
-  color: #666;
-  margin-right: 100px;
-  margin-bottom: 20px;
+   display: flex;
+   gap: 0.5rem;
+   font-weight: bold;
+   align-items: center;
+   color: #666;
+   margin-right: 100px;
+   margin-bottom: 20px;
 }
 
 .header-right .divider {
-  margin: 0 0.3rem;
+   margin: 0 0.3rem;
 }
 
 .header-right span:hover {
-  text-decoration: underline;
+   text-decoration: underline;
 }
 
 /* 화면이 작아졌을 때도 가로 정렬을 유지 */
 @media (max-width: 1200px) {
-  .nav {
-    justify-content: space-between; /* 줄어든 화면에서 간격을 균등하게 유지 */
-  }
+   .nav {
+     justify-content: space-between; /* 줄어든 화면에서 간격을 균등하게 유지 */
+   }
+   
+   .nav li {
+     margin: 0 10px;
+   }
 
-  .nav li{
-    margin: 0 10px;
-  }
-
-  .logo {
-    margin: 0 30px;
-  }
+   .logo {
+     margin: 0 30px;
+   }
 }

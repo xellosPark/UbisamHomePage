@@ -1,0 +1,150 @@
+/* Companygreetings.module.css */
+
+.company-greetings-container {
+    padding: 1rem;
+    background-color: white;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .company-greetings-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #959292;
+    max-width: 1200px;
+    height: 64px;
+    margin: 0;
+  }
+  
+  .company-greetings-check-icon {
+    color: #2eb872;
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 3px;
+  }
+  
+  .company-greetings-title {
+    font-size: 2rem;
+    color: #333;
+    margin: 0;
+  }
+  
+  .top-link {
+    font-size: 0.9rem;
+    color: #555;
+    text-decoration: none;
+    position: absolute;
+    border: none;
+    font-size: 18px;
+    background-color: white;
+  }
+  
+  .top-link:hover {
+    text-decoration: underline;
+  }
+  
+  .company-greetings-content {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow: hidden;
+  }
+  
+  .company-greetings-image {
+    width: 500px;
+    flex-shrink: 0;
+    height: auto;
+    margin-right: 2rem;
+    padding: 30px;
+    object-fit: contain;
+  }
+  
+  .greetings-text {
+    flex-grow: 1;
+    text-align: left;
+  }
+  
+  .greetings-intro {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .greetings-highlight {
+    font-size: 2rem;
+    color: #555;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #555;
+    margin-bottom: 1rem;
+  }
+  
+  strong {
+    color: #0056b3;
+  }
+  
+  .ceo-signature {
+    text-align: right;
+    margin-top: 2rem;
+  }
+  
+  /* Mobile Styles */
+  @media screen and (max-width: 768px) {
+    .company-greetings-container {
+      padding: 0 15px;
+    }
+  
+    .company-greetings-header {
+      flex-direction: column;
+      align-items: flex-start;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+  
+    .company-greetings-title {
+      font-size: 1.5rem;
+    }
+  
+    .company-greetings-content {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .company-greetings-image {
+      width: 100%;
+      margin-right: 0;
+      padding: 10px;
+    }
+  
+    .greetings-text {
+      text-align: center;
+      margin-top: 1rem;
+    }
+  
+    .greetings-intro {
+      font-size: 1.3rem;
+    }
+  
+    .greetings-highlight {
+      font-size: 1.7rem;
+    }
+  
+    p {
+      font-size: 1rem;
+    }
+  
+    .top-link {
+      font-size: 1rem;
+      position: relative;
+      margin-top: 1rem;
+    }
+  }
+  

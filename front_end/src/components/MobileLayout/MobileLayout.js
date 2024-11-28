@@ -3,10 +3,11 @@ import MobileHeader from "./MobileHeader"; // 모바일 헤더 컴포넌트
 import MobileBanner from "./MobileBanner"; // 배너 컴포넌트
 import MobileGridMenu from "./MobileGridMenu"; // 그리드 메뉴 컴포넌트
 import MobileFooter from "./MobileFooter"; // 모바일 푸터 컴포넌트import "./MobileLayout.css"; // 레이아웃 스타일
+import styles from "./MobileLayout.module.css"; // CSS module import
 
 const MobileLayout = () => {
   return (
-    <div className="mobile-layout">
+    <div className={styles.mobileLayout}>
       {/* 헤더 영역 */}
       <MobileHeader />
       {/* 배너 영역 */}
