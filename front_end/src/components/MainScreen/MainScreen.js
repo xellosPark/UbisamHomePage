@@ -17,7 +17,7 @@ import IntroductionToWelfare from '../Body/main_Recruitmentinformation/Introduct
 import Notice from '../Body/main_CustomerSupport/Notice';
 import DataRoom from '../Body/main_CustomerSupport/DataRoom';
 import DataDetails from '../Body/main_CustomerSupport/Modal/DataDetails';
-import M_InfopageLayout from '../MobileLayout/MobileView/Mobile_Main_InfoPage/M_InfopageLayout';
+import DataCreateFile from '../Body/main_CustomerSupport/DataCreateFile';
 
 const MainScreen = () => {
   const greetingsRef = useRef(null);
@@ -44,7 +44,7 @@ const MainScreen = () => {
   useEffect(() => {
     if (!isLoaded) {
       setIsLoaded(true);
-      console.log('Current pathname: 위치', location.hash);
+      //console.log('Current pathname: 위치', location.hash);
       if (location.hash === '#greeting') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (location.hash === '#greetings' && greetingsRef.current) {
@@ -88,10 +88,9 @@ const MainScreen = () => {
         <Route path="/Recruitment-Information-System" element={<RecruitmentInformation />} />
         <Route path="/support" element={<Notice />} />
         <Route path="/DataRoom" element={<DataRoom />} />
+        <Route path="/DataRoom/CreateFile" element={<DataCreateFile />} />
         <Route path="/data-room/:id" element={<DataDetails />} />
 
-        {/* Mobile 전용 라우터 */}
-        <Route path="/Mgreetings" element={<M_InfopageLayout />} />
         
       </Routes>
 

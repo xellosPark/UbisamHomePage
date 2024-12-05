@@ -46,11 +46,17 @@ const DataRoom = () => {
         document.removeEventListener("mouseup", handleMouseUp);
     };
 
+    const sortedData = initialData.sort((a, b) => a.id - b.id);
+
     return (
         <div className="data-room-container">
             <div className="data-room-header">
                 <h1 className="DataRoom-overview-title">자료실</h1>
+                <Link to="/DataRoom/CreateFile" className="add-dataroom-button">
+                    + 자료 추가
+                </Link>
             </div>
+           
             <table className="data-table">
                 <thead>
                     <tr>
@@ -67,7 +73,7 @@ const DataRoom = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {initialData.map((item) => (
+                    {sortedData.map((item) => (
                         <tr key={item.id}>
                             <td style={{ width: columnWidths.id }}>{item.id}</td>
                             <td style={{ width: columnWidths.title }}>{item.title}</td>

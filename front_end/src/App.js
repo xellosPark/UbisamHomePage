@@ -9,6 +9,7 @@ import MainScreen from './components/MainScreen/MainScreen'; // 새롭게 만든
 const AppContent = () => {
   const [isMobile, setIsMobile] = useState(false);
   const location = useLocation(); // 현재 경로를 가져옴
+  const [deviceType, setDeviceType] = useState("");
 
   const currentHash = window.location.hash.replace('#', ''); // 해시를 제거하여 경로를 가져옵니다.
 
@@ -24,6 +25,20 @@ const AppContent = () => {
     setIsMobile(window.innerWidth <= 768); // 768px 이하일 경우 모바일
   };
 
+
+  // 디바이스 타입 감지 및 저장
+  useEffect(() => {
+    const userAgent = navigator.userAgent.toLowerCase();
+
+    if (/tablet/.test(userAgent)) {
+      setDeviceType("태블릿");
+    } else if (/mobile|android|iphone|ipad|ipod/.test(userAgent)) {
+      setDeviceType("모바일");
+    } else {
+      setDeviceType("PC");
+    }
+  }, []);
+
   // 디바이스 변경 이벤트 추가
   useEffect(() => {
     detectDevice();
@@ -36,7 +51,7 @@ const AppContent = () => {
   return (
     <div className="full-screen-container">
       {/* 조건부 렌더링: 모바일 + 메인 페이지에서만 MobileLayout 사용 */}
-      {isMobile && isMainPageCondition  ? (
+      {isMobile && isMainPageCondition  ? ( //deviceType === "모바일"
         <MobileLayout />
       ) : (
         <>

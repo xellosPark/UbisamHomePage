@@ -1,12 +1,12 @@
 import React from "react";
-import M_InfopageHead from "./Infopage_Head/M_InfopageHead";
+import MboileCompanyGreetings from "./Infopage_Body/MobileCompanyGreetings";
 
 
 const M_InfopageLayout = () => {
   return (
     <div >
       {/* 헤더 영역 */}
-      <M_InfopageHead />
+      <MboileCompanyGreetings />
       
       
     </div>
