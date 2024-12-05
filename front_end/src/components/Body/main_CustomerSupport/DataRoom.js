@@ -1,5 +1,5 @@
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import { FaCheckCircle, FaHeart, FaFileAlt } from 'react-icons/fa';
 import './DataRoom.css';
 
@@ -18,33 +18,13 @@ const initialData = [
 
 
 const DataRoom = () => {
+    const navigate = useNavigate();
     const [columnWidths, setColumnWidths] = useState({ id: 50, title: 200, author: 100, date: 100, views: 100 });
-    const dragColumn = useRef(null);
-    const startX = useRef(0);
-
-    const handleMouseDown = (e, column) => {
-        dragColumn.current = column;
-        startX.current = e.clientX;
-        document.addEventListener("mousemove", handleMouseMove);
-        document.addEventListener("mouseup", handleMouseUp);
-    };
-
-    const handleMouseMove = (e) => {
-        if (dragColumn.current) {
-            const deltaX = e.clientX - startX.current;
-            setColumnWidths((prevWidths) => ({
-                ...prevWidths,
-                [dragColumn.current]: Math.max(prevWidths[dragColumn.current] + deltaX, 50), // Min width of 50
-            }));
-            startX.current = e.clientX;
-        }
-    };
-
-    const handleMouseUp = () => {
-        dragColumn.current = null;
-        document.removeEventListener("mousemove", handleMouseMove);
-        document.removeEventListener("mouseup", handleMouseUp);
-    };
+    
+    const handleRowClick = (item) => {
+        // Navigate to the detail page with the item ID
+        navigate(`/DataRoom/Detail/${item.id}`, { state: { item } });
+      };
 
     const sortedData = initialData.sort((a, b) => a.id - b.id);
 
@@ -58,23 +38,18 @@ const DataRoom = () => {
             </div>
            
             <table className="data-table">
-                <thead>
-                    <tr>
-                        {Object.keys(columnWidths).map((column) => (
-                            <th
-                                key={column}
-                                style={{ width: columnWidths[column] }}
-                                onMouseDown={(e) => handleMouseDown(e, column)}
-                                className="draggable-column"
-                            >
-                                {column}
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
+            <thead>
+          <tr>
+            <th style={{ width: "50px" }}>ID</th>
+            <th style={{ width: "200px" }}>제목</th>
+            <th style={{ width: "100px" }}>작성자</th>
+            <th style={{ width: "100px" }}>날짜</th>
+            <th style={{ width: "100px" }}>조회수</th>
+          </tr>
+        </thead>
                 <tbody>
                     {sortedData.map((item) => (
-                        <tr key={item.id}>
+                        <tr key={item.id} onClick={() => handleRowClick(item)} className="clickable-row">
                             <td style={{ width: columnWidths.id }}>{item.id}</td>
                             <td style={{ width: columnWidths.title }}>{item.title}</td>
                             <td style={{ width: columnWidths.author }}>{item.author}</td>
