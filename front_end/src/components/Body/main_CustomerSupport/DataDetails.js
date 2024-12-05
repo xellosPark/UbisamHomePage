@@ -6,6 +6,8 @@ const DataDetail = () => {
   const { state } = useLocation();
   const { item } = state;
 
+  const attachments = ["Test1.tex", "Test2.pdf", "Test3.docx","Test3.docx","Test3.docx"]; 
+
   return (
     <div className="data-detail-container">
       <h1 className="detail-title">자료 상세 정보</h1>
@@ -33,8 +35,29 @@ const DataDetail = () => {
           </tr>
           <tr>
             <td className="detail-label">첨부 파일</td>
-            <td>Test.tex</td>
+            <td>
+              <div className="attachments-wrapper">
+                <table className="attachments-table">
+                  <tbody>
+                    {attachments.map((attachment, index) => (
+                      <tr key={index}>
+                        <td>
+                          <a
+                            href={`/downloads/${attachment}`} // Specify the download URL
+                            download={attachment} // Force download
+                            className="attachment-link"
+                          >
+                            {`${index + 1}. ${attachment}`}
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </td>
           </tr>
+
           <tr>
             <td className="detail-label">내용</td>
             {/* 내용 부분 수정 */}

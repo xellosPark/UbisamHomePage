@@ -1,8 +1,8 @@
 /* 컨테이너 스타일 */
 .data-detail-container {
   max-width: 800px; /* 최대 너비 설정 */
-  margin: 2rem auto; /* 화면 중앙 정렬 */
-  padding: 1.5rem; /* 내부 여백 */
+  margin: 0.5rem auto; /* 화면 중앙 정렬 */
+  padding: 1rem; /* 내부 여백 */
   background-color: #ffffff; /* 배경색 흰색 */
   border-radius: 8px; /* 둥근 모서리 */
   font-family: Arial, sans-serif; /* 글꼴 설정 */
@@ -102,4 +102,36 @@
 
 .content-cell::-webkit-scrollbar-thumb:hover {
   background: #555; /* 스크롤바 호버 색상 */
+}
+
+.attachments-wrapper {
+  max-height: 150px; /* Set the maximum height for the table */
+  overflow-y: auto; /* Add vertical scrollbar if content exceeds max height */
+  border: 1px solid #ccc; /* Optional: Add border for better visibility */
+  border-radius: 4px; /* Optional: Rounded corners */
+  padding: 0.5rem; /* Optional: Padding inside the wrapper */
+  background-color: #f9f9f9; /* Optional: Background color */
+  box-sizing: border-box; /* Include padding and border in height calculation */
+}
+
+/* Attachments table styling */
+.attachments-table {
+  width: 100%; /* Table takes the full width of the wrapper */
+  border-collapse: collapse; /* Remove border gaps */
+}
+
+.attachments-table td {
+  padding: 0.5rem; /* Add padding for better readability */
+  font-size: 0.9rem; /* Optional: Slightly smaller font */
+  border-bottom: 1px solid #eaeaea; /* Optional: Add bottom border to rows */
+}
+
+.attachment-link {
+  color: #007bff; /* Link color */
+  text-decoration: none; /* Remove underline */
+}
+
+.attachment-link:hover {
+  color: #0056b3; /* Darker blue on hover */
+  text-decoration: none; /* Ensure underline is removed on hover */
 }
