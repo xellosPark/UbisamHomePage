@@ -1,99 +1,170 @@
+.createContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75vh; /* 화면 전체 높이 */
+}
 
-  .createContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 75vh; /* 화면 전체 높이 */
-  }
+.createFile {
+  width: 45%;
+  max-width: 1350px;
+  margin: 1rem;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif; /* 글꼴 추가 */
+}
 
-  .createFile {
-    width: 45%;
-    max-width: 1350px;
-    margin: 1rem;
-    padding: 2rem;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .createFile h2 {
-    text-align: center;
-    margin-bottom: 1rem;
-  }
+.createFile h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #333; /* 제목 색상 */
+}
 
-  .createFile p {
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-  
-  .createFile label {
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-    margin-right: 1rem;
-  }
-  
-  .createFile input,
-  .createFile textarea {
-    width: 91%;
-    padding: 0.8rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-left: 1rem;
-    font-size: 1rem;
-  }
-  
-  .createFile button {
-    display: block;
-    width: 90%;
-    padding: 0.5rem;
-    background-color: #2eb872;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-  
-  .createFile button:hover {
-    background-color: #26a163;
-  }
+.createFile p {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #555; /* 설명 색상 */
+}
 
-  .createIndex {
-    width: 15%;
-    max-width: 160px;
-  }
+.createFile label {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  margin-right: 1rem;
+}
 
-  .createTitle {
-    
-  }
+.createFile input,
+.createFile textarea {
+  width: 91%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 1rem;
+  font-size: 1rem;
+}
 
-  .createTextarea {
-    /* height: 500px; */
-    height: 30vh;
-  }
+.createFile button {
+  display: block;
+  width: 90%;
+  padding: 0.5rem;
+  background-color: #2eb872;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
 
-  .add-data-button {
-    display: flex;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    background-color: #2eb872;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-  }
-  
-  .add-data-button:hover {
-    background-color: #26a163;
-  }
-  
-  .add-data-button img {
-    width: 1rem;
-    height: 1rem;
-  }
+.createFile button:hover {
+  background-color: #26a163;
+}
+
+.createIndex {
+  width: 15%;
+  max-width: 160px;
+}
+
+.createTextarea {
+  height: 30vh;
+}
+
+.add-data-button {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #2eb872;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.add-data-button:hover {
+  background-color: #26a163;
+}
+
+.add-data-button img {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* 파일 목록 테이블 */
+.file-list-table {
+  width: 100%;
+  border-collapse: collapse; /* 테이블 셀 사이에 간격 없애기 */
+  margin-top: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* 테이블 헤더 스타일 */
+.file-list-table th {
+  background-color: #2eb872;
+  color: white;
+  padding: 1rem;
+  text-align: left;
+  font-weight: normal;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  border-bottom: 2px solid #ccc;
+}
+
+/* 테이블 셀 스타일 */
+.file-list-table td {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  text-align: left;
+  font-size: 1rem;
+}
+
+/* 파일 항목 스타일 */
+.file-list-item {
+  padding: 1rem;
+  background-color: #eafaf1;
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 파일 항목의 hover 효과 */
+.file-list-item:hover {
+  background-color: #d0f3e3;
+}
+
+.fileListTable {
+  width: 100%; /* Table takes the full width of the wrapper */
+
+}
+
+.fileListTable td {
+  padding: 0.5rem; /* Add padding for better readability */
+  border-bottom: 1px solid #eaeaea; /* Optional: Add bottom border to rows */
+}
+
+/* delete-button 스타일 */
+.delete-button {
+  width: 100px;
+  background: none; /* 배경색 제거 */
+  border: none; /* 테두리 제거 */
+  color: #222; /* 폰트 색을 #222로 설정 */
+  font-size: 12px; /* 적절한 폰트 크기 설정 (선택사항) */
+  cursor: pointer; /* 클릭할 수 있는 버튼처럼 보이도록 커서 변경 */
+  text-align: left; /* 텍스트 왼쪽 정렬 (선택사항) */
+  font-family: Arial, sans-serif; /* 글꼴 설정 (선택사항) */
+  padding: 0.5rem 1rem; /* 여백 추가 */
+}
+
+.delete-button:hover {
+  color: #0056b3; /* Hover 시 텍스트 색상 변경 */
+  text-decoration: none; /* Hover 시 밑줄 제거 */
+}
