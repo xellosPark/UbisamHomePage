@@ -16,8 +16,8 @@ import RecruitmentInformation from '../Body/main_Recruitmentinformation/Recruitm
 import IntroductionToWelfare from '../Body/main_Recruitmentinformation/Introductiontowelfare';
 import Notice from '../Body/main_CustomerSupport/Notice';
 import DataRoom from '../Body/main_CustomerSupport/DataRoom';
-import DataDetails from '../Body/main_CustomerSupport/Modal/DataDetails';
 import DataCreateFile from '../Body/main_CustomerSupport/DataCreateFile';
+import DataDetail from '../Body/main_CustomerSupport/DataDetails';
 
 const MainScreen = () => {
   const greetingsRef = useRef(null);
@@ -89,7 +89,7 @@ const MainScreen = () => {
         <Route path="/support" element={<Notice />} />
         <Route path="/DataRoom" element={<DataRoom />} />
         <Route path="/DataRoom/CreateFile" element={<DataCreateFile />} />
-        <Route path="/data-room/:id" element={<DataDetails />} />
+        <Route path="/DataRoom/Detail/:id" element={<DataDetail />} />
 
         
       </Routes>

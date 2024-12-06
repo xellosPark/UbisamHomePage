@@ -1,0 +1,191 @@
+/* 컨테이너 스타일 */
+.data-detail-container {
+  max-width: 800px; /* 최대 너비 설정 */
+  margin: 0rem auto; /* 화면 중앙 정렬 */
+  padding: 0.1rem; /* 내부 여백 */
+  background-color: #ffffff; /* 배경색 흰색 */
+  border-radius: 8px; /* 둥근 모서리 */
+  font-family: Arial, sans-serif; /* 글꼴 설정 */
+}
+
+/* 제목 스타일 */
+.detail-title {
+  text-align: center; /* 중앙 정렬 */
+  font-size: 1.2rem; /* 글자 크기 */
+  font-weight: bold; /* 굵은 글씨 */
+  margin-bottom: 1rem; /* 아래 여백 */
+  color: #333333; /* 글자 색 */
+  background-color: #eafaf1; /* AliceBlue background */
+  padding: 1rem; /* Add padding for better spacing */
+  border-radius: 8px; /* Rounded corners */
+}
+
+/* 테이블 스타일 */
+.detail-table {
+  width: 100%; /* 테이블 너비를 부모 요소의 100%로 설정 */
+  table-layout: fixed; /* 고정된 열 너비 설정 */
+  border-collapse: collapse; /* 테두리 중첩 제거 */
+  margin-bottom: 1.5rem; /* 테이블 아래 여백 */
+  border: 2px solid #eee; /* 테두리 */
+  background-color: #ffffff; /* 배경색 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 외곽 그림자 */
+}
+/* 테이블 행 스타일 */
+.detail-table tr {
+  border-bottom: 1px solid #ddd; /* 하단 테두리 추가 */
+}
+
+/* 왼쪽 레이블 스타일 */
+.detail-label {
+  width: 20%; /* 열 너비 20% */
+  font-weight: bold; /* 굵은 글씨 */
+  background-color: #f9f9f9; /* 밝은 배경색 */
+  vertical-align: top; /* 텍스트 상단 정렬 */
+  color: #555555; /* 글자 색 */
+}
+
+/* 오른쪽 데이터 셀 스타일 */
+.detail-table td {
+  padding: 0.5rem; /* 내부 여백 */
+  color: #333333; /* 글자 색 */
+  font-size: 0.8rem; /* 글자 크기 */
+}
+
+/* 뒤로가기 버튼 스타일 */
+.back-button {
+  display: inline-block; /* 인라인 블록 */
+  width: 30%; /* 너비 100% */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  padding: 0.75rem; /* 내부 여백 */
+  background-color: #2eb872; /* 초록색 배경 */
+  color: white; /* 흰색 글자 */
+  text-decoration: none; /* 밑줄 제거 */
+  border-radius: 4px; /* 둥근 모서리 */
+  font-size: 1rem; /* 글자 크기 */
+  font-weight: bold; /* 굵은 글씨 */
+  cursor: pointer; /* 포인터 커서 */
+  transition: background-color 0.3s ease; /* 배경색 전환 효과 */
+}
+
+/* 뒤로가기 버튼 호버 효과 */
+.back-button:hover {
+  background-color: #249a63; /* 어두운 초록색 배경 */
+}
+
+.content-cell {
+  height: 300px; /* Fix content area height to 300px */
+  vertical-align: top; /* Top align text */
+  word-wrap: break-word; /* Line break long text */
+  white-space: pre-wrap; /* Preserve spaces and line breaks */
+  overflow-y: auto; /* Add vertical scrollbar if content exceeds height */
+  background-color: #fdfdfd; /* Slightly different background color */
+  border: 1px solid #ccc; /* Add border */
+  padding: 0.75rem; /* Internal margin */
+  font-size: 1rem; /* Maintain text size */
+  line-height: 1.5; /* Set line spacing to make it easier to read */
+  box-sizing: border-box; /* Calculate size including padding and border */
+}
+
+.content-cell::-webkit-scrollbar {
+  width: 8px; /* 스크롤바 너비 */
+}
+
+.content-cell::-webkit-scrollbar-track {
+  background: #f1f1f1; /* 스크롤바 트랙 배경색 */
+}
+
+.content-cell::-webkit-scrollbar-thumb {
+  background: #888; /* 스크롤바 색상 */
+  border-radius: 4px; /* 스크롤바 모서리 둥글게 */
+}
+
+.content-cell::-webkit-scrollbar-thumb:hover {
+  background: #555; /* 스크롤바 호버 색상 */
+}
+
+.attachments-wrapper {
+  max-height: 120px; /* Set the maximum height for the table */
+  overflow-y: auto; /* Add vertical scrollbar if content exceeds max height */
+  border: 1px solid #ccc; /* Optional: Add border for better visibility */
+  border-radius: 4px; /* Optional: Rounded corners */
+  padding: 0.5rem; /* Optional: Padding inside the wrapper */
+  background-color: #f9f9f9; /* Optional: Background color */
+  box-sizing: border-box; /* Include padding and border in height calculation */
+}
+
+/* Attachments table styling */
+.attachments-table {
+  width: 100%; /* Table takes the full width of the wrapper */
+  border-collapse: collapse; /* Remove border gaps */
+}
+
+.attachments-table td {
+  padding: 0.5rem; /* Add padding for better readability */
+  font-size: 0.9rem; /* Optional: Slightly smaller font */
+  border-bottom: 1px solid #eaeaea; /* Optional: Add bottom border to rows */
+}
+
+.attachment-link {
+  color: #007bff; /* Link color */
+  text-decoration: none; /* Remove underline */
+}
+
+.attachment-link:hover {
+  color: #0056b3; /* Darker blue on hover */
+  text-decoration: none; /* Ensure underline is removed on hover */
+}
+
+/* 버튼 컨테이너 스타일 */
+.button-container {
+  display: flex; /* 버튼들을 한 줄에 배치 */
+  justify-content: space-between; /* 목록 버튼과 네비게이션 버튼 분리 */
+  align-items: center; /* 세로 가운데 정렬 */
+  margin-top: 1.5rem; /* 위쪽 여백 */
+}
+
+/* 목록으로 돌아가기 버튼 스타일 */
+.back-button {
+  display: inline-block;
+  background-color: #2eb872; /* 초록색 배경 */
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem; /* 버튼 패딩 조정 */
+  border-radius: 4px; /* 둥근 모서리 */
+  font-size: 1rem; /* 글씨 크기 */
+  font-weight: bold; /* 굵은 글씨 */
+  cursor: pointer; /* 포인터 커서 */
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #249a63; /* 어두운 초록색 */
+}
+
+/* 네비게이션 버튼 컨테이너 */
+.navigation-buttons {
+  display: flex;
+  gap: 1rem; /* 버튼 간격 */
+  align-items: center; /* 세로 정렬 */
+  font-size: 1rem; /* 텍스트 크기 */
+}
+
+/* 네비게이션 버튼 스타일 */
+.navigation-link {
+  color: #222; /* 파란색 텍스트 */
+  text-decoration: none; /* 밑줄 제거 */
+  font-weight: bold; /* 굵은 텍스트 */
+  padding: 0.5rem; /* 버튼 높이 조정 */
+  cursor: pointer; /* 포인터 커서 */
+  border: 1px solid transparent; /* 기본 테두리 설정 */
+  transition: color 0.3s ease, border-color 0.3s ease; /* 전환 효과 */
+}
+
+.navigation-link:hover {
+  color: #0d74da; /* 호버 시 어두운 파란색 */
+  border-color: #0d74da; /* 테두리 강조 */
+}
+
+/* 네비게이션 버튼 사이 간격을 유지하며 컴팩트한 UI */
+.navigation-buttons > .navigation-link:first-child {
+  margin-right: 0.5rem; /* 이전 버튼 우측 여백 */
+}
