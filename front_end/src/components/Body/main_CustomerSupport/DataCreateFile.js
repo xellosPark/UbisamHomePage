@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './DataCreateFile.css'
+import style from './DataCreateFile.module.css'
 
 // const DataRoom = () =>
 const DataCreateFile = () => {
@@ -24,35 +24,46 @@ const DataCreateFile = () => {
   };
 
   return (
-    <div className="create-file">
-      <h2>자료 업로드</h2>
-      <p>새로운 자료를 업로드하려면 아래 정보를 입력하세요.</p>
-      <form onSubmit={handleSubmit}>
-        <label>
-          제목:
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-        <label>
-          설명:
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-        <label>
-          파일 업로드:
-          <input type="file" name="file" onChange={handleFileChange} />
-        </label>
-        <button type="submit">업로드</button>
-      </form>
+    <div className={style.createContainer}>
+      <div className={style.createFile}>
+        <h2>자료 업로드</h2>
+        <p>새로운 자료를 업로드하려면 아래 정보를 입력하세요.</p>
+        <form onSubmit={handleSubmit}>
+        <label className={style.createIndex}>
+            Index
+            <input
+              type="text"
+              name="index"
+              value={1}
+            />
+          </label>
+          <label className={style.createTitle}>
+            제목
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleInputChange}
+              required
+            />
+          </label>
+          <label>
+            설명
+            <textarea className={style.createTextarea}
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              cols={10}
+              required
+            />
+          </label>
+          <label>
+            파일
+            <input type="file" name="file" onChange={handleFileChange} />
+          </label>
+          <button type="submit">업로드</button>
+        </form>
+      </div>
     </div>
   );
 }
