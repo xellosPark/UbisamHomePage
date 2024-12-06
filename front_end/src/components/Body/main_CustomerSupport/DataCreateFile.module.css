@@ -1,0 +1,99 @@
+
+  .createContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh; /* 화면 전체 높이 */
+  }
+
+  .createFile {
+    width: 45%;
+    max-width: 1350px;
+    margin: 1rem;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .createFile h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .createFile p {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .createFile label {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    margin-right: 1rem;
+  }
+  
+  .createFile input,
+  .createFile textarea {
+    width: 91%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 1rem;
+    font-size: 1rem;
+  }
+  
+  .createFile button {
+    display: block;
+    width: 90%;
+    padding: 0.5rem;
+    background-color: #2eb872;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .createFile button:hover {
+    background-color: #26a163;
+  }
+
+  .createIndex {
+    width: 15%;
+    max-width: 160px;
+  }
+
+  .createTitle {
+    
+  }
+
+  .createTextarea {
+    /* height: 500px; */
+    height: 30vh;
+  }
+
+  .add-data-button {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #2eb872;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-data-button:hover {
+    background-color: #26a163;
+  }
+  
+  .add-data-button img {
+    width: 1rem;
+    height: 1rem;
+  }
