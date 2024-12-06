@@ -46,14 +46,14 @@
 .data-table th, .data-table td {
   padding: 0.75rem;
   text-align: left;
-  /* border: solid 1px #090000; */
+  border-bottom: 1px solid #ddd; 
   white-space: nowrap;     /* 텍스트 줄바꿈 방지 */
   overflow: hidden;        /* 오버플로 방지 */
   text-overflow: ellipsis; /* 긴 텍스트 ... 표시 */
 }
 
 .data-table th {
-  background-color: #E5ECEF;
+  background-color: #f7f9fa;
   color: #333;
   font-weight: bold;
   position: sticky;       /* 스크롤 시 헤더 고정 */
@@ -140,3 +140,12 @@
   opacity: 0.8; /* 버튼에 마우스 오버 시 살짝 투명하게 변환 */
   text-decoration: none; /* 밑줄 제거 */
 }
+
+
+  /* 레이아웃 축소 방지 */
+  @media screen and (max-width: 1200px) {
+    .control-solution-container {
+      width: 1200px; /* 고정된 너비 유지 */
+      padding: 0 20px;
+    }
+  }

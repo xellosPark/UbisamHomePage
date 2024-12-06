@@ -1,12 +1,33 @@
 import React from "react";
-import { useLocation, Link } from "react-router-dom";
+import {useParams, useLocation, Link } from "react-router-dom";
 import "./DataDetails.css";
 
 const DataDetail = () => {
+  const { id } = useParams();
   const { state } = useLocation();
+  console.log("전달받은 상태(state):", state);
+  console.log("전달받은 상태(id):", id);
+
+  // state가 null 또는 undefined인 경우를 처리
+  if (!state || !state.item) {
+    return (
+      <div className="data-detail-container">
+        <h1 className="detail-title">오류</h1>
+        <p>올바른 데이터를 찾을 수 없습니다. 다시 시도해주세요.</p>
+        <Link to="/DataRoom" className="back-button">
+          목록으로 돌아가기
+        </Link>
+      </div>
+    );
+  }
   const { item } = state;
 
-  const attachments = ["Test1.tex", "Test2.pdf", "Test3.docx","Test3.docx","Test3.docx"]; 
+  const attachments = ["Test1.tex", "Test2.pdf", "Test3.docx", "Test3.docx", "Test3.docx"]; 
+
+  //   // 한글로 콘솔 출력
+  console.log("전달받은 상태(state):", state);
+  console.log("전달받은 항목(item):", item);
+  
 
   return (
     <div className="data-detail-container">
@@ -70,9 +91,32 @@ const DataDetail = () => {
           </tr>
         </tbody>
       </table>
-      <Link to="/DataRoom" className="back-button">
-        목록으로 돌아가기
-      </Link>
+      {/* 버튼 섹션 */}
+      <div className="button-container">
+        {/* 목록으로 돌아가기 버튼 */}
+        <Link to="/DataRoom" className="back-button">
+          목록으로 돌아가기
+        </Link>
+
+        {/* Previous and Next Buttons */}
+        <div className="navigation-buttons">
+          {/* 이전 버튼 */}
+          <Link
+            to={`/DataRoom/Detail/${item.id - 1}`} // 경로를 라우터와 일치하도록 수정
+            className="navigation-link"
+          >
+            &lt; Previous
+          </Link>
+
+          {/* 다음 버튼 */}
+          <Link
+            to={`/DataRoom/Detail/${item.id + 1}`} // 경로를 라우터와 일치하도록 수정
+            className="navigation-link"
+          >
+            Next &gt;
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };
