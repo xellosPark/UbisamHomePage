@@ -21,6 +21,13 @@ app.use(express.json()); // JSON 요청 데이터 파싱
 app.use(express.urlencoded({ extended: true })); // URL-encoded 데이터 파싱
 
 // // MySQL 데이터베이스 연결 설정
+const connection = mysql.createConnection({
+  host: process.env.MYSQL_HOST || "localhost", // MySQL 서버 주소 (환경 변수 사용 가능)
+  user: process.env.MYSQL_USER || "root", // MySQL 사용자 이름
+  password: process.env.MYSQL_PASSWORD || "ubisam8877", // MySQL 비밀번호
+  database: process.env.MYSQL_DATABASE || "ub_homepage", // MySQL 데이터베이스 이름
+  port: process.env.MYSQL_PORT || "3306", // MySQL 서버 포트 (기본값: 3306)
+});
 // const connection = mysql.createConnection({
 //   host: process.env.MYSQL_HOST || "ubihomepage.cafe24app.com", // MySQL 서버 주소 (환경 변수 사용 가능)
 //   user: process.env.MYSQL_USER || "ubisam", // MySQL 사용자 이름
@@ -30,13 +37,42 @@ app.use(express.urlencoded({ extended: true })); // URL-encoded 데이터 파싱
 // });
 
 // // 데이터베이스 연결
-// connection.connect((err) => {
-//   if (err) {
-//     console.error("MySQL 연결 실패:", err.stack);
-//     return;
-//   }
-//   console.log("MySQL 연결 성공. 연결 ID:", connection.threadId);
-// });
+connection.connect((err) => {
+  if (err) {
+    console.error("MySQL 연결 실패:", err.stack);
+    return;
+  }
+  console.log("MySQL 연결 성공. 연결 ID:", connection.threadId);
+});
+
+// SQL 쿼리를 통해 테이블을 생성 (이미 존재하지 않는 경우에만 생성)
+const createTableQuery = `
+  CREATE TABLE IF NOT EXISTS DataRoomTable (
+    // id INT AUTO_INCREMENT PRIMARY KEY,               -- 기본 키, 자동 증가
+    job_id INT NOT NULL PRIMARY KEY,               -- job ID (필수, 기본 키)
+    user_id INT NOT NULL,                            -- 사용자 ID (필수)
+    date DATE NOT NULL,                              -- 날짜 (필수)
+    file_title VARCHAR(255) NOT NULL,                -- 파일 제목 (최대 255자, 필수)
+    file_description TEXT,                           -- 파일 설명 (텍스트 필드)
+    file_name VARCHAR(255) NOT NULL,                 -- 파일 이름 (최대 255자, 필수)
+    file_count INT DEFAULT 0,                        -- 파일 개수 (기본값: 0)
+    view_count INT DEFAULT 0,                        -- 조회 수 (기본값: 0)
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 생성 시간 (현재 시간 기본값)
+    update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 수정 시간 (업데이트 시 자동 변경)
+    delete_time TIMESTAMP NULL                      -- 삭제 시간 (NULL 허용)
+  );
+`;
+
+// ALTER TABLE DataRoomTable DROP COLUMN view_count;
+
+// 쿼리를 실행하여 테이블 생성
+connection.query(createTableQuery, (err, results) => {
+  if (err) {
+    console.error("테이블 생성 중 오류 발생:", err.message); // 테이블 생성 중 오류 메시지 출력
+  } else {
+    console.log("테이블 'DataRoomTable'이 생성되었거나 이미 존재합니다."); // 테이블 생성 완료 또는 이미 존재 메시지 출력
+  }
+});
 
 // connection.query('SELECT * FROM ubisma', function(err, results, fields) {
 //   if (err) {
@@ -44,6 +80,41 @@ app.use(express.urlencoded({ extended: true })); // URL-encoded 데이터 파싱
 //   }
 //   console.log(results);
 // });
+
+app.post("/api/dataroom", (req, res) => {
+
+  const {
+    job_id,user_id,date,file_title,file_description,file_name,file_count,view_count,
+  } = req.body;
+
+    // 요청 데이터 확인 로그
+    console.log("🔍 Incoming data, req:", {
+      job_id, user_id, date, file_title, file_description, file_name, file_count, view_count,
+    });
+  
+  // SQL 쿼리
+  const insertQuery = `
+    INSERT INTO DataRoomTable (
+      job_id,user_id,date,file_title,file_description,file_name,file_count,view_count
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+  `;
+
+  // 데이터베이스에 값 삽입
+  connection.query(
+    insertQuery,
+    [
+      job_id,user_id,date,file_title,file_description,file_name,file_count,view_count,
+    ],
+    (err, results) => {
+      if (err) {
+        console.error("데이터 삽입 오류:", err.message);
+        return res.status(500).json({ error: "데이터 삽입 실패" });
+      }
+      console.log("✅ 데이터 삽입 성공!");
+      res.status(201).json({ message: "데이터 삽입 성공!", data: results });
+    }
+  );
+});
 
 // 파일 저장 디렉토리 경로 (다운로드할 파일들이 저장된 경로)
 const FILE_DIRECTORY = path.join(__dirname, "Storege/Category/dataroom/UbiGEMSECS");

@@ -120,9 +120,9 @@
 }
 
 .attachments-table td {
-  padding: 0.5rem; /* Add padding for better readability */
-  font-size: 0.9rem; /* Optional: Slightly smaller font */
-  border-bottom: 1px solid #eaeaea; /* Optional: Add bottom border to rows */
+  padding: 0.5rem; 
+  font-size: 0.9rem; 
+  border-bottom: 1px solid #eaeaea;
 }
 
 /* attachment-link 클래스에 대한 스타일 */
