@@ -2,44 +2,99 @@ import React, { useState } from "react";
 import style from './DataCreateFile.module.css'; // CSS 모듈 불러오기
 import { Link } from "react-router-dom";
 import axios from "axios"; // axios 모듈을 불러옵니다.
+import { v4 as uuidv4 } from "uuid"; // uuid 라이브러리 임포트
 
 const DataCreateFile = () => {
+  const now = new Date();
+  const formattedTime = now.toISOString().slice(11, 19); // HH:MM:SS 형식으로 시간 표시
+
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    files: [], // 선택된 파일들
+    job_id: "101",
+    user_id: "202",
+    date: new Date().toISOString().slice(0, 10),
+    file_title: "",
+    file_description: "",
+    file_name: [], // 파일 이름 목록
+    files: [],     // 실제 선택된 파일 객체
+    file_count: 0,
+    view_count: 0,
+    create_time: "",
+    update_time: "",
+    delete_time: "",
   });
 
+  // const [formData, setFormData] = useState({
+  //   title: "",
+  //   description: "",
+  //   files: [], // 선택된 파일들
+  // });
+
   // 입력 값이 변경될 때마다 formData 상태를 업데이트
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData({ ...formData, [name]: value });
+  // };
+
+  // // 파일 선택 시 처리하는 함수
+  // const handleFileChange = (e) => {
+  //   const files = e.target.files;
+  //   console.log("handleFileChange files", files);
+
+  //   if (!files) {
+  //     return; // 파일이 없다면 아무것도 하지 않음
+  //   }
+  //   // 선택한 파일들을 기존 파일 목록에 추가
+  //   const selectedFiles = Array.from(e.target.files);
+  
+  //   // 기존 파일 목록에 새로 선택한 파일을 추가하여 상태 업데이트
+  //   setFormData({
+  //     ...formData,
+  //     files: [...formData.files, ...selectedFiles], // 기존 파일 목록 + 새로 선택한 파일
+  //   });
+  
+  //   // 파일 선택 후 파일 탐색기 다시 닫는 방식 (자동으로 처리)
+  //   e.target.value = null;
+  // };
+  // // 파일 삭제 함수
+  // const handleFileDelete = (fileName) => {
+  //   setFormData({
+  //     ...formData,
+  //     files: formData.files.filter((file) => file.name !== fileName), // 해당 파일 삭제
+  //   });
+  // };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  // 파일 선택 시 처리하는 함수
   const handleFileChange = (e) => {
     const files = e.target.files;
-
-    if (!files) {
-      return; // 파일이 없다면 아무것도 하지 않음
-    }
-    // 선택한 파일들을 기존 파일 목록에 추가
-    const selectedFiles = Array.from(e.target.files);
+    if (!files) return;
   
-    // 기존 파일 목록에 새로 선택한 파일을 추가하여 상태 업데이트
-    setFormData({
-      ...formData,
-      files: [...formData.files, ...selectedFiles], // 기존 파일 목록 + 새로 선택한 파일
-    });
+    const selectedFiles = Array.from(files);
   
-    // 파일 선택 후 파일 탐색기 다시 닫는 방식 (자동으로 처리)
-    e.target.value = null;
+    setFormData((prev) => ({
+      ...prev,
+      files: [...prev.files, ...selectedFiles], // 파일 객체 추가
+      file_name: [...prev.file_name, ...selectedFiles.map((file) => file.name)], // 파일 이름 추가
+      file_count: prev.file_count + selectedFiles.length, // 파일 개수 업데이트
+    }));
+  
+    e.target.value = null; // 파일 선택기 초기화
   };
-  // 파일 삭제 함수
+
   const handleFileDelete = (fileName) => {
-    setFormData({
-      ...formData,
-      files: formData.files.filter((file) => file.name !== fileName), // 해당 파일 삭제
+    setFormData((prev) => {
+      const updatedFiles = prev.file_name.filter((name) => name !== fileName);
+      return {
+        ...prev,
+        file_name: updatedFiles,
+        file_count: updatedFiles.length, // 파일 개수 업데이트
+      };
     });
   };
 
@@ -49,55 +104,66 @@ const DataCreateFile = () => {
     console.log("업로드된 데이터:", formData);
   };
 
-   // 업로드 버튼 이벤트 핸들러
-   const handleUpload = async () => {
+  // 업로드 버튼 이벤트 핸들러
+  const handleUpload = async () => {
+    const now = new Date();
+    const formattedTime = now.toISOString().slice(0, 19).replace("T", " ");
 
-      // 현재 시간을 ISO 형식으로 변환
-  const now = new Date();
-     const formattedTime = now.toISOString().slice(0, 19).replace("T", " "); // MySQL 형식으로 변환 (YYYY-MM-DD HH:mm:ss)
+    // job_id를 UUID로 설정
+    //const uniqueJobId = uuidv4();
+    // job_id를 5자리로 생성
+    const uniqueJobId = uuidv4().replace(/-/g, "").slice(0, 5); // UUID를 5자리로 잘라서 사용
 
-     const testData = {
-       job_id: 101, // 테스트 job ID
-       user_id: 202, // 테스트 사용자 ID
-       date: now.toISOString().slice(0, 10), // 오늘 날짜 (YYYY-MM-DD 형식)
-       file_title: "테스트 파일 제목", // 테스트 파일 제목
-       file_description: "이것은 테스트 파일 설명입니다.", // 테스트 파일 설명
-       file_name: "test_file.pdf", // 테스트 파일 이름
-       file_count: 5, // 테스트 파일 개수
-       view_count: 0, // 테스트 조회수
-       create_time: formattedTime, // 현재 시간
-       update_time: formattedTime, // 현재 시간
-       delete_time: null, // 삭제 시간이 없는 경우 (null)
-     };
+    // FormData 객체 생성
+    const uploadData = new FormData();
 
-    //  const testData = {
-    //   job_id: uuidv4(), // UUID 생성
-    //   user_id: 202,
-    //   date: now.toISOString().slice(0, 10), // 오늘 날짜 (YYYY-MM-DD)
-    //   file_title: formData.title,
-    //   file_description: formData.description,
-    //   file_name: formData.files.map((file) => file.name).join(", "), // 파일 이름 목록
-    //   file_count: formData.files.length, // 파일 개수
-    //   view_count: 0,
-    //   create_time: formattedTime,
-    //   update_time: formattedTime,
-    //   delete_time: null,
-    // };
+    // FormData에 필드 추가
+    uploadData.append("job_id", uniqueJobId); // UUID를 job_id로 추가
+    uploadData.append("user_id", formData.user_id);
+    uploadData.append("date", formData.date);
+    uploadData.append("file_title", formData.file_title);
+    uploadData.append("file_description", formData.file_description);
+    uploadData.append("file_count", formData.file_count);
+    uploadData.append("view_count", formData.view_count);
+    uploadData.append("create_time", formattedTime);
+    uploadData.append("update_time", formattedTime);
+    uploadData.append("delete_time", formData.delete_time);
+
+    // 파일 이름 목록 생성
+    const fileNames = formData.files.map((file) => file.name);
+
+    // FormData에 파일 이름 추가
+    uploadData.append("file_name", fileNames.join(", ")); // 쉼표로 구분된 파일 이름 목록
 
 
-     try {
-       // 서버로 데이터 전송 (POST 요청)
-       const response = await axios.post("http://localhost:8001/api/dataroom", testData);
+    // 파일 객체 추가
+    formData.files.forEach((file, index) => {
+      uploadData.append(`files`, file); // 파일 추가 (키 이름은 'files')
+    });
 
-       // 업로드 성공 시 알림 및 콘솔 출력
-       alert("데이터 업로드 성공!");
-       console.log("서버 응답:", response.data); // 서버 응답 출력
-     } catch (error) {
-       // 업로드 실패 시 에러 알림 및 콘솔 출력
-       console.error("데이터 업로드 실패:", error.message); // 에러 메시지 출력
-       alert("데이터 업로드에 실패했습니다."); // 실패 알림
-     }
-   };
+    // 서버에 보내기 전에 FormData 확인
+    console.log("FormData 객체에 포함된 내용:");
+    for (let [key, value] of uploadData.entries()) {
+      console.log(`${key}:`, value);
+    }
+
+    try {
+      // axios를 사용하여 FormData 전송
+      const response = await axios.post("http://localhost:8001/api/dataroom", uploadData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // 필수: multipart/form-data 설정
+        },
+      });
+
+      // 업로드 성공 처리
+      alert("데이터 업로드 성공!");
+      console.log("서버 응답:", response.data);
+    } catch (error) {
+      // 업로드 실패 처리
+      console.error("데이터 업로드 실패:", error.message);
+      alert("데이터 업로드에 실패했습니다.");
+    }
+  };
 
   return (
     <div className={style.createContainer}>
@@ -107,28 +173,39 @@ const DataCreateFile = () => {
           <label>제목</label>
           <input
             type="text"
-            name="title"
-            value={formData.title}
+            name="file_title"
+            value={formData.file_title}
             onChange={handleInputChange}
             required
           />
 
           <label>설명</label>
           <textarea
-            name="description"
-            value={formData.description}
+            name="file_description"
+            value={formData.file_description}
             onChange={handleInputChange}
             rows={10}
             required
           />
+          {/* 파일 업로드 */}
           <div className={style.fileContainer}>
             <label>첨부 파일</label>
-            <button type="button" className={style.addButton} onClick={(e) => handleFileChange(e)} >
+            <input
+              type="file"
+              id="fileInput"
+              style={{ display: "none" }} // 숨겨진 파일 선택기
+              multiple
+              onChange={handleFileChange}
+            />
+            <button
+              type="button"
+              className={style.addButton}
+              onClick={() => document.getElementById("fileInput").click()} // 버튼 클릭 시 파일 선택 열기
+            >
               + ADD
             </button>
-
           </div>
-         
+
           {/* 선택된 파일 이름을 테이블 형식으로 출력 */}
           {formData.files.length > 0 && (
             <div className={style.fileListContainer}>

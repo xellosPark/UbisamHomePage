@@ -1,6 +1,5 @@
 
 import { Link, useNavigate } from "react-router-dom";
-import { FaCheckCircle, FaHeart, FaFileAlt } from 'react-icons/fa';
 import './DataRoom.css';
 
 import React, { useState, useRef } from "react";

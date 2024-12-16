@@ -2,8 +2,9 @@ require("dotenv").config(); // 환경 변수 로드
 const express = require("express"); // Express 모듈 로드
 const cors = require("cors"); // CORS 설정을 위한 모듈 로드
 const path = require("path"); // 경로 처리를 위한 path 모듈 로드
+const fs = require("fs"); // 파일 시스템 모듈 추가
 const mysql = require("mysql"); // MySQL 모듈 로드
-
+const multer = require("multer");
 const app = express(); // Express 애플리케이션 생성
 const PORT = process.env.PORT || 8001; // 서버 포트 설정
 
@@ -19,6 +20,38 @@ app.use(
 // JSON 및 URL-encoded 데이터 파싱 미들웨어 설정
 app.use(express.json()); // JSON 요청 데이터 파싱
 app.use(express.urlencoded({ extended: true })); // URL-encoded 데이터 파싱
+
+// 파일 저장 경로 설정
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const folderName = req.body.file_title || "default"; // 폴더 이름이 없으면 'default' 사용
+
+    // 경로에 한글이 포함되어도 문제없이 처리하도록 설정
+    const uploadPath = path.join(__dirname, "Storege/Category/dataroom", folderName);
+
+    // 콘솔 로그 추가: 폴더명과 생성 경로
+    //console.log(`[요청된 폴더명] file_title: ${folderName}`);
+    //console.log(`[파일 저장 경로 설정] 저장될 경로: ${uploadPath}`);
+
+    // 폴더가 존재하지 않으면 생성
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath, { recursive: true }); // 하위 폴더까지 생성
+      console.log(`[폴더 생성] 저장될 폴더 경로: ${uploadPath}`);
+    }
+
+    //console.log(`[파일 저장 경로 설정] 저장될 경로: ${uploadPath}`);
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    // 한글 깨짐 방지를 위해 utf8로 처리
+    const originalName = Buffer.from(file.originalname, "latin1").toString("utf8");
+    //console.log(`[파일 이름 생성] 저장될 파일 이름: ${originalName}`); // 파일 이름 로그 출력
+
+    cb(null, originalName); // 원본 파일 이름 그대로 사용
+  },
+});
+
+const upload = multer({ storage });
 
 // // MySQL 데이터베이스 연결 설정
 const connection = mysql.createConnection({
@@ -48,9 +81,8 @@ connection.connect((err) => {
 // SQL 쿼리를 통해 테이블을 생성 (이미 존재하지 않는 경우에만 생성)
 const createTableQuery = `
   CREATE TABLE IF NOT EXISTS DataRoomTable (
-    // id INT AUTO_INCREMENT PRIMARY KEY,               -- 기본 키, 자동 증가
-    job_id INT NOT NULL PRIMARY KEY,               -- job ID (필수, 기본 키)
-    user_id INT NOT NULL,                            -- 사용자 ID (필수)
+    job_id VARCHAR(255) NOT NULL PRIMARY KEY,        -- job ID (필수, 기본 키)
+    user_id VARCHAR(255) NOT NULL,                   -- 사용자 ID (필수)
     date DATE NOT NULL,                              -- 날짜 (필수)
     file_title VARCHAR(255) NOT NULL,                -- 파일 제목 (최대 255자, 필수)
     file_description TEXT,                           -- 파일 설명 (텍스트 필드)
@@ -81,61 +113,103 @@ connection.query(createTableQuery, (err, results) => {
 //   console.log(results);
 // });
 
-app.post("/api/dataroom", (req, res) => {
+// app.post("/api/dataroom", (req, res) => {
 
+//   // 요청 데이터 확인 로그
+//   console.log("🔍 Incoming data, req:", {
+//     job_id, user_id, date, file_title, file_description, file_name, file_count, view_count,
+//   });
+
+
+//   const {
+//     job_id, user_id, date, file_title, file_description, file_name, file_count, view_count,
+//   } = req.body;
+
+
+//   // SQL 쿼리
+//   const insertQuery = `
+//     INSERT INTO DataRoomTable (
+//       job_id,user_id,date,file_title,file_description,file_name,file_count,view_count
+//     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+//   `;
+
+//   // 데이터베이스에 값 삽입
+//   connection.query(
+//     insertQuery,
+//     [
+//       job_id, user_id, date, file_title, file_description, file_name, file_count, view_count,
+//     ],
+//     (err, results) => {
+//       if (err) {
+//         console.error("데이터 삽입 오류:", err.message);
+//         return res.status(500).json({ error: "데이터 삽입 실패" });
+//       }
+//       console.log("✅ 데이터 삽입 성공!");
+//       res.status(201).json({ message: "데이터 삽입 성공!", data: results });
+//     }
+//   );
+// });
+
+// POST 요청 처리
+app.post("/api/dataroom", upload.array("files"), (req, res) => {
   const {
-    job_id,user_id,date,file_title,file_description,file_name,file_count,view_count,
-  } = req.body;
+    job_id, user_id, date, file_title, file_description, file_count, view_count, } = req.body;
 
-    // 요청 데이터 확인 로그
-    console.log("🔍 Incoming data, req:", {
-      job_id, user_id, date, file_title, file_description, file_name, file_count, view_count,
+  try {
+    // 업로드된 파일 이름 리스트 생성 (원본 파일 이름 유지)
+    const fileNames = req.files.map((file) => file.originalname).join(", ");
+
+    console.log("🔍 Incoming data:", {
+      job_id,user_id,date,file_title,file_description,file_count,view_count,fileNames,
     });
-  
-  // SQL 쿼리
-  const insertQuery = `
-    INSERT INTO DataRoomTable (
-      job_id,user_id,date,file_title,file_description,file_name,file_count,view_count
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
-  `;
 
-  // 데이터베이스에 값 삽입
-  connection.query(
-    insertQuery,
-    [
-      job_id,user_id,date,file_title,file_description,file_name,file_count,view_count,
-    ],
-    (err, results) => {
-      if (err) {
-        console.error("데이터 삽입 오류:", err.message);
-        return res.status(500).json({ error: "데이터 삽입 실패" });
+    // SQL 쿼리
+    const insertQuery = `
+      INSERT INTO DataRoomTable (
+        job_id, user_id, date, file_title, file_description, file_name, file_count, view_count
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+    `;
+
+    // 데이터베이스에 값 삽입
+    connection.query(
+      insertQuery,
+      [ job_id, user_id, date, file_title, file_description, fileNames, file_count, view_count, ],
+      (err, results) => {
+        if (err) {
+          console.error("❌ 데이터 삽입 오류:", err.message);
+          return res.status(500).json({ error: "데이터 삽입 실패" });
+        }
+        console.log("✅ 데이터 삽입 성공!");
+        res.status(201).json({ message: "데이터 삽입 성공!", data: results });
       }
-      console.log("✅ 데이터 삽입 성공!");
-      res.status(201).json({ message: "데이터 삽입 성공!", data: results });
-    }
-  );
+    );
+  } catch (error) {
+    console.error("❌ 서버 처리 오류:", error.message);
+    res.status(500).json({ error: "서버 처리 실패" });
+  }
 });
 
 // 파일 저장 디렉토리 경로 (다운로드할 파일들이 저장된 경로)
-const FILE_DIRECTORY = path.join(__dirname, "Storege/Category/dataroom/UbiGEMSECS");
+//const FILE_DIRECTORY = path.join(__dirname, "Storege/Category/dataroom/UbiGEMSECS");
 
-app.get("/downloads/:filename", (req, res) => {
-  const filename = req.params.filename; // 클라이언트가 요청한 파일 이름
-  console.log(`[요청 처리 시작] 클라이언트가 요청한 파일 이름: ${filename}`);
+// // GET 요청 처리 (파일 다운로드)
+// app.get("/downloads/:filename", (req, res) => {
+//   const filename = req.params.filename; // 클라이언트가 요청한 파일 이름
+//   console.log(`[요청 처리 시작] 클라이언트가 요청한 파일 이름: ${filename}`);
 
-  const filePath = path.join(FILE_DIRECTORY, filename); // 파일의 전체 경로 생성
-  console.log(`[파일 경로 생성 완료] 전체 파일 경로: ${filePath}`);
+//   const filePath = path.join(FILE_DIRECTORY, filename); // 파일의 전체 경로 생성
+//   console.log(`[파일 경로 생성 완료] 전체 파일 경로: ${filePath}`);
 
-  // 파일 다운로드 처리
-  res.download(filePath, filename, (err) => {
-    if (err) {
-      console.error(`[다운로드 오류 발생] 파일을 다운로드할 수 없습니다: ${err.message}`); // 오류 로그 출력
-      res.status(404).send("파일을 찾을 수 없습니다."); // 파일이 없을 경우 404 응답
-    } else {
-      console.log(`[다운로드 성공] 클라이언트에 파일 전송 완료: ${filename}`); // 다운로드 성공 로그 출력
-    }
-  });
-});
+//   // 파일 다운로드 처리
+//   res.download(filePath, filename, (err) => {
+//     if (err) {
+//       console.error(`[다운로드 오류 발생] 파일을 다운로드할 수 없습니다: ${err.message}`); // 오류 로그 출력
+//       res.status(404).send("파일을 찾을 수 없습니다."); // 파일이 없을 경우 404 응답
+//     } else {
+//       console.log(`[다운로드 성공] 클라이언트에 파일 전송 완료: ${filename}`); // 다운로드 성공 로그 출력
+//     }
+//   });
+// });
 
 
 // MySQL 데이터 조회 API (예: books 테이블에서 데이터 가져오기)
