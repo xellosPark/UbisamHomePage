@@ -159,9 +159,9 @@ app.post("/api/dataroom", upload.array("files"), (req, res) => {
     // 업로드된 파일 이름 리스트 생성 (원본 파일 이름 유지)
     const fileNames = req.files.map((file) => file.originalname).join(", ");
 
-    console.log("🔍 Incoming data:", {
-      job_id,user_id,date,file_title,file_description,file_count,view_count,fileNames,
-    });
+    // console.log("🔍 Incoming data:", {
+    //   job_id,user_id,date,file_title,file_description,file_count,view_count,fileNames,
+    // });
 
     // SQL 쿼리
     const insertQuery = `
@@ -187,6 +187,50 @@ app.post("/api/dataroom", upload.array("files"), (req, res) => {
     console.error("❌ 서버 처리 오류:", error.message);
     res.status(500).json({ error: "서버 처리 실패" });
   }
+});
+//자료실 데이터 메일 화면 데이터 가져오는 부분
+app.get("/api/dataroom", (req, res) => {
+  const selectQuery = "SELECT job_id AS id, file_title, user_id, date, file_count, view_count FROM DataRoomTable";
+
+  connection.query(selectQuery, (err, results) => {
+      if (err) {
+          console.error("❌ 데이터 조회 오류:", err.message);
+          return res.status(500).json({ error: "데이터 조회 실패" });
+      }
+      res.status(200).json(results); // 조회된 데이터 반환
+  });
+});
+
+//자료실 데이터 조회수 증가하는
+app.post("/api/dataroom/update-views", (req, res) => {
+  const { id } = req.body;
+
+  const updateQuery = `
+      UPDATE DataRoomTable
+      SET view_count = view_count + 1
+      WHERE job_id = ?;
+  `;
+
+  connection.query(updateQuery, [id], (err) => {
+      if (err) {
+          console.error("❌ 조회수 업데이트 오류:", err.message);
+          return res.status(500).json({ error: "조회수 업데이트 실패" });
+      }
+
+      // 조회수 업데이트 후 전체 데이터를 반환
+      const selectQuery = "SELECT * FROM DataRoomTable";
+
+      connection.query(selectQuery, (err, results) => {
+          if (err) {
+              console.error("❌ 데이터 조회 오류:", err.message);
+              return res.status(500).json({ error: "데이터 조회 실패" });
+          }
+          res.status(200).json({
+              message: "조회수 업데이트 및 데이터 조회 성공!",
+              data: results, // 전체 데이터 반환
+          });
+      });
+  });
 });
 
 // 파일 저장 디렉토리 경로 (다운로드할 파일들이 저장된 경로)

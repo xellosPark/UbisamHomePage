@@ -51,6 +51,13 @@
   text-overflow: ellipsis; /* 긴 텍스트 ... 표시 */
 }
 
+/* 테이블 행에 마우스 호버 시 하늘색 배경색 적용 */
+.data-table tr:hover {
+  background-color: #E0F7FA; /* 연한 하늘색 */
+  transition: background-color 0.2s ease-in-out; /* 부드러운 색상 전환 */
+  cursor: pointer; /* 마우스 커서 변경 */
+}
+
 .data-table th {
   background-color: #f7f9fa;
   color: #333;

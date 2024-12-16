@@ -5,30 +5,25 @@ import axios from "axios"; // axios 모듈을 불러옵니다.
 
 const DataDetail = () => {
   const { id } = useParams();
-  const { state } = useLocation();
-  console.log("전달받은 상태(state):", state);
-  console.log("전달받은 상태(id):", id);
+  const location = useLocation();
+  const data = location.state?.data || []; // 데이터가 없으면 빈 배열 반환
 
-  // state가 null 또는 undefined인 경우를 처리
-  if (!state || !state.item) {
-    return (
-      <div className="data-detail-container">
-        <h1 className="detail-title">오류</h1>
-        <p>올바른 데이터를 찾을 수 없습니다. 다시 시도해주세요.</p>
-        <Link to="/DataRoom" className="back-button">
-          목록으로 돌아가기
-        </Link>
-      </div>
-    );
-  }
-  const { item } = state;
+  // 데이터 배열에서 첫 번째 항목 가져오기
+  const detailData = data[0] || {}; // 배열의 첫 번째 요소에 접근
+  console.log("✅ 상세 페이지로 전달된 데이터:", detailData);
 
+  // 파일 목록 처리
+  const fileNames = detailData?.file_name ? detailData.file_name.split(", ") : []; // 쉼표로 분할
+  const fileCount = detailData?.file_count || 0; // 파일 개수 확인
+
+  // 파일 다운로드 가능한 목록 생성
+  const attachments = fileNames.length > 0 ? fileNames : [];
+
+  console.log("✅ 파일 개수:", fileCount);
+  console.log("✅ 파일 목록:", attachments);
     // 다운로드 가능한 파일 목록
-  const attachments = ["Text1.txt", "Text2.txt", "Text3.txt", "Text4.txt"];
+  // const attachments = ["Text1.txt", "Text2.txt", "Text3.txt", "Text4.txt"];
 
-  //   // 한글로 콘솔 출력
-  console.log("전달받은 상태(state):", state);
-  console.log("전달받은 항목(item):", item);
 
   // 파일 다운로드 함수 (axios 사용)
   const downloadFile = async (attachment) => {
@@ -66,23 +61,23 @@ const DataDetail = () => {
         <tbody>
           <tr>
             <td className="detail-label">ID</td>
-            <td>{item.id}</td>
+            <td>{data.user}</td>
           </tr>
           <tr>
             <td className="detail-label">제목</td>
-            <td>{item.title}</td>
+            <td>{data.title}</td>
           </tr>
           <tr>
             <td className="detail-label">작성자</td>
-            <td>{item.author}</td>
+            <td>{data.author}</td>
           </tr>
           <tr>
             <td className="detail-label">날짜</td>
-            <td>{item.date}</td>
+            <td>{data.date}</td>
           </tr>
           <tr>
             <td className="detail-label">조회수</td>
-            <td>{item.views}</td>
+            <td>{data.views}</td>
           </tr>
           <tr>
             <td className="detail-label">첨부 파일</td>
@@ -132,7 +127,7 @@ const DataDetail = () => {
         <div className="navigation-buttons">
           {/* 이전 버튼 */}
           <Link
-            to={`/DataRoom/Detail/${item.id - 1}`} // 경로를 라우터와 일치하도록 수정
+            to={`/DataRoom/Detail/${data.id - 1}`} // 경로를 라우터와 일치하도록 수정
             className="navigation-link"
           >
             &lt; Previous
@@ -140,7 +135,7 @@ const DataDetail = () => {
 
           {/* 다음 버튼 */}
           <Link
-            to={`/DataRoom/Detail/${item.id + 1}`} // 경로를 라우터와 일치하도록 수정
+            to={`/DataRoom/Detail/${data.id + 1}`} // 경로를 라우터와 일치하도록 수정
             className="navigation-link"
           >
             Next &gt;
