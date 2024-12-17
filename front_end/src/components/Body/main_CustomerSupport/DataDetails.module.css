@@ -1,0 +1,117 @@
+/* 컨테이너 스타일 */
+.dataDetailContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0.5rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 제목 스타일 */
+.detailTitle {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+/* 테이블 스타일 */
+.detailTable {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #f9f9f9;
+}
+
+.detailTable td,
+.detailTable th {
+  padding: 0.3rem;
+  border: 1px solid #ddd;
+}
+
+.detailLabel {
+  width: 20%;
+  font-weight: bold;
+  background-color: #f0f0f0;
+  color: #555555;
+  text-align: center;
+  vertical-align: top;
+}
+
+.contentCell {
+  height: 250px;
+  vertical-align: top;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  background-color: #fdfdfd;
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.contentCell::-webkit-scrollbar {
+  width: 8px;
+}
+
+.contentCell::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.contentCell::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.contentCell::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* 첨부 파일 버튼 스타일 */
+.downloadButton {
+  background: none;
+  border: none;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* 버튼 섹션 */
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.backButton {
+  padding: 0.7rem 2rem;
+  background-color: #2eb872;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.backButton:hover {
+  background-color: #249a63;
+}
+
+.attachmentsWrapper {
+  margin-top: 0rem;
+}
+
+.attachmentsWrapper table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attachmentsWrapper td {
+  padding: 0.2rem;
+  border: 1px solid #ddd;
+  text-align: left;
+}

@@ -89,15 +89,26 @@ const DataCreateFile = () => {
 
   const handleFileDelete = (fileName) => {
     setFormData((prev) => {
-      const updatedFiles = prev.file_name.filter((name) => name !== fileName);
+      // file_name에서 해당 파일을 제외한 새로운 배열 생성
+      const updatedFileNames = prev.file_name.filter((name) => name !== fileName);
+  
+      // files 배열에서도 fileName에 해당하는 파일을 제외
+      const updatedFiles = prev.files.filter((file) => file.name !== fileName);
+  
+      // console.log("삭제된 파일:", fileName); // 삭제된 파일 이름 로그
+      // console.log("업데이트된 파일 목록:", updatedFiles); // 업데이트된 파일 객체 로그
+      // console.log("업데이트된 파일 이름 목록:", updatedFileNames); // 업데이트된 파일 이름 목록 로그
+      // console.log("파일 개수:", updatedFiles.length); // 파일 개수 로그
+  
+      // 업데이트된 상태 반환
       return {
         ...prev,
-        file_name: updatedFiles,
+        files: updatedFiles, // files 배열 업데이트
+        file_name: updatedFileNames, // file_name 배열 업데이트
         file_count: updatedFiles.length, // 파일 개수 업데이트
       };
     });
   };
-
   // 폼 제출 시 처리하는 함수
   const handleSubmit = (e) => {
     e.preventDefault();
