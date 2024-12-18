@@ -137,6 +137,11 @@
    text-decoration: underline;
 }
 
+.login {
+   text-decoration: none;
+   color: #666;
+}
+
 /* 화면이 작아졌을 때도 가로 정렬을 유지 */
 @media (max-width: 1200px) {
    .nav {

@@ -106,7 +106,7 @@ const Header = () => {
       </nav>
 
       <div className="header-right">
-        <span>Login</span>
+        <Link to="/Login" className='login'>Login</Link>
         <span className="divider">|</span>
         <span>Mobile</span>
       </div>
