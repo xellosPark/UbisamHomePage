@@ -8,12 +8,18 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* 제목 스타일 */
+.detailTitleContainer {
+  text-align: center; /* 자식 요소를 가운데 정렬 */
+  margin-bottom: 1rem;
+}
+
 .detailTitle {
-  text-align: center;
-  font-size: 1.8rem;
-  color: #333;
-  margin-bottom: 0.5rem;
+  display: inline-block; /* 글자만큼 너비 적용 */
+  background-color: #e1fda4;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  color: #777;
+  font-size: 1.5rem;
   font-weight: bold;
 }
 

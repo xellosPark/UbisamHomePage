@@ -25,7 +25,15 @@ const DataRoom = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:8001/api/dataroom");
-        setData(response.data);
+
+        // delete_time이 null인 데이터만 필터링
+        const filteredData = response.data.filter((item) => !item.delete_time);
+
+        // 콘솔에 필터링된 데이터 출력
+        //console.log("📥 필터링된 데이터:", filteredData);
+
+        // 상태에 필터링된 데이터 저장
+        setData(filteredData);
       } catch (err) {
         console.error("❌ 데이터 가져오기 오류:", err.message);
         setError("데이터를 가져오는 중 오류가 발생했습니다.");
@@ -50,12 +58,30 @@ const DataRoom = () => {
     }
   };
 
-  const handleEdit = (id) => {
-    console.log(`✏️ 수정 클릭: ${id}`);
+  const handleEdit = (jobid) => {
+    console.log(`✏️ 수정 클릭: ${jobid}`);
   };
 
-  const handleDelete = (id) => {
-    console.log(`🗑️ 삭제 클릭: ${id}`);
+  const handleDelete =  async (jobId) => {
+    try {
+      console.log(`🗑️ 삭제 클릭: ${jobId}`);
+
+      // 서버에 삭제 요청 보내기
+      const response = await axios.post("http://localhost:8001/api/dataroom/delete", { job_id: jobId });
+
+      if (response.status === 200) {
+        //console.log("✅ 삭제 완료:", jobId);
+
+        // 서버 응답에서 삭제된 `file_title` 가져오기
+        const { file_title } = response.data;
+
+        // 삭제된 데이터를 제외하고 상태 업데이트
+        setData((prevData) => prevData.filter((item) => item.job_id !== jobId));
+        //console.log(`📁 삭제된 폴더 경로: Storege/Category/dataroom/${file_title}`);
+      }
+    } catch (error) {
+      console.error("❌ 삭제 실패:", error.message);
+    }
   };
 
   return (
@@ -105,7 +131,7 @@ const DataRoom = () => {
                       className={`${styles.iconButton} ${styles.editIcon}`}
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleEdit(item.id);
+                        handleEdit(item.job_id);
                       }}
                     >
                       <FontAwesomeIcon icon={faPenToSquare} />
@@ -114,7 +140,7 @@ const DataRoom = () => {
                       className={`${styles.iconButton} ${styles.deleteIcon}`}
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleDelete(item.id);
+                        handleDelete(item.job_id);
                       }}
                     >
                       <FaTrash />
