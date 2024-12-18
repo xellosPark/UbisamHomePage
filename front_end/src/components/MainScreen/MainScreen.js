@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import LoginPage from '../Header/LoginPage.js';
 import CompanyIntroduction from '../Body/main_InfoPage/CompanyIntroduction';
 import CompanyGreetings from '../Body/main_InfoPage/Companygreetings';
 import BusinessOverview from '../Body/main_InfoPage/BusinessOverview';
@@ -90,7 +91,7 @@ const MainScreen = () => {
         <Route path="/DataRoom" element={<DataRoom />} />
         <Route path="/DataRoom/CreateFile" element={<DataCreateFile />} />
         <Route path="/DataRoom/Detail/:id" element={<DataDetail />} />
-
+        <Route path="/Login" element={<LoginPage />} />
         
       </Routes>
 
