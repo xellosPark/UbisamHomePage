@@ -35,6 +35,38 @@ app.use(
 app.use(express.json()); // JSON 요청 데이터 파싱
 app.use(express.urlencoded({ extended: true })); // URL-encoded 데이터 파싱
 
+// 파일 저장 경로 설정
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const folderName = req.body.file_title || "default"; // 폴더 이름이 없으면 'default' 사용
+
+    // 경로에 한글이 포함되어도 문제없이 처리하도록 설정
+    const uploadPath = path.join(__dirname, "Storege/Category/dataroom", folderName);
+
+    // 콘솔 로그 추가: 폴더명과 생성 경로
+    //console.log(`[요청된 폴더명] file_title: ${folderName}`);
+    //console.log(`[파일 저장 경로 설정] 저장될 경로: ${uploadPath}`);
+
+    // 폴더가 존재하지 않으면 생성
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath, { recursive: true }); // 하위 폴더까지 생성
+      console.log(`[폴더 생성] 저장될 폴더 경로: ${uploadPath}`);
+    }
+
+    //console.log(`[파일 저장 경로 설정] 저장될 경로: ${uploadPath}`);
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    // 한글 깨짐 방지를 위해 utf8로 처리
+    const originalName = Buffer.from(file.originalname, "latin1").toString("utf8");
+    //console.log(`[파일 이름 생성] 저장될 파일 이름: ${originalName}`); // 파일 이름 로그 출력
+
+    cb(null, originalName); // 원본 파일 이름 그대로 사용
+  },
+});
+
+const upload = multer({ storage });
+
 // // MySQL 데이터베이스 연결 설정
 
 dbConnection();
@@ -103,63 +135,88 @@ CreateTable();
 
 app.use("/api/auth", authRoutes);
 
+// POST 요청 처리
+//자료실 데이터 메일 화면 데이터 가져오는 부분
+app.get("/api/dataroom", (req, res) => {
+  const selectQuery = "SELECT job_id, file_title, user_id, date, file_count, view_count FROM DataRoomTable";
 
-
-app.post("/api/dataroom", (req, res) => {
-
-  const {
-    job_id,user_id,date,file_title,file_description,file_name,file_count,view_count,
-  } = req.body;
-
-    // 요청 데이터 확인 로그
-    console.log("🔍 Incoming data, req:", {
-      job_id, user_id, date, file_title, file_description, file_name, file_count, view_count,
-    });
-  
-  // SQL 쿼리
-//   const insertQuery = `
-//     INSERT INTO DataRoomTable (
-//       job_id,user_id,date,file_title,file_description,file_name,file_count,view_count
-//     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
-//   `;
-
-//   // 데이터베이스에 값 삽입
-//   connection.query(
-//     insertQuery,
-//     [
-//       job_id,user_id,date,file_title,file_description,file_name,file_count,view_count,
-//     ],
-//     (err, results) => {
-//       if (err) {
-//         console.error("데이터 삽입 오류:", err.message);
-//         return res.status(500).json({ error: "데이터 삽입 실패" });
-//       }
-//       console.log("✅ 데이터 삽입 성공!");
-//       res.status(201).json({ message: "데이터 삽입 성공!", data: results });
-//     }
-//   );
+  connection.query(selectQuery, (err, results) => {
+      if (err) {
+          console.error("❌ 데이터 조회 오류:", err.message);
+          return res.status(500).json({ error: "데이터 조회 실패" });
+      }
+      res.status(200).json(results); // 조회된 데이터 반환
+  });
 });
 
-// 파일 저장 디렉토리 경로 (다운로드할 파일들이 저장된 경로)
-const FILE_DIRECTORY = path.join(__dirname, "Storege/Category/dataroom/UbiGEMSECS");
+//자료실 데이터 조회수 증가하는
+app.post("/api/dataroom/update-views", (req, res) => {
+  const { id } = req.body;
 
-app.get("/downloads/:filename", (req, res) => {
-  const filename = req.params.filename; // 클라이언트가 요청한 파일 이름
-  console.log(`[요청 처리 시작] 클라이언트가 요청한 파일 이름: ${filename}`);
+  const updateQuery = `
+      UPDATE DataRoomTable
+      SET view_count = view_count + 1
+      WHERE job_id = ?;
+  `;
 
-  const filePath = path.join(FILE_DIRECTORY, filename); // 파일의 전체 경로 생성
-  console.log(`[파일 경로 생성 완료] 전체 파일 경로: ${filePath}`);
+  connection.query(updateQuery, [id], (err) => {
+      if (err) {
+          console.error("❌ 조회수 업데이트 오류:", err.message);
+          return res.status(500).json({ error: "조회수 업데이트 실패" });
+      }
 
-  // 파일 다운로드 처리
-  res.download(filePath, filename, (err) => {
+      // 조회수 업데이트 후 전체 데이터를 반환
+      const selectQuery = "SELECT * FROM DataRoomTable";
+
+      connection.query(selectQuery, (err, results) => {
+          if (err) {
+              console.error("❌ 데이터 조회 오류:", err.message);
+              return res.status(500).json({ error: "데이터 조회 실패" });
+          }
+          res.status(200).json({
+              message: "조회수 업데이트 및 데이터 조회 성공!",
+              data: results, // 전체 데이터 반환
+          });
+      });
+  });
+});
+
+// 파일 다운로드 API
+app.post("/api/download", (req, res) => {
+  const { path: filePath } = req.body;              // 요청에서 파일 경로 받기
+  // const fullPath = path.join(__dirname, filePath);  // 절대 경로 생성
+  const fullPath = path.isAbsolute(filePath) ? filePath : path.join(__dirname, filePath);
+
+  // 파일 전송
+  res.download(fullPath, (err) => {
     if (err) {
-      console.error(`[다운로드 오류 발생] 파일을 다운로드할 수 없습니다: ${err.message}`); // 오류 로그 출력
-      res.status(404).send("파일을 찾을 수 없습니다."); // 파일이 없을 경우 404 응답
-    } else {
-      console.log(`[다운로드 성공] 클라이언트에 파일 전송 완료: ${filename}`); // 다운로드 성공 로그 출력
+      console.error("❌ 파일 전송 실패:", err.message);
+      res.status(500).send("파일 다운로드 실패");
     }
   });
 });
+
+// 파일 저장 디렉토리 경로 (다운로드할 파일들이 저장된 경로)
+//const FILE_DIRECTORY = path.join(__dirname, "Storege/Category/dataroom/UbiGEMSECS");
+
+// // GET 요청 처리 (파일 다운로드)
+// app.get("/downloads/:filename", (req, res) => {
+//   const filename = req.params.filename; // 클라이언트가 요청한 파일 이름
+//   console.log(`[요청 처리 시작] 클라이언트가 요청한 파일 이름: ${filename}`);
+
+//   const filePath = path.join(FILE_DIRECTORY, filename); // 파일의 전체 경로 생성
+//   console.log(`[파일 경로 생성 완료] 전체 파일 경로: ${filePath}`);
+
+//   // 파일 다운로드 처리
+//   res.download(filePath, filename, (err) => {
+//     if (err) {
+//       console.error(`[다운로드 오류 발생] 파일을 다운로드할 수 없습니다: ${err.message}`); // 오류 로그 출력
+//       res.status(404).send("파일을 찾을 수 없습니다."); // 파일이 없을 경우 404 응답
+//     } else {
+//       console.log(`[다운로드 성공] 클라이언트에 파일 전송 완료: ${filename}`); // 다운로드 성공 로그 출력
+//     }
+//   });
+// });
 
 
 // MySQL 데이터 조회 API (예: books 테이블에서 데이터 가져오기)
