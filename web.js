@@ -9,6 +9,8 @@ dotenv.config();
 import express from "express"; // Express 모듈 로드
 import cors from "cors"; // CORS 설정을 위한 모듈 로드
 import path from "path"; // 경로 처리를 위한 path 모듈 로드
+import fs from "fs"; // 파일 시스템 모듈 추가
+import multer from "multer";
 import { fileURLToPath } from "url";
 import { dbConnection, CreateTable } from "./back_end/query/tableQuery.js";
 
@@ -136,6 +138,45 @@ CreateTable();
 app.use("/api/auth", authRoutes);
 
 // POST 요청 처리
+app.post("/api/dataroom", upload.array("files"), (req, res) => {
+  const {
+    job_id, user_id, date, file_title, file_description, file_count, view_count, } = req.body;
+
+  try {
+    // 업로드된 파일 이름 리스트 생성 (원본 파일 이름 유지)
+    const fileNames = req.files
+    .map((file) => Buffer.from(file.originalname, "latin1").toString("utf8"))
+    .join(", ");
+
+    // console.log("🔍 Incoming data:", {
+    //   job_id,user_id,date,file_title,file_description,file_count,view_count,fileNames,
+    // });
+
+    // SQL 쿼리
+    const insertQuery = `
+      INSERT INTO DataRoomTable (
+        job_id, user_id, date, file_title, file_description, file_name, file_count, view_count
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+    `;
+
+    // 데이터베이스에 값 삽입
+    connection.query(
+      insertQuery,
+      [ job_id, user_id, date, file_title, file_description, fileNames, file_count, view_count, ],
+      (err, results) => {
+        if (err) {
+          console.error("❌ 데이터 삽입 오류:", err.message);
+          return res.status(500).json({ error: "데이터 삽입 실패" });
+        }
+        console.log("✅ 데이터 삽입 성공!");
+        res.status(201).json({ message: "데이터 삽입 성공!", data: results });
+      }
+    );
+  } catch (error) {
+    console.error("❌ 서버 처리 오류:", error.message);
+    res.status(500).json({ error: "서버 처리 실패" });
+  }
+});
 //자료실 데이터 메일 화면 데이터 가져오는 부분
 app.get("/api/dataroom", (req, res) => {
   const selectQuery = "SELECT job_id, file_title, user_id, date, file_count, view_count FROM DataRoomTable";
