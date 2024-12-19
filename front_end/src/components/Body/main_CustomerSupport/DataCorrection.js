@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation, Link } from "react-router-dom";
+import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 import styles from "./DataCorrection.module.css"; // CSS 모듈 import
 import axios from "axios";
 
@@ -23,10 +23,13 @@ const DataCorrection = () => {
     update_time: "",
     delete_time: "",
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (data && Object.keys(data).length > 0) {
       const { job_id, user_id, date, file_title, file_description, file_name, view_count } = data;
+      console.log('server data', file_name.length);
+      
       setFormData({
         job_id,
         user_id,
@@ -41,6 +44,8 @@ const DataCorrection = () => {
 
   const handleFileAddition = (e) => {
     const files = Array.from(e.target.files).map(file => file.name);
+    console.log('files', files);
+    
     setFormData(prev => ({ ...prev, file_name: [...prev.file_name, ...files] }));
   };
 
@@ -116,6 +121,7 @@ const DataCorrection = () => {
 
     if (response.data.success) {
       alert("업로드 성공!");
+      navigate('/DataRoom');
     } else {
       alert("업로드 실패!");
     }
@@ -142,7 +148,7 @@ const DataCorrection = () => {
           </tr>
           <tr>
             <td className={styles.detailLabel}>작성자</td>
-            <td>{formData.user_id}</td>
+            <td>Admin</td>
           </tr>
           <tr>
             <td className={styles.detailLabel}>날짜</td>
@@ -172,7 +178,7 @@ const DataCorrection = () => {
                 />
                 <table>
                   <tbody>
-                    {formData.file_name.length > 0 ? (
+                    { Array.isArray(formData.file_name) && formData.file_name.length > 0 ? (
                       formData.file_name.map((file, index) => (
                         <tr key={index}>
                            <td style={{ width: "90%" }}>

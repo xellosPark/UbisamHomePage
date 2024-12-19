@@ -41,7 +41,7 @@ const Header = () => {
             <span className="nav_title">회사소개</span>
             {hoveredMenu === 'company' && (
               <div className="dropdown">
-                <div onClick={() => handleNavigate('greeting')} className="menu-item">인사말</div>
+                <div onClick={() => handleNavigate('greetings')} className="menu-item">인사말</div>
                 <div onClick={() => handleNavigate('businessOverview')} className="menu-item">사업개요</div>
                 <div onClick={() => handleNavigate('history')} className="menu-item">회사연혁</div>
                 <div onClick={() => handleNavigate('OrganizationIntroduction')} className="menu-item">조직소개</div>
@@ -116,9 +116,8 @@ const Header = () => {
       <div className="header-right">
         {
           isAuthenticated ? (
-            <div className='header-info'>
-              <span>{user.user_name}</span>
-              { user.role === 'admin' && <span>Admin</span>}
+            <div className='header-logout'>
+              <span>{user.user_name} 님 환영합니다</span>
               <span className="divider">|</span>
               <button onClick={handleLogout}>Logout</button>
             </div>

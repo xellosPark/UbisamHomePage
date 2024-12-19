@@ -16,7 +16,7 @@ const RecruitmentInformation = () => {
       <div className="intro-text">
         <p>
           <strong>개인의 무한한 가능성</strong>을 이끌어 내어 <strong>꿈을 현실</strong>로 이루는 기업, <br />
-          <strong>유비쎔</strong>과 미래를 함께할 <strong>인재</strong>를 모십니다.
+          <strong>유비샘</strong>과 미래를 함께할 <strong>인재</strong>를 모십니다.
         </p>
       </div>
       <img src={step1Image} alt="step1Image" className="RecruitmentInformation-image" />

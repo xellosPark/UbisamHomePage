@@ -47,9 +47,10 @@ const MainScreen = () => {
     if (!isLoaded) {
       setIsLoaded(true);
       //console.log('Current pathname: 위치', location.hash);
-      if (location.hash === '#greeting') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (location.hash === '#greetings' && greetingsRef.current) {
+      // if (location.hash === '/') {
+      //   window.scrollTo({ top: 0, behavior: 'smooth' });
+      // } else
+      if (location.hash === '#greetings' && greetingsRef.current) {
         greetingsRef.current.scrollIntoView({ behavior: 'smooth' });
       } else if (location.hash === '#businessOverview' && businessOverviewRef.current) {
         businessOverviewRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -99,7 +100,7 @@ const MainScreen = () => {
 
     {/* 경로가 "/"가 아닐 때만 컴포넌트 렌더링 */}
     { location.hash !== '' && 
-      ( location.hash === '#greeting' || location.hash === '#greetings' || location.hash === '#businessOverview' || location.hash === '#history' ||
+      ( location.hash === '#greetings' || location.hash === '#businessOverview' || location.hash === '#history' ||
         location.hash === '#OrganizationIntroduction' || location.hash === '#Patent' || location.hash === '#MainCustomer' ||
         location.hash === '#ContentWithImages' ) && (
         <>

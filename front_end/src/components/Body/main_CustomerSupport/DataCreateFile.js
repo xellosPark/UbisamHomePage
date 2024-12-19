@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import style from './DataCreateFile.module.css'; // CSS 모듈 불러오기
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // axios 모듈을 불러옵니다.
 import { v4 as uuidv4 } from "uuid"; // uuid 라이브러리 임포트
 
@@ -10,7 +10,7 @@ const DataCreateFile = () => {
 
   const [formData, setFormData] = useState({
     job_id: "101",
-    user_id: "202",
+    user_id: "Admin",
     date: new Date().toISOString().slice(0, 10),
     file_title: "",
     file_description: "",
@@ -22,6 +22,7 @@ const DataCreateFile = () => {
     update_time: "",
     delete_time: "",
   });
+  const navigate = useNavigate();
 
   // const [formData, setFormData] = useState({
   //   title: "",
@@ -169,6 +170,7 @@ const DataCreateFile = () => {
       // 업로드 성공 처리
       alert("데이터 업로드 성공!");
       // console.log("서버 응답:", response.data);
+      navigate('/DataRoom');
     } catch (error) {
       // 업로드 실패 처리
       console.error("데이터 업로드 실패:", error.message);

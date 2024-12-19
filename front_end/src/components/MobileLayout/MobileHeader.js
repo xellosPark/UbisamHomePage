@@ -110,7 +110,7 @@ const MobileHeader = () => {
            </li>
    
            {/* 네비게이션 링크들 */}
-            <li> <span onClick={() => handleNavigate('greeting')} className="nav_title">(주)유비샘 소개</span></li>
+            <li> <span onClick={() => handleNavigate('greetings')} className="nav_title">(주)유비샘 소개</span></li>
             <li><span onClick={() => handleNavigate('equipment-system')} className="nav_title">장비제어시스템</span></li>
             <li><span onClick={() => handleNavigate('Production-Information-System')} className="nav_title">생산정보시스템</span></li>
             <li><span onClick={() => handleNavigate('Recruitment-Information-System')} className="nav_title">채용정보</span></li>

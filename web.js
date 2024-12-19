@@ -229,7 +229,8 @@ app.get("/api/dataroom", (req, res) => {
       file_count, 
       DATE_FORMAT(CONVERT_TZ(delete_time, '+00:00', '+09:00'), '%Y-%m-%d %H:%i:%s') AS delete_time, 
       view_count 
-    FROM DataRoomTable;
+    FROM DataRoomTable
+    ORDER BY create_time DESC;
   `;
 
   connection.query(selectQuery, (err, results) => {

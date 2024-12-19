@@ -4,7 +4,8 @@
    justify-content: space-between;
    background-color: white;
    padding-top: 5px;
-   max-width: 1200px;
+   max-width: 2000px;
+   min-width: 1200px;
    margin: 0 auto;
 }
 
@@ -19,7 +20,7 @@
 }
 
 .nav {
-   margin-right: 300px;
+   margin-right: 200px;
    font-weight: bold;
    margin-bottom: 10px;
 }
@@ -139,13 +140,16 @@
    text-decoration: underline;
 }
 
-.header-info {
+.header-logout {
    display: flex;
-   font-size: 0.9rem;
+   font-size: 1rem;
    align-items: center;
+   max-width: 500px;
+   margin-top: 3px;
+   gap: 0.5rem;
 }
 
-.header-info > button {
+.header-logout > button {
    border: none;
    background-color: transparent; /* 버튼 배경 제거 */
    color: #666;

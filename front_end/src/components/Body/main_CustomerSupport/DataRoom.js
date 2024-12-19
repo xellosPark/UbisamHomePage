@@ -5,21 +5,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import axios from "axios";
 import styles from "./DataRoom.module.css"; // CSS Modules import
+import { useAuth } from "../../../context/AuthContext";
 
 const DataRoom = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [columnWidths] = useState({
+  const [columnWidths] = useState( isAuthenticated ?{
     id: 50,
     title: 500,
     author: 100,
     date: 100,
     views: 50,
     actions: 100,
+  } : {
+    id: 50,
+    title: 550,
+    author: 100,
+    date: 150,
+    views: 50,
   });
   const [isAdmin, setIsAdmin] = useState(true);
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -98,7 +107,7 @@ const DataRoom = () => {
     <div className={styles.dataRoomContainer}>
       <div className={styles.dataRoomHeader}>
         <h1 className={styles.dataRoomTitle}>자료실</h1>
-        {isAdmin && (
+        {isAuthenticated && (
           <Link to="/DataRoom/CreateFile" className={styles.addDataRoomButton}>
             + 자료 추가
           </Link>
@@ -112,7 +121,7 @@ const DataRoom = () => {
             <th style={{ width: columnWidths.author }}>등록자</th>
             <th style={{ width: columnWidths.date }}>날짜</th>
             <th style={{ width: columnWidths.views }}>조회수</th>
-            {isAdmin && <th style={{ width: columnWidths.actions }}>수정 / 삭제</th>}
+            {isAuthenticated && <th style={{ width: columnWidths.actions }}>수정 / 삭제</th>}
           </tr>
         </thead>
         <tbody>
@@ -121,9 +130,9 @@ const DataRoom = () => {
               <td>{index + 1}</td>
               <td className={styles.titleColumn}>
                 {item.file_title}
-                {item.file_count > 0 && <FaSave style={{ color: "#DB7093", marginLeft: "5px" }} />}
+                { item.file_count > 0 && <FaSave style={{ color: "#DB7093", marginLeft: "5px" }} />}
               </td>
-              <td>{item.user_id}</td>
+              <td>Admin</td>
                   <td>
                       {item.date
                           ? new Date(item.date)
@@ -134,7 +143,7 @@ const DataRoom = () => {
                           : ""}
                   </td>
                   <td>{item.view_count}</td>
-              {isAdmin && (
+              {isAuthenticated && (
                 <td>
                   <div className={styles.actionsColumn}>
                     <div

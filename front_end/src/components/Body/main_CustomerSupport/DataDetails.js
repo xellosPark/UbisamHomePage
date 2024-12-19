@@ -77,7 +77,7 @@ const DataDetail = () => {
           </tr>
           <tr>
             <td className={styles.detailLabel}>작성자</td>
-            <td>{formData.user_id}</td>
+            <td>Admin</td>
           </tr>
           <tr>
             <td className={styles.detailLabel}>날짜</td>

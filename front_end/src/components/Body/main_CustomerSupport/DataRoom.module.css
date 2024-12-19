@@ -45,6 +45,10 @@
   opacity: 0.8;
 }
 
+.dataTable {
+  margin: 0 auto;
+}
+
 .dataTable th, .dataTable td {
   padding: 0.65rem;
   text-align: center;

@@ -2,24 +2,24 @@ import React from 'react';
 import './Footer.css';
 import logoGray from '../../images/icon/ubisamlogoGray.png';
 import qr from '../../images/image/qr.gif'
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
     <footer className="footer">
       {/* 네비게이션 링크 섹션 */}
       <div className="footer-nav">
-        <ul>
-          <li><a href="/">회사소개</a></li>
-          <div className="separator"></div>
-          <li><a href="/equipment">장비제어시스템</a></li>
-          <div className="separator"></div>
-          <li><a href="/production">생산정보시스템</a></li>
-          <div className="separator"></div>
-          <li><a href="/recruit">리쿠르트</a></li>
-          <div className="separator"></div>
-          <li><a href="/support">고객지원</a></li>
-        </ul>
+        <Link to="/#greetings" className="footer-nav-link">회사소개</Link>
+        <div className="separator"></div>
+        <Link to="/#control-solution" className="footer-nav-link">장비제어시스템</Link>
+        <div className="separator"></div>
+        <Link to="/#Automation-Solutions" className="footer-nav-link">생산정보시스템</Link>
+        <div className="separator"></div>
+        <Link to="/#Recruitment-Information" className="footer-nav-link">채용정보</Link>
+        <div className="separator"></div>
+        <Link to="/support" className="footer-nav-link">고객지원</Link>
       </div>
+      
 
       {/* 회사 정보 섹션 */}
       <div className="footer-content">

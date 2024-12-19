@@ -16,7 +16,7 @@ const MobileFooter = () => {
       
       {/* PC 버전 버튼 */}
       <div className={style.pcVersionButtonContainer}>
-        <button className={style.pcVersionButton} onClick={() => handleNavigate('greeting')}>
+        <button className={style.pcVersionButton} onClick={() => handleNavigate('greetings')}>
           <span className={style.navTitle}>PC 버전으로 보기</span>
         </button>
       </div>
