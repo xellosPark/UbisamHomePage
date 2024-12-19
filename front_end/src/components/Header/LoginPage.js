@@ -3,23 +3,34 @@ import logo from "../../images/icon/ubisamlogo.png"
 import style from "./LoginPage.module.css";
 
 import { onLogin, onTest } from "../../api/authApi";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
     const [userId, setUserId] = useState("");
     const [userPw, setUserPw] = useState("");
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const response = await onLogin(userId, userPw); // ID와 PW를 부모 컴포넌트로 전달
         console.log('response', response);
-        
         if (response.status === 200) {
             const { accessToken, refreshToken, userData } = await response.data;
 
             // 로컬 스토리지에 저장
-            localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('refreshToken', refreshToken);
-            localStorage.setItem('userData', userData);
+            //localStorage.setItem('accessToken', accessToken);
+            //localStorage.setItem('refreshToken', refreshToken);
+            //localStorage.setItem('userData', userData);
+            login(userData, accessToken, refreshToken);
+            navigate('/main');
+        } else if (response.status === 400) {
+            alert('비밀번호가 잘못되었습니다.');
+        } else if (response.status === 500) {
+            alert('아이디가 잘못되었습니다.');
+        } else {
+
         }
     }
 
@@ -33,8 +44,8 @@ const LoginPage = () => {
         <div className={style.loginContainer}>
             <div className={style.login}>
                 <div className={style.loginImg}>
-                    <img alt='LG LOGO' src={logo} style={{ width: '150px', marginTop: '10px', marginBottom: '4px' }} />
-
+                    {/* <img alt='LG LOGO' src={logo} style={{ width: '150px', marginTop: '10px', marginBottom: '4px' }} /> */}
+                    <span>Login</span>
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className={style.loginBox}>
@@ -69,7 +80,6 @@ const LoginPage = () => {
                     </div>
                 </div>
             </div>
-            <button onClick={handleBtnClick}>api 테스트 버튼</button>
         </div>
     );
 };

@@ -5,6 +5,7 @@ import Header from './components/Header/Header';
 import Footer from './components/footer/Footer';
 import MobileLayout from './components/MobileLayout/MobileLayout';
 import MainScreen from './components/MainScreen/MainScreen'; // 새롭게 만든 MainScreen 컴포넌트
+import { AuthProvider } from './context/AuthContext';
 
 const AppContent = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -69,9 +70,11 @@ const AppContent = () => {
 
 const App = () => {
   return (
+    <AuthProvider>
     <Router>
       <AppContent />
     </Router>
+    </AuthProvider>
   );
 };
 

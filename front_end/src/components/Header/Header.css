@@ -124,17 +124,41 @@
    gap: 0.5rem;
    font-weight: bold;
    align-items: center;
+   justify-content: center; /* 컨테이너 내부에서 중앙 정렬 */
    color: #666;
-   margin-right: 100px;
-   margin-bottom: 20px;
+   margin: 0 auto; /* 화면 중앙으로 정렬 */
+   width: fit-content; /* 컨텐츠 크기에 맞는 너비 */
 }
 
 .header-right .divider {
    margin: 0 0.3rem;
+   font-size: 1rem;
 }
 
-.header-right span:hover {
+.header-right > span:hover {
    text-decoration: underline;
+}
+
+.header-info {
+   display: flex;
+   font-size: 0.9rem;
+   align-items: center;
+}
+
+.header-info > button {
+   border: none;
+   background-color: transparent; /* 버튼 배경 제거 */
+   color: #666;
+   font-weight: bold;
+   font-size: 1rem;
+   cursor: pointer;
+   padding: 0; /* 기본 padding 제거 */
+   margin: 0; /* 기본 margin 제거 */
+   align-items: center;
+   line-height: 1.5; /* 다른 텍스트와 높이 일치 */
+   display: flex; /* 정렬을 위한 flexbox */
+   justify-content: center; /* 수평 중앙 정렬 */
+   vertical-align: middle;
 }
 
 .login {

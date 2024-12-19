@@ -2,14 +2,22 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Header.css';
 import logo from '../../images/icon/ubisamlogo.png';
+import { useAuth } from '../../context/AuthContext';
 
 const Header = () => {
   const [hoveredMenu, setHoveredMenu] = useState(null);
   const navigate = useNavigate(); // 페이지 이동을 위한 훅
 
+  const { isAuthenticated, user, logout } = useAuth();
+
   // 메뉴 항목을 클릭했을 때 특정 섹션으로 이동
   const handleNavigate = (section) => {
     navigate(`/#${section}`);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate(`/main`);
   };
 
   return (
@@ -106,7 +114,19 @@ const Header = () => {
       </nav>
 
       <div className="header-right">
-        <Link to="/Login" className='login'>Login</Link>
+        {
+          isAuthenticated ? (
+            <div className='header-info'>
+              <span>{user.user_name}</span>
+              { user.role === 'admin' && <span>Admin</span>}
+              <span className="divider">|</span>
+              <button onClick={handleLogout}>Logout</button>
+            </div>
+          ) : (
+            <Link to="/Login" className='login'>Login</Link>
+          )
+        }
+        
         <span className="divider">|</span>
         <span>Mobile</span>
       </div>

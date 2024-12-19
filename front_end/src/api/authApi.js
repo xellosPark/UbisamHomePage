@@ -1,9 +1,8 @@
-import axios from "axios";
 import api from "./api";
 
 export const onLogin = async (id, pw) => {
     try {
-        const response = await axios.post(`/api/auth/login`,
+        const response = await api.post(`/api/auth/login`,
             {
                 user_id : id,
                 user_password : pw,
@@ -13,7 +12,7 @@ export const onLogin = async (id, pw) => {
         return response;
       } catch (error) {
         if (error.response) {
-          
+          return error.response;
         }
       }
 };
@@ -37,8 +36,10 @@ export const onTest = async () => {
       
       return response;
     } catch (error) {
+      console.log('login error', error);
+      
       if (error.response) {
-        
+        return error.response;
       }
     }
 };
