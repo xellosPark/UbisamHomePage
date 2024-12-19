@@ -15,7 +15,7 @@ const DataRoom = () => {
     id: 50,
     title: 500,
     author: 100,
-    date: 200,
+    date: 100,
     views: 50,
     actions: 100,
   });
@@ -129,7 +129,7 @@ const DataRoom = () => {
                           ? new Date(item.date)
                               .toISOString()
                               .replace("T", " ")
-                              .slice(0, 16)
+                              .slice(0, 10)
                               .replace(/-/g, ".")
                           : ""}
                   </td>

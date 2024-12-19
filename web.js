@@ -365,6 +365,100 @@ app.post("/api/dataroom/delete", async (req, res) => {
 //   });
 // });
 
+app.post("/api/Editupload", upload.array("files"), async (req, res) => {
+  const { job_id, file_description, file_title, file_count, existing_files } = req.body;
+
+  console.log("=== 시작: /api/Editupload 요청 처리 ===");
+  console.log(`Received job_id: ${job_id}`);
+  console.log(`Received file_description: ${file_description}`);
+  console.log(`Received file_title: ${file_title}`);
+  console.log(`Received file_count: ${file_count}`);
+  console.log(`Received existing_files: ${existing_files}`);
+
+  // 기존 파일 목록과 새로 업로드된 파일 목록 병합
+  const existingFileList = existing_files ? existing_files.split(",").map(name => name.trim()) : [];
+  console.log("Parsed existing files: ", existingFileList);
+
+  // 업로드된 파일 이름들 가져오기
+  const uploadedFileNames = req.files.map(file => path.basename(file.path));
+  console.log(`Uploaded file names: ${uploadedFileNames}`);
+
+  // 전체 파일 목록 생성 (기존 파일 + 새 파일)
+  const allFiles = [...existingFileList, ...uploadedFileNames];
+  console.log("Combined file list: ", allFiles);
+
+  // DB 업데이트 쿼리
+  const query = `
+    UPDATE DataRoomTable
+    SET file_description = ?, file_name = ?, file_count = ?, update_time = NOW()
+    WHERE job_id = ?
+  `;
+  const values = [file_description, allFiles.join(", "), allFiles.length, job_id];
+
+  console.log("=== 데이터베이스 쿼리 준비 완료 ===");
+  console.log("Query: ", query);
+  console.log("Values: ", values);
+
+  connection.query(query, values, (err, results) => {
+    console.log("=== 데이터베이스 쿼리 실행 중 ===");
+    if (err) {
+      console.error("데이터 업데이트 에러 발생!");
+      console.error("에러 메시지: ", err.message);
+      console.error("에러 스택: ", err.stack);
+      return res.status(500).json({ success: false, message: "데이터 업데이트 실패", error: err.message });
+    }
+
+    console.log("Database updated successfully. Affected rows: ", results.affectedRows);
+
+    // 파일이 저장될 폴더 경로 설정
+    const folderPath = path.join(__dirname, "Storege/Category/dataroom", file_title);
+    console.log(`Target folder path: ${folderPath}`);
+
+    // 1. 폴더가 존재하지 않을 경우 생성
+    if (!fs.existsSync(folderPath)) {
+      console.log("Folder does not exist. Creating folder...");
+      fs.mkdirSync(folderPath, { recursive: true }); // 하위 디렉터리도 함께 생성
+      console.log("Folder created successfully.");
+    } else {
+      console.log("Folder already exists.");
+    }
+
+    // 2. 현재 폴더 내 파일 목록 가져오기
+    const existingFiles = fs.readdirSync(folderPath); // 폴더 내 모든 파일 이름 읽기
+    console.log(`Existing files in folder: ${existingFiles.join(", ")}`);
+
+    // 3. 요청된 파일 중 폴더에 없는 파일 추가
+    req.files.forEach(file => {
+      const destinationPath = path.join(folderPath, file.filename);
+      if (!fs.existsSync(destinationPath)) {
+        console.log(`Adding new file to folder: ${file.filename}`);
+        // 업로드된 파일을 해당 폴더로 이동
+        fs.renameSync(file.path, destinationPath);
+        console.log(`File moved to: ${destinationPath}`);
+      } else {
+        console.log(`File already exists in folder: ${file.filename}`);
+      }
+    });
+
+    // 4. 폴더 내 파일 중 요청된 파일 목록에 없는 파일 삭제
+    const requestedFileNames = allFiles; // 최종 요청된 파일 이름 배열
+    console.log(`Requested file names: ${requestedFileNames.join(", ")}`);
+
+    existingFiles.forEach(file => {
+      if (!requestedFileNames.includes(file)) {
+        const filePathToRemove = path.join(folderPath, file);
+        console.log(`Removing file not in request: ${file}`);
+        fs.unlinkSync(filePathToRemove); // 파일 삭제
+        console.log(`File deleted: ${filePathToRemove}`);
+      }
+    });
+
+    // 성공적으로 작업 완료 후 클라이언트에 응답
+    console.log("File synchronization completed successfully.");
+    return res.json({ success: true, message: "데이터 업데이트 및 파일 동기화 성공", affectedRows: results.affectedRows });
+  });
+});
+
 
 // MySQL 데이터 조회 API (예: books 테이블에서 데이터 가져오기)
 app.get("/api/books", (req, res) => {
