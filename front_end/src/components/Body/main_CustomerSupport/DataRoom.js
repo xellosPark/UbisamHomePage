@@ -44,10 +44,10 @@ const DataRoom = () => {
     fetchData();
   }, []);
 
-  const handleRowClick = async (jobId) => {
+  const handleRowClick = async (JobId) => {
     try {
-      const response = await axios.post("http://localhost:8001/api/dataroom/update-views", { id: jobId });
-      const selectedData = response.data.data.find((row) => row.job_id === jobId);
+      const response = await axios.post("http://localhost:8001/api/dataroom/update-views", { id: JobId });
+      const selectedData = response.data.data.find((row) => row.job_id === JobId);
       if (selectedData) {
         navigate(`/DataRoom/Detail/${selectedData.job_id}`, { state: { data: selectedData } });
       } else {
@@ -58,16 +58,26 @@ const DataRoom = () => {
     }
   };
 
-  const handleEdit = (jobid) => {
-    console.log(`✏️ 수정 클릭: ${jobid}`);
+  const handleEdit = async (JobId) => {
+    try {
+      const response = await axios.post("http://localhost:8001/api/dataroom/update-views", { id: JobId });
+      const selectedData = response.data.data.find((row) => row.job_id === JobId);
+      if (selectedData) {
+        navigate(`/DataRoom/DataCorrection/${selectedData.job_id}`, { state: { data: selectedData } });
+      } else {
+        console.error("❌ 일치하는 데이터가 없습니다.");
+      }
+    } catch (error) {
+      console.error("❌ 서버 요청 실패:", error.message);
+    }
   };
 
-  const handleDelete =  async (jobId) => {
+  const handleDelete =  async (JobId) => {
     try {
-      console.log(`🗑️ 삭제 클릭: ${jobId}`);
+      console.log(`🗑️ 삭제 클릭: ${JobId}`);
 
       // 서버에 삭제 요청 보내기
-      const response = await axios.post("http://localhost:8001/api/dataroom/delete", { job_id: jobId });
+      const response = await axios.post("http://localhost:8001/api/dataroom/delete", { job_id: JobId });
 
       if (response.status === 200) {
         //console.log("✅ 삭제 완료:", jobId);
@@ -76,7 +86,7 @@ const DataRoom = () => {
         const { file_title } = response.data;
 
         // 삭제된 데이터를 제외하고 상태 업데이트
-        setData((prevData) => prevData.filter((item) => item.job_id !== jobId));
+        setData((prevData) => prevData.filter((item) => item.job_id !== JobId));
         //console.log(`📁 삭제된 폴더 경로: Storege/Category/dataroom/${file_title}`);
       }
     } catch (error) {

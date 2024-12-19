@@ -19,6 +19,7 @@ import Notice from '../Body/main_CustomerSupport/Notice';
 import DataRoom from '../Body/main_CustomerSupport/DataRoom';
 import DataCreateFile from '../Body/main_CustomerSupport/DataCreateFile';
 import DataDetail from '../Body/main_CustomerSupport/DataDetails';
+import DataCorrection from '../Body/main_CustomerSupport/DataCorrection.js';
 
 const MainScreen = () => {
   const greetingsRef = useRef(null);
@@ -91,6 +92,7 @@ const MainScreen = () => {
         <Route path="/DataRoom" element={<DataRoom />} />
         <Route path="/DataRoom/CreateFile" element={<DataCreateFile />} />
         <Route path="/DataRoom/Detail/:id" element={<DataDetail />} />
+        <Route path="/DataRoom/DataCorrection/:id" element={<DataCorrection />} />
         <Route path="/Login" element={<LoginPage />} />
         
       </Routes>
