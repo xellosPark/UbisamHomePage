@@ -153,10 +153,10 @@ const DataCreateFile = () => {
     });
 
     // 서버에 보내기 전에 FormData 확인
-    console.log("FormData 객체에 포함된 내용:");
-    for (let [key, value] of uploadData.entries()) {
-      console.log(`${key}:`, value);
-    }
+    //console.log("FormData 객체에 포함된 내용:");
+    // for (let [key, value] of uploadData.entries()) {
+    //   console.log(`${key}:`, value);
+    // }
 
     try {
       // axios를 사용하여 FormData 전송
@@ -168,7 +168,7 @@ const DataCreateFile = () => {
 
       // 업로드 성공 처리
       alert("데이터 업로드 성공!");
-      console.log("서버 응답:", response.data);
+      // console.log("서버 응답:", response.data);
     } catch (error) {
       // 업로드 실패 처리
       console.error("데이터 업로드 실패:", error.message);

@@ -62,7 +62,9 @@ const DataDetail = () => {
 
   return (
     <div className={styles.dataDetailContainer}>
-      <h1 className={styles.detailTitle}>자료 상세 정보</h1>
+      <div className={styles.detailTitleContainer}>
+        <h1 className={styles.detailTitle}>자료 상세 정보</h1>
+      </div>
       <table className={styles.detailTable}>
         <tbody>
           <tr>

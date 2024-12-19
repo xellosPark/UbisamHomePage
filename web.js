@@ -219,14 +219,25 @@ app.post("/api/dataroom", upload.array("files"), (req, res) => {
 });
 //자료실 데이터 메일 화면 데이터 가져오는 부분
 app.get("/api/dataroom", (req, res) => {
-  const selectQuery = "SELECT job_id, file_title, user_id, date, file_count, view_count FROM DataRoomTable";
+  const selectQuery = `
+    SELECT 
+      job_id, 
+      file_title, 
+      user_id, 
+      DATE_FORMAT(CONVERT_TZ(date, '+00:00', '+09:00'), '%Y-%m-%d %H:%i:%s') AS date, 
+      file_count, 
+      DATE_FORMAT(CONVERT_TZ(delete_time, '+00:00', '+09:00'), '%Y-%m-%d %H:%i:%s') AS delete_time, 
+      view_count 
+    FROM DataRoomTable;
+  `;
 
   connection.query(selectQuery, (err, results) => {
-      if (err) {
-          console.error("❌ 데이터 조회 오류:", err.message);
-          return res.status(500).json({ error: "데이터 조회 실패" });
-      }
-      res.status(200).json(results); // 조회된 데이터 반환
+    if (err) {
+      console.error("❌ 데이터 조회 오류:", err.message);
+      return res.status(500).json({ error: "데이터 조회 실패" });
+    }
+
+    res.status(200).json(results); // 변환된 데이터 반환
   });
 });
 
@@ -277,6 +288,60 @@ app.post("/api/download", (req, res) => {
   });
 });
 
+
+// 자료 삭제 API
+app.post("/api/dataroom/delete", async (req, res) => {
+  const { job_id } = req.body;
+
+  if (!job_id) {
+    return res.status(400).json({ status: "error", message: "job_id가 필요합니다." });
+  }
+
+  const selectQuery = "SELECT file_title FROM DataRoomTable WHERE job_id = ? AND delete_time IS NULL";
+  const updateQuery = "UPDATE DataRoomTable SET delete_time = NOW() WHERE job_id = ?";
+
+  connection.query(selectQuery, [job_id], (err, results) => {
+    if (err) {
+      console.error("❌ 데이터 조회 오류:", err.message);
+      return res.status(500).json({ status: "error", message: "데이터 조회 중 오류 발생" });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ status: "error", message: "유효하지 않은 job_id거나 이미 삭제된 데이터입니다." });
+    }
+
+    const fileTitle = results[0].file_title;
+    const folderPath = path.join(__dirname, "Storege/Category/dataroom", fileTitle);
+
+    // 데이터베이스 delete_time 업데이트
+    connection.query(updateQuery, [job_id], async (updateErr) => {
+      if (updateErr) {
+        console.error("❌ delete_time 업데이트 오류:", updateErr.message);
+        return res.status(500).json({ status: "error", message: "delete_time 업데이트 실패" });
+      }
+
+      try {
+        // 동기적으로 폴더 삭제
+        if (fs.existsSync(folderPath)) {
+          fs.rmSync(folderPath, { recursive: true, force: true });
+          console.log(`📁 폴더 삭제 성공: ${folderPath}`);
+        } else {
+          console.log(`⚠️ 폴더를 찾을 수 없음: ${folderPath}`);
+        }
+
+        res.status(200).json({
+          status: "success",
+          message: "삭제 처리 완료",
+          job_id,
+          file_title: fileTitle,
+        });
+      } catch (folderErr) {
+        console.error("❌ 폴더 삭제 실패:", folderErr.message);
+        res.status(500).json({ status: "error", message: "폴더 삭제 중 오류 발생" });
+      }
+    });
+  });
+});
 // 파일 저장 디렉토리 경로 (다운로드할 파일들이 저장된 경로)
 //const FILE_DIRECTORY = path.join(__dirname, "Storege/Category/dataroom/UbiGEMSECS");
 
