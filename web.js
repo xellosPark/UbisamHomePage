@@ -367,23 +367,28 @@ app.post("/api/dataroom/delete", async (req, res) => {
 app.post("/api/Editupload", upload.array("files"), async (req, res) => {
   const { job_id, file_description, file_title, file_count, existing_files } = req.body;
 
-  console.log("=== 시작: /api/Editupload 요청 처리 ===");
-  console.log(`Received job_id: ${job_id}`);
-  console.log(`Received file_description: ${file_description}`);
-  console.log(`Received file_title: ${file_title}`);
-  console.log(`Received file_count: ${file_count}`);
-  console.log(`Received existing_files: ${existing_files}`);
+  // console.log("=== 시작: /api/Editupload 요청 처리 ===");
+  // console.log(`Received job_id: ${job_id}`);
+  // console.log(`Received file_description: ${file_description}`);
+  // console.log(`Received file_title: ${file_title}`);
+  // console.log(`Received file_count: ${file_count}`);
+  // console.log(`Received existing_files: ${existing_files}`);
 
   // 기존 파일 목록과 새로 업로드된 파일 목록 병합
-  const existingFileList = existing_files ? existing_files.split(",").map(name => name.trim()) : [];
+  const existingFileList = existing_files
+    ? existing_files.split(",").map(name => name.trim()).filter(name => name)
+    : [];
   console.log("Parsed existing files: ", existingFileList);
 
-  // 업로드된 파일 이름들 가져오기
-  const uploadedFileNames = req.files.map(file => path.basename(file.path));
-  console.log(`Uploaded file names: ${uploadedFileNames}`);
+  // 업로드된 파일 이름 가져오기
+  const uploadedFileNames = req.files.map(file => {
+    const originalName = Buffer.from(file.originalname, "latin1").toString("utf8");
+    return originalName.trim();
+  });
+  console.log("Uploaded file names: ", uploadedFileNames);
 
-  // 전체 파일 목록 생성 (기존 파일 + 새 파일)
-  const allFiles = [...existingFileList, ...uploadedFileNames];
+  // 전체 파일 목록 생성 (기존 파일 + 새 파일, 중복 제거)
+  const allFiles = [...new Set([...existingFileList, ...uploadedFileNames])];
   console.log("Combined file list: ", allFiles);
 
   // DB 업데이트 쿼리
@@ -395,15 +400,13 @@ app.post("/api/Editupload", upload.array("files"), async (req, res) => {
   const values = [file_description, allFiles.join(", "), allFiles.length, job_id];
 
   console.log("=== 데이터베이스 쿼리 준비 완료 ===");
-  console.log("Query: ", query);
-  console.log("Values: ", values);
+  //console.log("Query: ", query);
+  //console.log("Values: ", values);
 
   connection.query(query, values, (err, results) => {
-    console.log("=== 데이터베이스 쿼리 실행 중 ===");
     if (err) {
       console.error("데이터 업데이트 에러 발생!");
       console.error("에러 메시지: ", err.message);
-      console.error("에러 스택: ", err.stack);
       return res.status(500).json({ success: false, message: "데이터 업데이트 실패", error: err.message });
     }
 
@@ -413,50 +416,58 @@ app.post("/api/Editupload", upload.array("files"), async (req, res) => {
     const folderPath = path.join(__dirname, "Storege/Category/dataroom", file_title);
     console.log(`Target folder path: ${folderPath}`);
 
-    // 1. 폴더가 존재하지 않을 경우 생성
+    // 폴더 생성 (존재하지 않을 경우)
     if (!fs.existsSync(folderPath)) {
       console.log("Folder does not exist. Creating folder...");
-      fs.mkdirSync(folderPath, { recursive: true }); // 하위 디렉터리도 함께 생성
+      fs.mkdirSync(folderPath, { recursive: true });
       console.log("Folder created successfully.");
-    } else {
-      console.log("Folder already exists.");
     }
 
-    // 2. 현재 폴더 내 파일 목록 가져오기
-    const existingFiles = fs.readdirSync(folderPath); // 폴더 내 모든 파일 이름 읽기
-    console.log(`Existing files in folder: ${existingFiles.join(", ")}`);
-
-    // 3. 요청된 파일 중 폴더에 없는 파일 추가
-    req.files.forEach(file => {
-      const destinationPath = path.join(folderPath, file.filename);
-      if (!fs.existsSync(destinationPath)) {
-        console.log(`Adding new file to folder: ${file.filename}`);
-        // 업로드된 파일을 해당 폴더로 이동
-        fs.renameSync(file.path, destinationPath);
-        console.log(`File moved to: ${destinationPath}`);
-      } else {
-        console.log(`File already exists in folder: ${file.filename}`);
+    // 업로드된 파일을 folderPath에 저장
+    req.files.forEach((file, index) => {
+      console.log(`Processing file ${index + 1} of ${req.files.length}`);
+    
+      // 파일 이름 변환 및 저장 경로 설정
+      const originalName = Buffer.from(file.originalname, "latin1").toString("utf8");
+      const uniqueName = `${Date.now()}_${originalName}`; // 중복 방지용 고유 이름 추가
+      const destinationPath = path.join(folderPath, uniqueName);
+    
+      console.log(`Original file name: ${file.originalname}`);
+      console.log(`Decoded file name: ${originalName}`);
+      console.log(`Unique file name: ${uniqueName}`);
+      console.log(`Destination path: ${destinationPath}`);
+    
+      try {
+        const fileContent = fs.readFileSync(file.path); // 업로드된 파일 읽기
+        fs.writeFileSync(destinationPath, fileContent); // 대상 경로에 파일 저장
+        console.log(`File successfully saved: ${destinationPath}`);
+      } catch (err) {
+        console.error(`Error saving file ${originalName} to ${destinationPath}:`, err.message);
       }
     });
+    
+    // 폴더 내 기존 파일 목록 가져오기
+    const existingFilesInFolder = fs.readdirSync(folderPath);
+    console.log(`Existing files in folder: ${existingFilesInFolder.join(", ")}`);
 
-    // 4. 폴더 내 파일 중 요청된 파일 목록에 없는 파일 삭제
-    const requestedFileNames = allFiles; // 최종 요청된 파일 이름 배열
-    console.log(`Requested file names: ${requestedFileNames.join(", ")}`);
-
-    existingFiles.forEach(file => {
-      if (!requestedFileNames.includes(file)) {
+    // 요청된 파일 목록에 없는 파일 삭제
+    existingFilesInFolder.forEach(file => {
+      if (!allFiles.includes(file)) {
         const filePathToRemove = path.join(folderPath, file);
-        console.log(`Removing file not in request: ${file}`);
-        fs.unlinkSync(filePathToRemove); // 파일 삭제
-        console.log(`File deleted: ${filePathToRemove}`);
+        try {
+          fs.unlinkSync(filePathToRemove);
+          console.log(`File deleted: ${filePathToRemove}`);
+        } catch (err) {
+          console.error(`Error deleting file ${filePathToRemove}:`, err.message);
+        }
       }
     });
 
     // 성공적으로 작업 완료 후 클라이언트에 응답
-    console.log("File synchronization completed successfully.");
     return res.json({ success: true, message: "데이터 업데이트 및 파일 동기화 성공", affectedRows: results.affectedRows });
   });
 });
+
 
 
 // MySQL 데이터 조회 API (예: books 테이블에서 데이터 가져오기)

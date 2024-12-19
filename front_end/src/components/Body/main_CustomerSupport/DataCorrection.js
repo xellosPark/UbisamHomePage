@@ -40,10 +40,17 @@ const DataCorrection = () => {
   }, [data]);
 
   const handleFileAddition = (e) => {
-    const files = Array.from(e.target.files).map(file => file.name);
-    setFormData(prev => ({ ...prev, file_name: [...prev.file_name, ...files] }));
+    const files = Array.from(e.target.files); // File 객체 배열로 변환
+    const fileNames = files.map(file => file.name); // 파일 이름만 추출
+    console.log("Adding files:", fileNames);
+  
+    // 상태에 파일 이름과 파일 객체 추가
+    setFormData(prev => ({
+      ...prev,
+      file_name: [...prev.file_name, ...fileNames],
+      files: [...(prev.files || []), ...files], // File 객체 추가
+    }));
   };
-
   const handleFileDeletion = (fileToDelete) => {
     setFormData(prev => ({
       ...prev,
@@ -78,51 +85,68 @@ const DataCorrection = () => {
 
   const handleUpload = async () => {
     const formDataToSend = new FormData();
+  
+    // 기존 첨부 파일 정보 가져오기
+    const existingFiles = (formData.file_name || [])
+      .filter(file => file && file.trim() !== "") // 빈 값 제거
+      .map(file => file.trim().toLowerCase()); // 파일 이름 정규화
+    console.log("Filtered existing files: ", existingFiles);
+  
+    // 새로운 파일 정보 가져오기
+    const newFiles = formData.files || []; // 상태에서 파일 객체 가져오기
+    console.log("New files to upload:", newFiles.map(file => file.name));
+  
+    // 기존 파일과 새로운 파일 병합 (중복 제거)
+    const combinedFileList = [...existingFiles, ...newFiles.map(file => file.name.trim().toLowerCase())];
+    const uniqueFileList = [...new Set(combinedFileList)];
+    console.log("Combined unique file list: ", uniqueFileList);
 
-    // 기존 첨부 파일 정보 가져오기 (file_name 배열에서 가져옴)
-    const existingFiles = formData.file_name || []; // formData.file_name은 기존 파일 목록 배열
-    console.log("기존 첨부 파일: ", existingFiles);
-
-  // 새로운 파일 추가 데이터 가져오기
-  const fileInput = document.querySelector("input[type='file']");
-  const newFiles = fileInput?.files ? Array.from(fileInput.files) : [];
-  console.log("새로 추가된 파일: ", newFiles);
-
-  // 기존 첨부 파일을 FormData에 추가
-  if (existingFiles.length > 0) {
-    formDataToSend.append("existing_files", existingFiles.join(","));
-  } else {
-    formDataToSend.append("existing_files", ""); // 기존 파일이 없을 경우 빈 값 추가
-  }
-
-  // 새로운 파일을 FormData에 추가
-  newFiles.forEach(file => {
-    formDataToSend.append("files", file);
-  });
-
-  // 파일 개수 (기존 파일 + 새 파일) 계산 및 추가
-  formDataToSend.append("file_count", existingFiles.length + newFiles.length);
-
-  // 기타 데이터 추가
-  formDataToSend.append("job_id", formData.job_id);
-  formDataToSend.append("file_description", formData.file_description);
-  formDataToSend.append("file_title", formData.file_title);
-
-  // 서버로 전송
-  try {
-    const response = await axios.post("http://localhost:8001/api/Editupload", formDataToSend, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-
-    if (response.data.success) {
-      alert("업로드 성공!");
+    formDataToSend.append("file_title", formData.file_title);
+  
+    // 파일 개수 계산 및 FormData에 추가
+    formDataToSend.append("file_count", uniqueFileList.length); // 고유 파일 개수 추가
+    console.log("Total file count: ", uniqueFileList.length);
+  
+    // 기존 첨부 파일을 FormData에 추가
+    if (existingFiles.length > 0) {
+      formDataToSend.append("existing_files", existingFiles.join(",")); // 기존 파일 이름 전송
     } else {
-      alert("업로드 실패!");
+      formDataToSend.append("existing_files", ""); // 기존 파일이 없을 경우 빈 값 추가
     }
-  } catch (error) {
-    console.error("업로드 에러:", error);
-    alert("업로드 중 오류가 발생했습니다.");
-  }
+  
+    // 새로운 파일을 FormData에 추가
+    newFiles.forEach(file => {
+      formDataToSend.append("files", file);
+      console.log(`Adding file to FormData: ${file.name}`);
+    });
+  
+    // 기타 데이터 추가
+    formDataToSend.append("job_id", formData.job_id);
+    formDataToSend.append("file_description", formData.file_description);
+      
+    // 업로드 전 전체 FormData 내용 확인 (디버깅용)
+    console.log("FormData contents:");
+    for (const [key, value] of formDataToSend.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+  
+    // 서버로 전송
+    try {
+      const response = await axios.post("http://localhost:8001/api/Editupload", formDataToSend, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+  
+      if (response.data.success) {
+        alert("업로드 성공!");
+        console.log("Server Response: ", response.data);
+      } else {
+        alert("업로드 실패!");
+        console.error("Server Error: ", response.data.message);
+      }
+    } catch (error) {
+      console.error("업로드 에러:", error);
+      alert("업로드 중 오류가 발생했습니다.");
+    }
   };
 
   return (
@@ -172,33 +196,43 @@ const DataCorrection = () => {
                 />
                 <table>
                   <tbody>
-                    {formData.file_name.length > 0 ? (
-                      formData.file_name.map((file, index) => (
-                        <tr key={index}>
-                           <td style={{ width: "90%" }}>
-                            <button
-                              onClick={(e) => {
-                                e.preventDefault();
-                                downloadFile(formData.file_title, file);
-                              }}
-                              className={styles.downloadButton}
-                            >
-                              {file}
-                            </button>
-                          </td>
-                          <td>
-                            <button
-                              onClick={() => handleFileDeletion(file)}
-                              className={styles.deleteButton}
-                            >
-                              삭제
-                            </button>
-                          </td>
-                        </tr>
-                      ))
+                    {formData.file_name && formData.file_name.length > 0 ? (
+                      formData.file_name
+                        .filter(file => file && file.trim() !== "") // 유효한 파일만 필터링
+                        .map((file, index) => {
+                          console.log(`Rendering file at index ${index}:`, file); // 각 파일 로그 출력
+                          return (
+                            <tr key={index}>
+                              <td style={{ width: "90%" }}>
+                                <button
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    console.log(`Downloading file: ${file}`); // 다운로드 클릭 로그 출력
+                                    downloadFile(formData.file_title, file);
+                                  }}
+                                  className={styles.downloadButton}
+                                >
+                                  {file}
+                                </button>
+                              </td>
+                              <td>
+                                <button
+                                  onClick={() => {
+                                    console.log(`Deleting file: ${file}`); // 삭제 클릭 로그 출력
+                                    handleFileDeletion(file);
+                                  }}
+                                  className={styles.deleteButton}
+                                >
+                                  삭제
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })
                     ) : (
                       <tr>
-                        <td>첨부된 파일이 없습니다.</td>
+                        {console.log("No files available in formData.file_name")} {/* 파일 없을 경우 로그 출력 */}
+                        <td colSpan="2">첨부된 파일이 없습니다.</td>
                       </tr>
                     )}
                   </tbody>
