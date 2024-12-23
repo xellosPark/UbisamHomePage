@@ -4,6 +4,54 @@ import { FaCheckCircle } from 'react-icons/fa';
 
 const companyHistory = [
   {
+    year: "2023",
+    events: [
+      "2차전지계측기통합모니터링시스템개발",
+      "LG전자 진공레이저패터닝기술개발"
+    ],
+    active: true
+  },
+  {
+    year: "2022",
+    events: [
+      "2차전지 화성공정 자동화 시스템개발",
+      "O2O 예약관리 Mobile Web Application 개발"
+    ],
+    active: true
+  },
+  {
+    year: "2021",
+    events: [
+      "LG 엔솔조립공정통합모니터링시스템개발",
+      "레이저용접이상감지시스템개발"
+    ],
+    active: true
+  },
+  {
+    year: "2020",
+    events: [
+      "UbiSCADA/ UbiGem-PaC 런칭",
+      "Toray BSF 저산전력계모니터링시스템개발",
+      "LG Auto Transfer 장비제어, RO 필터포장기제작"
+    ],
+    active: true
+  },
+  {
+    year: "2019",
+    events: [
+      "파주  출장소개소 (파주시 월롱면 LCD로 6 )",
+    ],
+    active: true
+  },
+  {
+    year: "2018",
+    events: [
+      "본사 사무실 확장 이전 (가산 SK V!센터)",
+      "UbiGem (SECS/GEM Driver) LGIT  표준선정"
+    ],
+    active: true
+  },
+  {
     year: "2017",
     events: [
       "장비 제어 소프트웨어 개발 프레임워크 'mcFramework' 개발"

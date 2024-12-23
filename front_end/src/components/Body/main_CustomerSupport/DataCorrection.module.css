@@ -15,7 +15,7 @@
 
 .detailTitle {
   display: inline-block; /* 글자만큼 너비 적용 */
-  background-color: #f56f75;
+  background-color: none;
   padding: 0.5rem 1rem;
   border-radius: 8px;
   color: #222;

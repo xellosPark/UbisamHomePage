@@ -52,7 +52,7 @@ const storage = multer.diskStorage({
     // 폴더가 존재하지 않으면 생성
     if (!fs.existsSync(uploadPath)) {
       fs.mkdirSync(uploadPath, { recursive: true }); // 하위 폴더까지 생성
-      console.log(`[폴더 생성] 저장될 폴더 경로: ${uploadPath}`);
+      //console.log(`[폴더 생성] 저장될 폴더 경로: ${uploadPath}`);
     }
 
     //console.log(`[파일 저장 경로 설정] 저장될 경로: ${uploadPath}`);
@@ -368,28 +368,31 @@ app.post("/api/Editupload", upload.array("files"), async (req, res) => {
   const { job_id, file_description, file_title, file_count, existing_files } = req.body;
 
   // console.log("=== 시작: /api/Editupload 요청 처리 ===");
-  // console.log(`Received job_id: ${job_id}`);
-  // console.log(`Received file_description: ${file_description}`);
-  // console.log(`Received file_title: ${file_title}`);
-  // console.log(`Received file_count: ${file_count}`);
-  // console.log(`Received existing_files: ${existing_files}`);
+  // console.log(`수신된 job_id: ${job_id}`);
+  // console.log(`수신된 file_description: ${file_description}`);
+  // console.log(`수신된 file_title: ${file_title}`);
+  // console.log(`수신된 file_count: ${file_count}`);
+  // console.log(`수신된 existing_files: ${existing_files}`);
 
   // 기존 파일 목록과 새로 업로드된 파일 목록 병합
   const existingFileList = existing_files
     ? existing_files.split(",").map(name => name.trim()).filter(name => name)
     : [];
-  console.log("Parsed existing files: ", existingFileList);
+  //console.log("파싱된 기존 파일 목록: ", existingFileList);
+
+  // 업로드된 파일 이름 가져오기
+  //console.log("요청에서 받은 파일 객체 배열 (req.files):", req.files); // 파일 배열 출력
 
   // 업로드된 파일 이름 가져오기
   const uploadedFileNames = req.files.map(file => {
     const originalName = Buffer.from(file.originalname, "latin1").toString("utf8");
     return originalName.trim();
   });
-  console.log("Uploaded file names: ", uploadedFileNames);
+  //console.log("업로드된 파일 이름: ", uploadedFileNames);
 
   // 전체 파일 목록 생성 (기존 파일 + 새 파일, 중복 제거)
   const allFiles = [...new Set([...existingFileList, ...uploadedFileNames])];
-  console.log("Combined file list: ", allFiles);
+  //console.log("병합된 파일 목록: ", allFiles);
 
   // DB 업데이트 쿼리
   const query = `
@@ -399,9 +402,9 @@ app.post("/api/Editupload", upload.array("files"), async (req, res) => {
   `;
   const values = [file_description, allFiles.join(", "), allFiles.length, job_id];
 
-  console.log("=== 데이터베이스 쿼리 준비 완료 ===");
-  //console.log("Query: ", query);
-  //console.log("Values: ", values);
+  //console.log("=== 데이터베이스 쿼리 준비 완료 ===");
+  //console.log("쿼리: ", query);
+  //console.log("값: ", values);
 
   connection.query(query, values, (err, results) => {
     if (err) {
@@ -410,45 +413,45 @@ app.post("/api/Editupload", upload.array("files"), async (req, res) => {
       return res.status(500).json({ success: false, message: "데이터 업데이트 실패", error: err.message });
     }
 
-    console.log("Database updated successfully. Affected rows: ", results.affectedRows);
+    //console.log("데이터베이스 업데이트 성공. 영향을 받은 행: ", results.affectedRows);
 
     // 파일이 저장될 폴더 경로 설정
     const folderPath = path.join(__dirname, "Storege/Category/dataroom", file_title);
-    console.log(`Target folder path: ${folderPath}`);
+    //console.log(`대상 폴더 경로: ${folderPath}`);
 
     // 폴더 생성 (존재하지 않을 경우)
     if (!fs.existsSync(folderPath)) {
-      console.log("Folder does not exist. Creating folder...");
+      console.log("폴더가 존재하지 않습니다. 폴더를 생성합니다...");
       fs.mkdirSync(folderPath, { recursive: true });
-      console.log("Folder created successfully.");
+      console.log("폴더 생성 완료.");
     }
 
     // 업로드된 파일을 folderPath에 저장
     req.files.forEach((file, index) => {
-      console.log(`Processing file ${index + 1} of ${req.files.length}`);
+      //console.log(`파일 처리 중 (${index + 1}/${req.files.length})`);
     
       // 파일 이름 변환 및 저장 경로 설정
       const originalName = Buffer.from(file.originalname, "latin1").toString("utf8");
       const uniqueName = `${Date.now()}_${originalName}`; // 중복 방지용 고유 이름 추가
       const destinationPath = path.join(folderPath, uniqueName);
     
-      console.log(`Original file name: ${file.originalname}`);
-      console.log(`Decoded file name: ${originalName}`);
-      console.log(`Unique file name: ${uniqueName}`);
-      console.log(`Destination path: ${destinationPath}`);
+      //console.log(`원래 파일 이름: ${file.originalname}`);
+      //console.log(`디코딩된 파일 이름: ${originalName}`);
+      //console.log(`고유 파일 이름: ${uniqueName}`);
+      //console.log(`저장 경로: ${destinationPath}`);
     
       try {
         const fileContent = fs.readFileSync(file.path); // 업로드된 파일 읽기
         fs.writeFileSync(destinationPath, fileContent); // 대상 경로에 파일 저장
-        console.log(`File successfully saved: ${destinationPath}`);
+        //console.log(`파일 저장 성공: ${destinationPath}`);
       } catch (err) {
-        console.error(`Error saving file ${originalName} to ${destinationPath}:`, err.message);
+        console.error(`파일 저장 실패 (${originalName} -> ${destinationPath}):`, err.message);
       }
     });
     
     // 폴더 내 기존 파일 목록 가져오기
     const existingFilesInFolder = fs.readdirSync(folderPath);
-    console.log(`Existing files in folder: ${existingFilesInFolder.join(", ")}`);
+    //console.log(`폴더 내 기존 파일 목록: ${existingFilesInFolder.join(", ")}`);
 
     // 요청된 파일 목록에 없는 파일 삭제
     existingFilesInFolder.forEach(file => {
@@ -456,9 +459,9 @@ app.post("/api/Editupload", upload.array("files"), async (req, res) => {
         const filePathToRemove = path.join(folderPath, file);
         try {
           fs.unlinkSync(filePathToRemove);
-          console.log(`File deleted: ${filePathToRemove}`);
+          //console.log(`파일 삭제됨: ${filePathToRemove}`);
         } catch (err) {
-          console.error(`Error deleting file ${filePathToRemove}:`, err.message);
+          console.error(`파일 삭제 실패 (${filePathToRemove}):`, err.message);
         }
       }
     });
@@ -467,8 +470,6 @@ app.post("/api/Editupload", upload.array("files"), async (req, res) => {
     return res.json({ success: true, message: "데이터 업데이트 및 파일 동기화 성공", affectedRows: results.affectedRows });
   });
 });
-
-
 
 // MySQL 데이터 조회 API (예: books 테이블에서 데이터 가져오기)
 app.get("/api/books", (req, res) => {

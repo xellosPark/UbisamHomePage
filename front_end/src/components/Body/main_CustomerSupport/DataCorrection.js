@@ -28,7 +28,7 @@ const DataCorrection = () => {
   useEffect(() => {
     if (data && Object.keys(data).length > 0) {
       const { job_id, user_id, date, file_title, file_description, file_name, view_count } = data;
-      console.log('server data', file_name.length);
+      //console.log('server data', file_name.length);
       
       setFormData({
         job_id,
@@ -44,21 +44,59 @@ const DataCorrection = () => {
 
   const handleFileAddition = (e) => {
     const files = Array.from(e.target.files); // File 객체 배열로 변환
-    const fileNames = files.map(file => file.name); // 파일 이름만 추출
-    console.log("Adding files:", fileNames);
+    const fileNames = files
+      .map(file => file.name.trim()) // 파일 이름 추출 및 공백 제거
+      .filter(name => name !== ""); // 빈 문자열 제거
+    console.log("추가된 파일들:", fileNames);
   
     // 상태에 파일 이름과 파일 객체 추가
-    setFormData(prev => ({
-      ...prev,
-      file_name: [...prev.file_name, ...fileNames],
-      files: [...(prev.files || []), ...files], // File 객체 추가
-    }));
+    setFormData(prev => {
+      const currentData = prev || { file_name: [], files: [] }; // 초기 상태 확인 및 기본값 설정
+  
+      // 기존 파일 이름과 새로운 파일 이름 병합 및 중복 제거 (빈 문자열 제거)
+      const updatedFileName = [
+        ...new Set([
+          ...(currentData.file_name || []).filter(name => name.trim() !== ""), // 기존 파일에서 빈 문자열 제거
+          ...fileNames, // 새 파일 이름 추가
+        ]),
+      ];
+  
+      // `file_name` 기준으로 중복되지 않은 새로운 파일만 추가
+      const updatedFiles = [
+        ...(currentData.files || []),
+        ...files.filter(file => !currentData.file_name.includes(file.name.trim())), // 중복되지 않은 파일만 추가
+      ];
+  
+      console.log("최종 파일 이름 목록:", updatedFileName);
+      console.log("최종 File 객체 목록:", updatedFiles);
+  
+      return {
+        ...currentData,
+        file_name: updatedFileName,
+        files: updatedFiles,
+      };
+    });
   };
+
   const handleFileDeletion = (fileToDelete) => {
-    setFormData(prev => ({
-      ...prev,
-      file_name: prev.file_name.filter(file => file !== fileToDelete)
-    }));
+    setFormData(prev => {
+      // 초기 상태 확인 및 기본값 설정
+      const currentData = prev || { file_name: [], files: [] }; 
+      const updatedFileName = (currentData.file_name || []).filter(file => file !== fileToDelete); // file_name 배열 필터링
+      const updatedFiles = (currentData.files || []).filter(file => file.name !== fileToDelete); // files 배열 필터링
+  
+      // 디버깅 로그
+      // console.log("삭제 요청 파일:", fileToDelete);
+      // console.log("삭제 후 남은 파일 이름 목록:", updatedFileName);
+      // console.log("삭제 후 남은 File 객체 목록:", updatedFiles);
+  
+      // 업데이트된 상태 반환
+      return {
+        ...currentData,
+        file_name: updatedFileName,
+        files: updatedFiles,
+      };
+    });
   };
 
   const handleDescriptionChange = (e) => {
@@ -92,23 +130,17 @@ const DataCorrection = () => {
     // 기존 첨부 파일 정보 가져오기
     const existingFiles = (formData.file_name || [])
       .filter(file => file && file.trim() !== "") // 빈 값 제거
-      .map(file => file.trim().toLowerCase()); // 파일 이름 정규화
-    console.log("Filtered existing files: ", existingFiles);
+      .map(file => file.trim()); // 파일 이름 정규화
+    // console.log("필터링된 기존 파일: ", existingFiles);
   
-    // 새로운 파일 정보 가져오기
-    const newFiles = formData.files || []; // 상태에서 파일 객체 가져오기
-    console.log("New files to upload:", newFiles.map(file => file.name));
+    // 새로운 파일 가져오기
+    const newFiles = formData.files || []; // 새 파일 객체 가져오기
+    // console.log("새 파일들: ", newFiles.map(file => file.name)); // 새 파일 이름 디버깅
   
-    // 기존 파일과 새로운 파일 병합 (중복 제거)
-    const combinedFileList = [...existingFiles, ...newFiles.map(file => file.name.trim().toLowerCase())];
-    const uniqueFileList = [...new Set(combinedFileList)];
-    console.log("Combined unique file list: ", uniqueFileList);
-
+    // 기존 파일 개수 및 새 파일 추가
     formDataToSend.append("file_title", formData.file_title);
-  
-    // 파일 개수 계산 및 FormData에 추가
-    formDataToSend.append("file_count", uniqueFileList.length); // 고유 파일 개수 추가
-    console.log("Total file count: ", uniqueFileList.length);
+    formDataToSend.append("file_count", existingFiles.length); // 기존 파일 개수 + 새 파일 개수
+    // console.log("전체 파일 개수: ", existingFiles.length);
   
     // 기존 첨부 파일을 FormData에 추가
     if (existingFiles.length > 0) {
@@ -117,21 +149,22 @@ const DataCorrection = () => {
       formDataToSend.append("existing_files", ""); // 기존 파일이 없을 경우 빈 값 추가
     }
   
-    // 새로운 파일을 FormData에 추가
+    // 새 파일을 FormData에 추가
     newFiles.forEach(file => {
-      formDataToSend.append("files", file);
-      console.log(`Adding file to FormData: ${file.name}`);
+      formDataToSend.append("files", file); // 새 파일 추가
+      // console.log(`FormData에 추가된 새 파일: ${file.name}`);
     });
   
     // 기타 데이터 추가
     formDataToSend.append("job_id", formData.job_id);
     formDataToSend.append("file_description", formData.file_description);
-      
-    // 업로드 전 전체 FormData 내용 확인 (디버깅용)
-    console.log("FormData contents:");
-    for (const [key, value] of formDataToSend.entries()) {
-      console.log(`${key}: ${value}`);
-    }
+    // console.log(`파일 설명: ${formData.file_description}`);
+  
+    // // 업로드 전 전체 FormData 내용 확인 (디버깅용)
+    // console.log("FormData 내용:");
+    // for (const [key, value] of formDataToSend.entries()) {
+    //   console.log(`${key}: ${value}`);
+    // }
   
     // 서버로 전송
     try {
@@ -141,13 +174,13 @@ const DataCorrection = () => {
   
       if (response.data.success) {
         alert("업로드 성공!");
-        console.log("Server Response: ", response.data);
+        // console.log("서버 응답: ", response.data);
       } else {
         alert("업로드 실패!");
-        console.error("Server Error: ", response.data.message);
+        // console.error("서버 오류: ", response.data.message);
       }
     } catch (error) {
-      console.error("업로드 에러:", error);
+      // console.error("업로드 중 에러:", error);
       alert("업로드 중 오류가 발생했습니다.");
     }
   };
@@ -203,14 +236,14 @@ const DataCorrection = () => {
                       formData.file_name
                         .filter(file => file && file.trim() !== "") // 유효한 파일만 필터링
                         .map((file, index) => {
-                          console.log(`Rendering file at index ${index}:`, file); // 각 파일 로그 출력
+                          //console.log(`Rendering file at index ${index}:`, file); // 각 파일 로그 출력
                           return (
                             <tr key={index}>
                               <td style={{ width: "90%" }}>
                                 <button
                                   onClick={(e) => {
                                     e.preventDefault();
-                                    console.log(`Downloading file: ${file}`); // 다운로드 클릭 로그 출력
+                                    //console.log(`Downloading file: ${file}`); // 다운로드 클릭 로그 출력
                                     downloadFile(formData.file_title, file);
                                   }}
                                   className={styles.downloadButton}

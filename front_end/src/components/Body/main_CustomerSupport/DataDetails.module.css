@@ -15,10 +15,10 @@
 
 .detailTitle {
   display: inline-block; /* 글자만큼 너비 적용 */
-  background-color: #e1fda4;
+  background-color: none;
   padding: 0.5rem 1rem;
   border-radius: 8px;
-  color: #777;
+  color: #222;
   font-size: 1.5rem;
   font-weight: bold;
 }

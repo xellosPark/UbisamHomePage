@@ -6,12 +6,12 @@ import { v4 as uuidv4 } from "uuid"; // uuid 라이브러리 임포트
 
 const DataCreateFile = () => {
   const now = new Date();
-  const formattedTime = now.toISOString().slice(11, 19); // HH:MM:SS 형식으로 시간 표시
+  // const formattedTime = now.toISOString().slice(11, 19); // HH:MM:SS 형식으로 시간 표시
 
   const [formData, setFormData] = useState({
     job_id: "101",
     user_id: "Admin",
-    date: new Date().toISOString().slice(0, 10),
+    date: now.toISOString().slice(0, 19).replace("T", " "),
     file_title: "",
     file_description: "",
     file_name: [], // 파일 이름 목록

@@ -71,6 +71,7 @@ const DataRoom = () => {
     try {
       const response = await axios.post("http://localhost:8001/api/dataroom/update-views", { id: JobId });
       const selectedData = response.data.data.find((row) => row.job_id === JobId);
+      //console.log('선택된 데이터:', selectedData);
       if (selectedData) {
         navigate(`/DataRoom/DataCorrection/${selectedData.job_id}`, { state: { data: selectedData } });
       } else {
@@ -138,7 +139,7 @@ const DataRoom = () => {
                           ? new Date(item.date)
                               .toISOString()
                               .replace("T", " ")
-                              .slice(0, 10)
+                              .slice(0, 16)
                               .replace(/-/g, ".")
                           : ""}
                   </td>
