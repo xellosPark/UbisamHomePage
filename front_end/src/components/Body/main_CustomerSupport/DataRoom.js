@@ -9,11 +9,11 @@ import { useAuth } from "../../../context/AuthContext";
 
 const DataRoom = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [columnWidths] = useState( isAuthenticated ?{
+  const [columnWidths] = useState(isAuthenticated ? {
     id: 50,
     title: 500,
     author: 100,
@@ -28,7 +28,7 @@ const DataRoom = () => {
     views: 50,
   });
   const [isAdmin, setIsAdmin] = useState(true);
-  
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,7 +82,7 @@ const DataRoom = () => {
     }
   };
 
-  const handleDelete =  async (JobId) => {
+  const handleDelete = async (JobId) => {
     try {
       console.log(`🗑️ 삭제 클릭: ${JobId}`);
 
@@ -131,7 +131,7 @@ const DataRoom = () => {
               <td>{index + 1}</td>
               <td className={styles.titleColumn}>
                 {item.file_title}
-                { item.file_count > 0 && <FaSave style={{ color: "#DB7093", marginLeft: "5px" }} />}
+                {item.file_count > 0 && <FaSave style={{ color: "#DB7093", marginLeft: "5px" }} />}
               </td>
               <td>Admin</td>
                   <td>
@@ -156,15 +156,18 @@ const DataRoom = () => {
                     >
                       <FontAwesomeIcon icon={faPenToSquare} />
                     </div>
-                    <div
-                      className={`${styles.iconButton} ${styles.deleteIcon}`}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDelete(item.job_id);
-                      }}
-                    >
-                      <FaTrash />
-                    </div>
+                    {user.role === 1 &&
+                      <div
+                        className={`${styles.iconButton} ${styles.deleteIcon}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDelete(item.job_id);
+                        }}
+                      >
+                        <FaTrash />
+                      </div>
+                    }
+
                   </div>
                 </td>
               )}

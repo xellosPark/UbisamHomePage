@@ -56,7 +56,7 @@
 }
 
 .loginOptions {
-    margin-top: 0.5rem;
+    margin: 0.5rem 0rem;
     font-size: 0.7rem;
     color: #6F777A;
     text-align: end;
@@ -65,4 +65,8 @@
 .option {
     margin: 5px;
     border-right: 1px solid #6F777A;
+}
+
+.loginOption {
+    cursor: pointer;
 }

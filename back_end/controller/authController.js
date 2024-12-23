@@ -28,7 +28,7 @@ const generateRefreshToken = (user) => {
 // 로그인 처리 함수
 async function login(req, res) {
     const { user_id, user_password } = req.body;
-    console.log('로그인 진행', user_id, user_password);
+    //console.log('로그인 진행', user_id, user_password);
 
 
     try {
@@ -50,7 +50,7 @@ async function login(req, res) {
             return res.status(400).json({ message: 'Invalid password' });
         }
 
-        const userData = { user_id: user_id, user_name: user.user_name, role: user.role };
+        const userData = { user_id: user_id, user_name: user.user_name, role: user.admin };
         
         // Access Token과 Refresh Token 생성
         const accessToken = generateAccessToken(userData);

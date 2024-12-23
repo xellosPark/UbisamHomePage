@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import logo from "../../images/icon/ubisamlogo.png"
 import style from "./LoginPage.module.css";
 
 import { onLogin, onTest } from "../../api/authApi";
@@ -11,6 +10,10 @@ const LoginPage = () => {
     const [userPw, setUserPw] = useState("");
     const { login } = useAuth();
     const navigate = useNavigate();
+
+    const handleOption = () => {
+        alert('관리자께 문의바랍니다');
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,12 +35,6 @@ const LoginPage = () => {
         } else {
 
         }
-    }
-
-    const handleBtnClick = async () => {
-        const response = await onTest();
-        console.log('onTest response', response);
-        
     }
 
     return (
@@ -65,20 +62,18 @@ const LoginPage = () => {
                                 required
                             />
                         </div>
+                        <div className={style.loginOptions}>
+                            <div>
+                                <span className={style.loginOption} type="button" onClick={handleOption}>아이디 찾기</span>
+                                <span className={style.option} />
+                                <span className={style.loginOption} type="button" onClick={handleOption}>비밀번호 찾기</span>
+                            </div>
+                        </div>
                         <div className={style.loginSubmit}>
                             <button type="submit">로그인</button>
                         </div>
                     </div>
                 </form>
-
-                <div className={style.loginOptions}>
-                    <span></span>
-                    <div>
-                        <span>아이디 찾기</span>
-                        <span className={style.option} />
-                        <span>비밀번호 찾기</span>
-                    </div>
-                </div>
             </div>
         </div>
     );

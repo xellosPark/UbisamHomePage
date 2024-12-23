@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import LoginPage from '../Header/LoginPage.js';
 import CompanyIntroduction from '../Body/main_InfoPage/CompanyIntroduction';
 import CompanyGreetings from '../Body/main_InfoPage/Companygreetings';
 import BusinessOverview from '../Body/main_InfoPage/BusinessOverview';
@@ -20,6 +19,8 @@ import DataRoom from '../Body/main_CustomerSupport/DataRoom';
 import DataCreateFile from '../Body/main_CustomerSupport/DataCreateFile';
 import DataDetail from '../Body/main_CustomerSupport/DataDetails';
 import DataCorrection from '../Body/main_CustomerSupport/DataCorrection.js';
+import LoginPage from '../User/LoginPage.js';
+import JoinPage from '../User/JoinPage.js';
 
 const MainScreen = () => {
   const greetingsRef = useRef(null);
@@ -95,7 +96,7 @@ const MainScreen = () => {
         <Route path="/DataRoom/Detail/:id" element={<DataDetail />} />
         <Route path="/DataRoom/DataCorrection/:id" element={<DataCorrection />} />
         <Route path="/Login" element={<LoginPage />} />
-        
+        <Route path="/Join" element={<JoinPage />} />
       </Routes>
 
     {/* 경로가 "/"가 아닐 때만 컴포넌트 렌더링 */}
