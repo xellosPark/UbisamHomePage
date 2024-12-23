@@ -6,6 +6,7 @@ import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import axios from "axios";
 import styles from "./DataRoom.module.css"; // CSS Modules import
 import { useAuth } from "../../../context/AuthContext";
+import Pagination from '../../Pagination/Pagination';
 
 const DataRoom = () => {
   const navigate = useNavigate();
@@ -28,6 +29,16 @@ const DataRoom = () => {
     views: 50,
   });
   const [isAdmin, setIsAdmin] = useState(true);
+
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 7;
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = data ? data?.slice(indexOfFirstItem, indexOfLastItem) : [];
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 
   useEffect(() => {
@@ -126,9 +137,9 @@ const DataRoom = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item, index) => (
+          {currentItems.map((item, index) => (
             <tr key={item.id} onClick={() => handleRowClick(item.job_id)}>
-              <td>{index + 1}</td>
+              <td>{`${(currentPage - 1) * itemsPerPage + index + 1}`}</td>
               <td className={styles.titleColumn}>
                 {item.file_title}
                 {item.file_count > 0 && <FaSave style={{ color: "#DB7093", marginLeft: "5px" }} />}
@@ -175,6 +186,11 @@ const DataRoom = () => {
           ))}
         </tbody>
       </table>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <div className="pagination-container" style={{ textAlign: "center", flexGrow: 1, marginTop: '20px' }}>
+                    <Pagination postsPerPage={itemsPerPage} totalPosts={data.length} paginate={paginate} currentPage={currentPage} />
+                </div>
+            </div>
     </div>
   );
 };
