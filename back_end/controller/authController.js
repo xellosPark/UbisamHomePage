@@ -1,6 +1,9 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import { pool, query } from "../query/tableQuery.js";
+// import jwt from 'jsonwebtoken';
+// import bcrypt from 'bcrypt';
+// import { pool, query } from "../query/tableQuery.js";
+const jwt = require("jsonwebtoken");
+const bcrypt = require('bcryptjs');
+const { pool, query } = require("../query/tableQuery.js");
 
 let users = [
     { id: '1111', pw: '2222' },
@@ -23,7 +26,7 @@ const generateRefreshToken = (user) => {
 };
 
 // 로그인 처리 함수
-export async function login(req, res) {
+async function login(req, res) {
     const { user_id, user_password } = req.body;
     console.log('로그인 진행', user_id, user_password);
 
@@ -63,7 +66,7 @@ export async function login(req, res) {
 }
 
 // Refresh Token을 통해 새로운 Access Token 발급
-export function refreshToken(req, res) {
+function refreshToken(req, res) {
     const { refreshToken } = req.body;
     
     try {
@@ -80,12 +83,19 @@ export function refreshToken(req, res) {
 }
 
 // 로그아웃 처리 함수 (Refresh Token 제거)
-export function logout(req, res) {
+function logout(req, res) {
     const { token } = req.body;
     res.status(204).send();
 }
 
 
-export function Test(req, res) {
+function Test(req, res) {
     res.status(200).json({data: 'test 진행'});
 }
+
+module.exports = {
+    login,
+    refreshToken,
+    logout,
+    Test,
+};

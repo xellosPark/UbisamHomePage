@@ -1,27 +1,25 @@
-//require("dotenv").config(); // 환경 변수 로드
-//const express = require("express"); // Express 모듈 로드
-//const cors = require("cors"); // CORS 설정을 위한 모듈 로드
-//const path = require("path"); // 경로 처리를 위한 path 모듈 로드
-//const mysql = require("mysql"); // MySQL 모듈 로드
-
-import dotenv from "dotenv"; // 환경 변수 로드
-dotenv.config();
-import express from "express"; // Express 모듈 로드
-import cors from "cors"; // CORS 설정을 위한 모듈 로드
-import path from "path"; // 경로 처리를 위한 path 모듈 로드
-import fs from "fs"; // 파일 시스템 모듈 추가
-import multer from "multer";
-import mysql from "mysql"; // MySQL 모듈 로드
-import { fileURLToPath } from "url";
-import { checkDatabaseConnection, CreateTable } from "./back_end/query/tableQuery.js";
-
-import authRoutes from "./back_end/routes/authRoutes.js";
+require("dotenv").config(); // 환경 변수 로드
+let express = require("express"); // Express 모듈 로드
+const cors = require("cors"); // CORS 설정을 위한 모듈 로드
+const path = require("path"); // 경로 처리를 위한 path 모듈 로드
+const mysql = require("mysql"); // MySQL 모듈 로드
+const fs = require("fs");
+const multer = require("multer");
+//import dotenv from "dotenv"; // 환경 변수 로드
+//dotenv.config();
+//import express from "express"; // Express 모듈 로드
+//import cors from "cors"; // CORS 설정을 위한 모듈 로드
+//import path from "path"; // 경로 처리를 위한 path 모듈 로드
+//import fs from "fs"; // 파일 시스템 모듈 추가
+//import multer from "multer";
+//import mysql from "mysql"; // MySQL 모듈 로드
+//import { fileURLToPath } from "url";
+//import authRoutes from "./back_end/routes/authRoutes.js";
 //import userRoutes from "./back_end/routes/userRoutes.js"
-
-
-// __dirname 대체
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const { checkDatabaseConnection, CreateTable } = require("./back_end/query/tableQuery.js");
+const authRoutes = require("./back_end/routes/authRoutes.js");
+const userRoutes = require("./back_end/routes/userRoutes.js");
+const { verifyAccessToken } = require('./back_end/middlewares/authMiddleware.js');
 
 const app = express(); // Express 애플리케이션 생성
 const PORT = process.env.PORT || 8001; // 서버 포트 설정

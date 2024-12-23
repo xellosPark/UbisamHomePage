@@ -1,8 +1,11 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
-import { pool } from "../query/tableQuery.js";
+// import jwt from 'jsonwebtoken';
+// import bcrypt from 'bcryptjs';
+// import { pool } from "../query/tableQuery.js";
+const jwt = require("jsonwebtoken");
+const bcrypt = require('bcryptjs');
+const { pool, query } = require("../query/tableQuery.js");
 
-export async function createUser(req, res) {
+async function createUser(req, res) {
     const { user_id, user_password, user_name, admin, job_position } = req.body;
 
     try {
@@ -25,3 +28,7 @@ export async function createUser(req, res) {
         res.status(500).json({ message: 'Error creating user' });
     }
 }
+
+module.exports = {
+    createUser,
+};

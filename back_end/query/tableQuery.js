@@ -1,8 +1,9 @@
 //import mysql from "mysql2/promise"; // 본 Promise API 제공하여 변경
-import mysql from "mysql"; // MySQL 모듈 로드
+//import mysql from "mysql"; // MySQL 모듈 로드
+const mysql = require("mysql");
 
 // // MySQL 데이터베이스 연결 설정
-export const pool = mysql.createPool({ //MySQL 연결을 Connection Pool로 설정하면 동시 연결 성능이 향상
+const pool = mysql.createPool({ //MySQL 연결을 Connection Pool로 설정하면 동시 연결 성능이 향상
   host: process.env.MYSQL_HOST || "localhost", // MySQL 서버 주소 (환경 변수 사용 가능)
   user: process.env.MYSQL_USER || "root", // MySQL 사용자 이름
   password: process.env.MYSQL_PASSWORD || "ubisam8877", //ubisam8877 MySQL 비밀번호
@@ -11,7 +12,15 @@ export const pool = mysql.createPool({ //MySQL 연결을 Connection Pool로 설�
   connectionLimit: 10,
 });
 
-export function checkDatabaseConnection() {
+const connection = mysql.createConnection({
+  host: process.env.MYSQL_HOST || "ubihomepage.cafe24app.com", // MySQL 서버 주소 (환경 변수 사용 가능)
+  user: process.env.MYSQL_USER || "ubisam", // MySQL 사용자 이름
+  password: process.env.MYSQL_PASSWORD || "samtech0719!", // MySQL 비밀번호
+  database: process.env.MYSQL_DATABASE || "ubisam", // MySQL 데이터베이스 이름
+  port: process.env.MYSQL_PORT || "3306", // MySQL 서버 포트 (기본값: 3306)
+});
+
+function checkDatabaseConnection() {
   pool.getConnection((err, connection) => {
     if (err) {
       console.error("DB 연결 실패:", err.message || err.stack);
@@ -24,7 +33,7 @@ export function checkDatabaseConnection() {
 
 
 // 쿼리 실행 함수
-export function query(sql, params) {
+function query(sql, params) {
   return new Promise((resolve, reject) => {
     pool.query(sql, params, (err, results) => {
       if (err) {
@@ -53,7 +62,7 @@ CREATE TABLE IF NOT EXISTS UserTable (
 // ALTER TABLE DataRoomTable DROP COLUMN view_count;
 
 // 쿼리를 실행하여 테이블 생성
-export async function CreateTable() {
+async function CreateTable() {
   pool.query(createUserTableQuery, (err, results) => {
     if (err) {
       console.error("테이블 생성 중 오류 발생:", err.message);
@@ -62,3 +71,10 @@ export async function CreateTable() {
     console.log("테이블 'UserTable'이 생성되었거나 이미 존재합니다.");
   });
 }
+
+module.exports = {
+  pool,
+  checkDatabaseConnection,
+  query,
+  CreateTable,
+};

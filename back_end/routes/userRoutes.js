@@ -1,9 +1,10 @@
-import { Router } from 'express';
-const router = Router();
+const express = require("express");
+const router = express();
 
-import { verifyAccessToken } from '../middlewares/authMiddleware.js';
-import { createUser } from '../controller/userController.js';
+//import { verifyAccessToken } from '../middlewares/authMiddleware.js';
+//import { createUser } from '../controller/userController.js';
+const { createUser } = require("../controller/userController.js");
 
 router.post('/create', createUser);
 
-export default router;
+module.exports = router;

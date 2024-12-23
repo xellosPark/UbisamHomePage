@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
 
-export const verifyAccessToken = (req, res, next) => {
+function verifyAccessToken(req, res, next) {
     const authHeader = req.headers['authorization'];
   
     if (!authHeader) {
@@ -17,4 +17,8 @@ export const verifyAccessToken = (req, res, next) => {
       console.error('Token verification error:', err.message);
       return res.status(401).json({ message: 'Access token expired or invalid' });
     }
+  };
+
+  module.exports = {
+    verifyAccessToken,
   };
