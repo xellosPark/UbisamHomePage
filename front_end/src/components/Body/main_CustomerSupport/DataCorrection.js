@@ -175,7 +175,7 @@ const DataCorrection = () => {
       if (response.data.success) {
         alert("업로드 성공!");
         //console.log("Server Response: ", response.data);
-        navigate(`/main`);
+        navigate(`/DataRoom`);
       } else {
         alert("업로드 실패!");
         // console.error("서버 오류: ", response.data.message);

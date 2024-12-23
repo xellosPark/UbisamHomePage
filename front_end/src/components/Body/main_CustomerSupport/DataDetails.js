@@ -13,7 +13,7 @@ const DataDetail = () => {
   const [formData, setFormData] = useState({
     job_id: "",
     user_id: "",
-    date: new Date().toISOString().slice(0, 10),
+    date: "",
     file_title: "",
     file_description: "",
     file_name: [],
@@ -27,10 +27,25 @@ const DataDetail = () => {
   useEffect(() => {
     if (data && Object.keys(data).length > 0) {
       const { job_id, user_id, date, file_title, file_description, file_name, view_count } = data;
+
+      const dateSet = new Date(date);
+      const dateTime = dateSet.getFullYear() +
+        "-" +
+        String(dateSet.getMonth() + 1).padStart(2, "0") +
+        "-" +
+        String(dateSet.getDate()).padStart(2, "0") +
+        " " +
+        String(dateSet.getHours()).padStart(2, "0") +
+        ":" +
+        String(dateSet.getMinutes()).padStart(2, "0") +
+        ":" +
+        String(dateSet.getSeconds()).padStart(2, "0");
+
+
       setFormData({
         job_id,
         user_id,
-        date,
+        date: dateTime,
         file_title,
         file_description,
         file_name: typeof file_name === "string" ? file_name.split(",").map(f => f.trim()) : [],
@@ -82,13 +97,7 @@ const DataDetail = () => {
           <tr>
             <td className={styles.detailLabel}>날짜</td>
             <td>
-              {formData.date
-                ? new Date(formData.date)
-                    .toISOString()
-                    .replace("T", " ")
-                    .slice(0, 16)
-                    .replace(/-/g, ".")
-                : ""}
+              {formData.date}
             </td>
           </tr>
           <tr>
