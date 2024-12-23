@@ -6,7 +6,7 @@ const mysql = require("mysql");
 const pool = mysql.createPool({ //MySQL 연결을 Connection Pool로 설정하면 동시 연결 성능이 향상
   host: process.env.MYSQL_HOST || "localhost", // MySQL 서버 주소 (환경 변수 사용 가능)
   user: process.env.MYSQL_USER || "root", // MySQL 사용자 이름
-  password: process.env.MYSQL_PASSWORD || "ubisam8877", //ubisam8877 MySQL 비밀번호
+  password: process.env.MYSQL_PASSWORD || "sujeong", //ubisam8877 MySQL 비밀번호
   database: process.env.MYSQL_DATABASE || "ub_homepage", // MySQL 데이터베이스 이름
   port: process.env.MYSQL_PORT || "3306", // MySQL 서버 포트 (기본값: 3306)
   connectionLimit: 10,

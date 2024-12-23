@@ -1,0 +1,84 @@
+
+.joinContainer {
+    width: 100%;
+    height: 63vh;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.join {
+    width: 100%;
+    max-width: 400px; /* 로그인 박스 최대 너비 */
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+.joinImg {
+    align-items: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.joinBox {
+    max-width: 400px;
+}
+
+.joinBody {
+    display: flex;
+    flex-direction: column;
+}
+
+.joinBody > span {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.joinType {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    margin-left: 0.3rem;
+    color: #1478d6;
+}
+
+.joinInput {
+    margin: 0.3rem 0.3rem 0.4rem 0.3rem;
+    padding: 1rem 0.1rem;
+    border: none;
+    border-bottom: 1px solid #cdcdcd;
+    font-size: 0.7rem;
+}
+
+.joinInput:focus {
+    outline: none;
+    border-bottom: 1px solid #2E97F7;
+}
+
+.joinMsg {
+    display: flex;
+    justify-content: flex-start;
+    font-size: 0.7rem;
+    color: brown;
+    margin-left: 0.3rem;
+    margin-bottom: 0.5rem;
+    height: 1rem;
+}
+
+.joinSubmit {
+    display: flex;
+    flex-direction: column;
+}
+
+.joinSubmit > button {
+    margin: 1rem 0.3rem 0.3rem 0.3rem;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.2rem;
+    background-color: #2E97F7;
+    color: white;
+}

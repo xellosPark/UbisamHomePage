@@ -20,6 +20,10 @@ const Header = () => {
     navigate(`/main`);
   };
 
+  const handleJoin = () => {
+    navigate(`/join`);
+  }
+
   return (
     <header className="header">
       <div className="header-left">
@@ -117,8 +121,14 @@ const Header = () => {
         {
           isAuthenticated ? (
             <div className='header-logout'>
-              <span>{user.user_name} 님 환영합니다</span>
+              <span>{user.user_name}님 환영합니다</span>
               <span className="divider">|</span>
+              { user.role === 1 && 
+                <>
+                  <button onClick={handleJoin}>회원가입</button>
+                  <span className="divider">|</span>
+                </>
+              }
               <button onClick={handleLogout}>Logout</button>
             </div>
           ) : (
