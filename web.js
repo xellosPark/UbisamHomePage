@@ -136,7 +136,7 @@ connection.query(createTableQuery, (err, results) => {
 
 
 app.use("/api/auth", authRoutes);
-//app.use("/api/user", userRoutes);
+app.use("/api/user", userRoutes);
 
 // POST 요청 처리
 // app.post("/api/dataroom", (req, res) => {
