@@ -1,0 +1,139 @@
+.noticeBoardContainer {
+  padding: 1rem;
+  background-color: white;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.noticeOverviewHeader {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #333232;
+  padding: 10px;
+  max-width: 1200px;
+  height: 64px;
+  margin: 0 auto;
+}
+
+.checkIcon {
+  color: #2eb872;
+  font-size: 2rem; /* 아이콘 크기 */
+  margin-right: 0.5rem; /* 아이콘과 제목 간격 */
+  display: flex;
+  align-items: center; /* 아이콘 내부 수직 중앙 정렬 */
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+
+.topLink {
+  font-size: 18px;
+  color: #555;
+  text-decoration: none;
+  position: absolute;
+  right: 40px;
+}
+
+.tableInfo {
+  font-size: 1rem;
+  color: #666;
+  margin-top: 10px;
+  padding: 5px;
+}
+
+.noticeTable {
+  width: 100%;
+  height: 300px;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  border-bottom: solid 1px #dad6d6;
+}
+
+.noticeTable th,
+.noticeTable td {
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.noticeTable thead th {
+  background-color: #E5ECEF;
+  font-weight: bold;
+}
+
+.noData {
+  color: #999;
+  font-size: 1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.searchSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.searchCategory {
+  padding: 7px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  margin-right: 0.5rem;
+}
+
+.searchInput {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  width: 200px;
+  margin-right: 0.5rem;
+}
+
+.searchButton {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #ff5a5f;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.searchButton:hover {
+  background-color: #e04a4f;
+}
+
+.tableInfoContainer {
+  display: flex;
+  justify-content: space-between; /* 왼쪽과 오른쪽으로 정렬 */
+  align-items: center; /* 세로 가운데 정렬 */
+  margin-bottom: 1rem; /* 하단 여백 추가 */
+}
+
+.tableInfo {
+  font-size: 1rem;
+  color: #666;
+}
+
+.addDataNoticeButton {
+  background-color: rgb(222, 247, 176);
+  border: 1px solid #999;
+  border-radius: 14px;
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+  height: 35px;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+  margin-top: 10px;
+}
+
+.addDataNoticeButton:hover {
+  background-color: #0056b3;
+}
