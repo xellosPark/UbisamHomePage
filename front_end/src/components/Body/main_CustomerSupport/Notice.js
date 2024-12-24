@@ -6,12 +6,11 @@ import { useAuth } from "../../../context/AuthContext";
 import { FaSave, FaTrash } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import Pagination from '../../Pagination/Pagination';
 
 const Notice = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-
-  
 
   const [columnWidths] = useState(
     isAuthenticated
@@ -27,6 +26,17 @@ const Notice = () => {
     { id: 4, type: "일반", title: "서비스 정책 변경 안내", date: "2024-12-19", views: 76 },
     { id: 5, type: "일반", title: "FAQ 업데이트 소식", date: "2024-12-18", views: 85 },
   ]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 7;
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = data ? data?.slice(indexOfFirstItem, indexOfLastItem) : [];
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+
 
   const getTagClass = (type) => {
     if (type === "공지") return `${styles.tag} ${styles.notice}`;
@@ -66,7 +76,7 @@ const Notice = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => (
+          {currentItems.map((item) => (
             <tr key={item.id}>
               <td>
                 {item.type === "공지" || item.type === "알림" ? (
@@ -112,6 +122,11 @@ const Notice = () => {
           ))}
         </tbody>
       </table>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div className="pagination-container" style={{ textAlign: "center", flexGrow: 1, marginTop: '20px' }}>
+          <Pagination postsPerPage={itemsPerPage} totalPosts={data.length} paginate={paginate} currentPage={currentPage} />
+        </div>
+      </div>
 
       <div className={styles.searchSection}>
         <select className={styles.searchCategory}>
