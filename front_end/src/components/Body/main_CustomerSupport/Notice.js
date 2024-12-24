@@ -122,11 +122,7 @@ const Notice = () => {
           ))}
         </tbody>
       </table>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <div className="pagination-container" style={{ textAlign: "center", flexGrow: 1, marginTop: '20px' }}>
-          <Pagination postsPerPage={itemsPerPage} totalPosts={data.length} paginate={paginate} currentPage={currentPage} />
-        </div>
-      </div>
+      
 
       <div className={styles.searchSection}>
         <select className={styles.searchCategory}>
@@ -141,6 +137,11 @@ const Notice = () => {
           placeholder="검색어를 입력하세요"
         />
         <button className={styles.searchButton}>검색</button>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div className="pagination-container" style={{ textAlign: "center", flexGrow: 1, marginTop: '20px' }}>
+          <Pagination postsPerPage={itemsPerPage} totalPosts={data.length} paginate={paginate} currentPage={currentPage} />
+        </div>
       </div>
     </div>
   );
