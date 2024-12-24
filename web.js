@@ -368,7 +368,7 @@ app.post("/api/dataroom/delete", verifyAccessToken, async (req, res) => {
 });
 
 // 공지사항 생성 API
-app.post('/api/createnoticeboard', (req, res) => {
+app.post('/api/createnoticeboard', verifyAccessToken, (req, res) => {
 
   const { job_id, user_id, notice_type, title, view_count, description, created_time, update_time, delete_time } = req.body;
 

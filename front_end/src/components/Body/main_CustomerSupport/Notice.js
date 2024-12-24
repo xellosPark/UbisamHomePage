@@ -9,6 +9,7 @@ import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faBullhorn, faBell } from "@fortawesome/free-solid-svg-icons";
 import Pagination from '../../Pagination/Pagination';
 import axios from 'axios';
+import api from '../../../api/api';
 
 const Notice = () => {
   const now = new Date();
@@ -25,7 +26,7 @@ const Notice = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8001/api/noticeboard");
+        const response = await api.get("/api/noticeboard");
         if (response.data.success) {
           // console.log("데이터 가져오기 성공!"); // 성공 메시지
           // console.log("가져온 데이터:", response.data.notices); // 데이터 출력
@@ -103,10 +104,11 @@ const Notice = () => {
             })
             .map((item, index, sortedItems) => {
               // "일반" 타입에 대한 순번 계산
+              const generalItems = data.filter((x) => x.notice_type === "일반"); // "일반" 타입만 필터링
               const generalIndex =
-                item.notice_type === "일반"
-                  ? sortedItems.filter((x) => x.notice_type === "일반").indexOf(item) + 1
-                  : null;
+              item.notice_type === "일반"
+                ? generalItems.length - generalItems.indexOf(item) // 내림차순 순번 계산
+                : null;
 
               return (
                 <tr key={item.id_num} onClick={() => handleRowClick(item)}>

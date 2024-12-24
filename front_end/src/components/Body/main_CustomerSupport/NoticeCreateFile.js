@@ -4,6 +4,7 @@ import style from './NoticeCreateFile.module.css';
 import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+import api from '../../../api/api';
 
 const NoticeCreateFile = () => {
   const now = new Date();
@@ -51,7 +52,7 @@ const NoticeCreateFile = () => {
       // console.log("삭제 시간 (delete_time):", updatedFormData.delete_time);
 
       // 서버에 데이터 전송
-      const response = await axios.post("http://localhost:8001/api/createnoticeboard", updatedFormData);
+      const response = await api.post("/api/createnoticeboard", updatedFormData);
 
       if (response.data.success) {
         alert("게시물이 성공적으로 업로드되었습니다.");
