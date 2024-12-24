@@ -30,6 +30,25 @@ async function createUser(req, res) {
     }
 }
 
+async function getUserById(req, res) {
+    const id = req.params.id;
+    
+    try {
+        const sql = `
+         SELECT * FROM UserTable WHERE user_id = ?;
+     `;
+         //RETURNING id 이렇게 추가하고 확인차 데이터 가져올수 있음
+        
+         const result = await query(sql, [id]);
+         
+        res.status(201).json({ message: 'User created successfully', data: result[0].id });
+     } catch (err) {
+       console.error('Error check user', err.stack);
+         res.status(500).json({ message: 'Error check user' });
+     }
+}
+
 module.exports = {
     createUser,
+    getUserById,
 };

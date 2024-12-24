@@ -6,7 +6,7 @@
 const express = require("express");
 const router = express();
 //import { login, refreshToken, logout, Test } from '../controller/authController.js';
-//import { verifyAccessToken } from '../middlewares/authMiddleware.js';
+const { verifyAccessToken } = require('../middlewares/authMiddleware.js');
 const { login, refreshToken, logout, Test } = require("../controller/authController.js");
 
 // 로그인 라우트

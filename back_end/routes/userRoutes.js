@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express();
 
-//import { verifyAccessToken } from '../middlewares/authMiddleware.js';
-//import { createUser } from '../controller/userController.js';
-const { createUser } = require("../controller/userController.js");
+const { verifyAccessToken } = require('../middlewares/authMiddleware.js');
+const { createUser, getUserById } = require("../controller/userController.js");
 
-router.post('/create', createUser);
+router.post('/create', verifyAccessToken, createUser);
+
+router.get('/:id', getUserById)
 
 module.exports = router;

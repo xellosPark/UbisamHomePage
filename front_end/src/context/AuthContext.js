@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { setLogoutCallback } from '../api/api';
 
 // AuthContext 생성
 const AuthContext = createContext();
@@ -16,6 +17,9 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
       setUser(userData);
     }
+
+    // 로그아웃 콜백 설정
+    setLogoutCallback(logout);
   }, []);
 
   // 로그인 함수

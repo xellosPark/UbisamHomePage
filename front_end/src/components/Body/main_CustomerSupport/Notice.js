@@ -203,10 +203,8 @@ const Notice = () => {
         />
         <button className={styles.searchButton}>검색</button>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <div className="pagination-container" style={{ textAlign: "center", flexGrow: 1, marginTop: '20px' }}>
-          <Pagination postsPerPage={itemsPerPage} totalPosts={data.length} paginate={paginate} currentPage={currentPage} />
-        </div>
+      <div className={styles.paginationContainer}>
+        <Pagination postsPerPage={itemsPerPage} totalPosts={data.length} paginate={paginate} currentPage={currentPage} />
       </div>
     </div>
   );

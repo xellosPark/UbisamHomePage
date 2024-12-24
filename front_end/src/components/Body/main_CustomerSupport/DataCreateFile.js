@@ -3,6 +3,7 @@ import style from './DataCreateFile.module.css'; // CSS 모듈 불러오기
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // axios 모듈을 불러옵니다.
 import { v4 as uuidv4 } from "uuid"; // uuid 라이브러리 임포트
+import api from "../../../api/api";
 
 const DataCreateFile = () => {
   const now = new Date();
@@ -162,7 +163,7 @@ const DataCreateFile = () => {
 
     try {
       // axios를 사용하여 FormData 전송
-      const response = await axios.post("http://localhost:8001/api/dataroom", uploadData, {
+      const response = await api.post("/api/dataroom", uploadData, {
         headers: {
           "Content-Type": "multipart/form-data", // 필수: multipart/form-data 설정
         },
@@ -174,6 +175,10 @@ const DataCreateFile = () => {
       navigate('/DataRoom');
     } catch (error) {
       // 업로드 실패 처리
+      if (error.status === 403) {
+        alert('사용자 인증이 만료되었습니다. 로그인 후 다시 시도해 주십시오');
+        return;
+      }
       console.error("데이터 업로드 실패:", error.message);
       alert("데이터 업로드에 실패했습니다.");
     }

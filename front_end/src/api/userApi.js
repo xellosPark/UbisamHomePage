@@ -19,3 +19,14 @@ export const onCreateUser = async (id, pw, name, admin, position) => {
         }
       }
 };
+
+export const idDuplicateCheck = async (id) => {
+  try {
+    const response = await api.get(`/api/user/${id}`);
+    console.log('response', response);
+    
+    return response;
+  } catch (error) {
+    return error;
+  }
+}

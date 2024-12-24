@@ -18,14 +18,9 @@ const LoginPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const response = await onLogin(userId, userPw); // ID와 PW를 부모 컴포넌트로 전달
-        console.log('response', response);
+        //console.log('response', response);
         if (response.status === 200) {
             const { accessToken, refreshToken, userData } = await response.data;
-
-            // 로컬 스토리지에 저장
-            //localStorage.setItem('accessToken', accessToken);
-            //localStorage.setItem('refreshToken', refreshToken);
-            //localStorage.setItem('userData', userData);
             login(userData, accessToken, refreshToken);
             navigate('/main');
         } else if (response.status === 400) {
@@ -33,7 +28,7 @@ const LoginPage = () => {
         } else if (response.status === 500) {
             alert('아이디가 잘못되었습니다.');
         } else {
-
+            alert('로그인 중 문제가 발생했습니다. 관리자에게 문의바랍니다.');
         }
     }
 

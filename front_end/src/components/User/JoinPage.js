@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import style from "./JoinPage.module.css";
 
-import React, { Component, useState } from 'react'
-import { onCreateUser } from "../../api/userApi";
+import React, { Component, useCallback, useState } from 'react'
+import { idDuplicateCheck, onCreateUser } from "../../api/userApi";
 
 const JoinPage = () => {
     const [userId, setUserId] = useState("");
@@ -12,10 +12,37 @@ const JoinPage = () => {
     const [confirm, setConfirm] = useState('');
     const [userPosition, setUserPosition] = useState("");
 
+    const [idError, setIdError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [confirmError, setConfirmError] = useState('');
 
+    const [isIdCheck, setIsIdCheck] = useState(false);
+
     const navigate = useNavigate();
+
+    //디바운스는 사용자가 입력을 멈춘 후 일정 시간이 지나면 한 번만 실행
+    function debounce(func, delay) {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => func(...args), delay);
+        };
+    }
+
+    const onChangeIdHandler = (e) => {
+        const { value } = e.target;
+        const idRegex = /^.{2,20}$/;
+        setUserId(value);
+        if (!idRegex.test(value)) {
+            setIdError('아이디는 그룹웨어와 같은 아이디를 권장합니다.');
+        }
+        else if (value.trim() !== '') {
+            debouncedCheckUserId(value); // 디바운스된 함수 호출
+        } else if (value.trim() === '') {
+            setIdError('아이디는 그룹웨어와 같은 아이디를 권장합니다.');
+            setIsIdCheck(false);
+        }
+    }
 
     const onChangePasswordHandler = (e) => {
         const { name, value } = e.target;
@@ -25,6 +52,28 @@ const JoinPage = () => {
         } else {
             setConfirm(value);
             passwordCheckHandler(userPw, value);
+        }
+    }
+
+    const idCheckHandler = async (id) => {
+        try {
+            const responseData = await idDuplicateCheck(id);
+            if (responseData.status === 201) {
+                setIdError('이미 사용중인 아이디입니다.');
+                setIsIdCheck(false);
+                return false;
+            }
+            else if (responseData.status === 500) {
+                setIdError('사용 가능한 아이디입니다.');
+                setIsIdCheck(true);
+                return true;
+            } else {
+
+            }
+        } catch (error) {
+            alert('서버 오류입니다. 관리자에게 문의하세요.');
+            console.error(error);
+            return false;
         }
     }
 
@@ -47,15 +96,28 @@ const JoinPage = () => {
         }
     }
 
+    // 디바운스를 적용한 아이디 체크 함수
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const debouncedCheckUserId = useCallback(debounce(idCheckHandler, 500), []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const passwordCheckResult = passwordCheckHandler(userPw, confirm);
+        const idCheckresult = await idCheckHandler(userId);
+        if (idCheckresult) setIdError('');
+        else {
+            alert('아이디를 확인해주세요');
+            return;
+        }
+
+        const passwordCheckResult = await passwordCheckHandler(userPw, confirm);
         if (passwordCheckResult) { setPasswordError(''); setConfirmError(''); }
         else return;
 
         const response = await onCreateUser(userId, userPw, userName, 0, userPosition);
-        if (response.status === 201) {
+        if (response === undefined) {
+            alert('사용자 인증이 만료되었습니다. 로그인 후 다시 시도해 주십시오');
+        } else if (response.status === 201) {
             alert(`${userName} 회원가입에 성공했습니다`);
             navigate('/main');
         } else if (response.status === 400) {
@@ -63,7 +125,8 @@ const JoinPage = () => {
         } else if (response.status === 500) {
             alert('아이디가 잘못되었습니다.');
         } else {
-
+            console.log('Join 중 에러 발생', response);
+            alert('관리자에게 문의 바랍니다.');
         }
     }
 
@@ -83,9 +146,11 @@ const JoinPage = () => {
                                 type="text"
                                 value={userId}
                                 placeholder='아이디는 그룹웨어와 동일하게 작성해주세요'
-                                onChange={(e) => setUserId(e.target.value)}
+                                // onChange={(e) => setUserId(e.target.value)}
+                                onChange={onChangeIdHandler}
                                 required
                             />
+                            <small className={style.joinMsg}>{idError}</small>
                             <span className={style.joinType}>이름</span>
                             <input className={style.joinInput}
                                 type="text"

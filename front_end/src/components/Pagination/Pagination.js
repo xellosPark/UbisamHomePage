@@ -27,7 +27,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
       <ul className={styles.pagination}>
         {/* 첫 페이지로 이동하는 버튼 */}
         {/* <li className={`pageItem ${currentPage === 1 ? "disabled" : ""}`}> */}
-        <li className={`${styles.pageItem} ${currentPage === 1 ? styles.disabled : ""}`}>
+        <li className={`${styles.pageItem} ${currentPage === 1 ? styles.disabled : ""}`} style={{marginTop: '-1px'}}>
           <button
             onClick={() => paginate(1)}
             disabled={currentPage === 1}
@@ -69,7 +69,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
         </li>
         {/* 마지막 페이지로 이동하는 버튼 */}
         {/* <li className={`pageItem ${currentPage === totalPages ? "disabled" : ""}`}> */}
-        <li className={`${styles.pageItem} ${currentPage === totalPages ? styles.disabled : ""}`}>
+        <li className={`${styles.pageItem} ${currentPage === totalPages ? styles.disabled : ""}`} style={{marginTop: '-1px'}}>
           <button
             onClick={() => paginate(totalPages)}
             disabled={currentPage === totalPages}

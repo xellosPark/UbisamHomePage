@@ -198,10 +198,10 @@ app.use("/api/user", userRoutes);
 //   );
 // });
 
-
+//app.use("/api", verifyAccessToken);
 
 //자료실 데이터 메일 화면 데이터 가져오는 부분
-app.post("/api/dataroom", upload.array("files"), (req, res) => {
+app.post("/api/dataroom", verifyAccessToken, upload.array("files"), (req, res) => {
   const {
     job_id, user_id, date, file_title, file_description, file_count, view_count, } = req.body;
 
@@ -314,7 +314,7 @@ app.post("/api/download", (req, res) => {
 
 
 // 자료 삭제 API
-app.post("/api/dataroom/delete", async (req, res) => {
+app.post("/api/dataroom/delete", verifyAccessToken, async (req, res) => {
   const { job_id } = req.body;
 
   if (!job_id) {
@@ -441,7 +441,7 @@ app.get('/api/noticeboard', (req, res) => {
 //   });
 // });
 
-app.post("/api/Editupload", upload.array("files"), async (req, res) => {
+app.post("/api/Editupload", verifyAccessToken, upload.array("files"), async (req, res) => {
   const { job_id, file_description, file_title, file_count, existing_files } = req.body;
 
   // console.log("=== 시작: /api/Editupload 요청 처리 ===");
