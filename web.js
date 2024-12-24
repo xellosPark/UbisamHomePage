@@ -419,6 +419,58 @@ app.get('/api/noticeboard', (req, res) => {
   });
 });
 
+// 자료 삭제 API
+app.post("/api/notice/delete", verifyAccessToken, async (req, res) => {
+  const { job_id } = req.body;
+
+  // job_id 값 확인 로그
+  if (!job_id) {
+    console.error("❌ 요청 오류: job_id 값이 전달되지 않았습니다.");
+    return res.status(400).json({ status: "error", message: "job_id가 필요합니다." });
+  }
+  console.log(`✅ 요청 받은 job_id: ${job_id}`);
+
+  try {
+    // job_id가 유효한지 확인
+    const selectQuery = "SELECT title FROM noticeboardTable WHERE job_id = ? AND delete_time IS NULL";
+    const results = await new Promise((resolve, reject) => {
+      connection.query(selectQuery, [job_id], (err, results) => {
+        if (err) {
+          console.error("❌ 데이터 조회 오류:", err.message);
+          return reject(err);
+        }
+        console.log("✅ 데이터 조회 성공:", results);
+        resolve(results);
+      });
+    });
+
+    if (!results || results.length === 0) {
+      console.error("❌ 데이터 조회 실패: 유효하지 않은 job_id거나 이미 삭제된 데이터입니다.");
+      return res.status(404).json({ status: "error", message: "유효하지 않은 job_id거나 이미 삭제된 데이터입니다." });
+    }
+
+    // delete_time 업데이트
+    const updateQuery = "UPDATE noticeboardTable SET delete_time = NOW() WHERE job_id = ?";
+    await new Promise((resolve, reject) => {
+      connection.query(updateQuery, [job_id], (err) => {
+        if (err) {
+          console.error("❌ delete_time 업데이트 오류:", err.message);
+          return reject(err);
+        }
+        console.log("✅ delete_time 업데이트 성공: job_id =", job_id);
+        resolve();
+      });
+    });
+
+    // 성공 응답 반환
+    console.log("✅ 데이터 삭제 완료: job_id =", job_id);
+    return res.status(200).json({ status: "success", message: "데이터 삭제 완료" });
+  } catch (error) {
+    console.error("❌ 데이터 삭제 처리 중 오류:", error.message);
+    return res.status(500).json({ status: "error", message: "데이터 삭제 처리 중 오류 발생" });
+  }
+});
+
 // 파일 저장 디렉토리 경로 (다운로드할 파일들이 저장된 경로)
 //const FILE_DIRECTORY = path.join(__dirname, "Storege/Category/dataroom/UbiGEMSECS");
 
