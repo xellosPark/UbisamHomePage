@@ -1,0 +1,110 @@
+.inquiryFormContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+    height: calc(100vh - auto);
+  }
+  
+  .inquiryFormContainer > h2 {
+    text-align: left;
+    margin-bottom: 2.5rem;
+  }
+  
+  .inquiryFormTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .inquiryFormTable td {
+    padding: 10px;
+    vertical-align: middle;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .inquiryFormTable td:first-child {
+    width: 150px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .inquiryFormTable input,
+  .inquiryFormTable select,
+  .inquiryFormTable textarea {
+    width: 100%;
+    max-width: 600px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .inquiryFormTable textarea {
+    resize: none;
+    height: 100px;
+  }
+  
+  .contactField {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .contactField input {
+    width: 10%;
+  }
+  
+  .privacyPolicyContainer {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0rem 1rem;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    max-height: 150px; /* 스크롤 높이 설정 */
+    overflow-y: auto; /* 스크롤 추가 */
+  }
+  
+  .privacyPolicyContainer h3 {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .privacyPolicyContent {
+    
+    color: #555;
+  }
+  
+  .privacyPolicyContent > p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  .privacyPolicyContent strong {
+    font-weight: bold;
+    color: #000;
+  }
+
+  .privacyBtnContainer {
+    display: flex;
+    margin: 0 auto;
+  }
+
+  .privacyBtnContainer > button {
+    margin: 0 auto; 
+    margin-top: 20px;
+    padding: 1rem 1.5rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+
+
+
+  .privacyBtnContainer > button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }

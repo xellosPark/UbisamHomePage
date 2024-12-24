@@ -110,7 +110,7 @@ const Header = () => {
                 <Link to="/DataRoom" className="menu-item">자료실</Link>
                 {/* <div onClick={() => handleNavigate('support')} className="menu-item">공지사항 / 뉴스</div> */}
                 {/* <div onClick={() => handleNavigate('DataRoom')} className="menu-item">자료실</div> */}
-                <div onClick={() => handleNavigate('')} className="menu-item">Q & A</div>
+                <Link to="/Inquire" className="menu-item">문의하기</Link>
               </div>
             )}
           </li>

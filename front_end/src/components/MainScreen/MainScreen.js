@@ -21,6 +21,7 @@ import DataDetail from '../Body/main_CustomerSupport/DataDetails';
 import DataCorrection from '../Body/main_CustomerSupport/DataCorrection.js';
 import LoginPage from '../User/LoginPage.js';
 import JoinPage from '../User/JoinPage.js';
+import Inquire from '../Body/main_CustomerSupport/Inquire.js';
 
 const MainScreen = () => {
   const greetingsRef = useRef(null);
@@ -97,6 +98,7 @@ const MainScreen = () => {
         <Route path="/DataRoom/DataCorrection/:id" element={<DataCorrection />} />
         <Route path="/Login" element={<LoginPage />} />
         <Route path="/Join" element={<JoinPage />} />
+        <Route path="/Inquire" element={<Inquire />} />
       </Routes>
 
     {/* 경로가 "/"가 아닐 때만 컴포넌트 렌더링 */}
