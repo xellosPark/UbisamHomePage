@@ -116,7 +116,6 @@ const createTableQuery = `
   );
 `;
 
-//ALTER TABLE DataRoomTable DROP COLUMN view_count;
 
 //쿼리를 실행하여 테이블 생성
 connection.query(createTableQuery, (err, results) => {
@@ -124,6 +123,31 @@ connection.query(createTableQuery, (err, results) => {
     console.error("테이블 생성 중 오류 발생:", err.message); // 테이블 생성 중 오류 메시지 출력
   } else {
     console.log("테이블 'DataRoomTable'이 생성되었거나 이미 존재합니다."); // 테이블 생성 완료 또는 이미 존재 메시지 출력
+  }
+});
+
+// SQL 쿼리를 통해 noticeboardTable을 생성 (이미 존재하지 않는 경우에만 생성)
+const createNoticeboardTableQuery = `
+  CREATE TABLE IF NOT EXISTS noticeboardTable (
+    id_num INT AUTO_INCREMENT PRIMARY KEY,            -- 고유 ID
+    user_id VARCHAR(255) NOT NULL,                    -- 사용자 ID
+    job_id VARCHAR(255) NOT NULL,                     -- 작업 ID
+    notice_type VARCHAR(255) NOT NULL,                -- 공지 유형
+    title VARCHAR(255) NOT NULL,                      -- 제목
+    view_count INT DEFAULT 0,                         -- 조회수
+    description TEXT,                                 -- 설명
+    created_time DATETIME DEFAULT CURRENT_TIMESTAMP,  -- 생성 시간
+    update_time DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP, -- 수정 시간
+    delete_time DATETIME DEFAULT NULL                 -- 삭제 시간
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+`;
+
+// noticeboardTable 생성 쿼리 실행
+connection.query(createNoticeboardTableQuery, (err, results) => {
+  if (err) {
+    console.error("noticeboardTable 생성 중 오류 발생:", err.message);
+  } else {
+    console.log("테이블 'noticeboardTable'이 생성되었거나 이미 존재합니다.");
   }
 });
 
@@ -342,6 +366,59 @@ app.post("/api/dataroom/delete", async (req, res) => {
     });
   });
 });
+
+// 공지사항 생성 API
+app.post('/api/createnoticeboard', (req, res) => {
+
+  const { job_id, user_id, notice_type, title, view_count, description, created_time, update_time, delete_time } = req.body;
+
+  const query = `
+    INSERT INTO noticeboardTable 
+    (job_id, user_id, notice_type, title, view_count, description, created_time, update_time, delete_time) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  const values = [job_id, user_id, notice_type, title, view_count, description, created_time, update_time, delete_time];
+
+  connection.query(query, values, (err, result) => {
+    if (err) {
+      console.error('공지사항 생성 중 오류 발생:', err.message);
+      return res.status(500).json({
+        success: false,
+        message: '공지사항 생성 중 오류가 발생했습니다.',
+        error: err.message,
+      });
+    }
+
+    console.log('공지사항 생성 성공:', result);
+    res.status(200).json({
+      success: true,
+      message: '공지사항이 성공적으로 생성되었습니다.',
+    });
+  });
+});
+
+// 공지사항 데이터 가져오기 API
+app.get('/api/noticeboard', (req, res) => {
+
+  const query = `SELECT id_num, user_id, job_id, notice_type, title, view_count, description, created_time, update_time, delete_time FROM noticeboardTable`;
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error('공지사항 데이터를 불러오는 중 오류 발생:', err.message);
+      return res.status(500).json({
+        success: false,
+        message: '공지사항 데이터를 불러오는 중 오류가 발생했습니다.',
+      });
+    }
+
+    console.log('공지사항 데이터를 성공적으로 불러왔습니다.');
+    res.status(200).json({
+      success: true,
+      notices: results,
+    });
+  });
+});
+
 // 파일 저장 디렉토리 경로 (다운로드할 파일들이 저장된 경로)
 //const FILE_DIRECTORY = path.join(__dirname, "Storege/Category/dataroom/UbiGEMSECS");
 

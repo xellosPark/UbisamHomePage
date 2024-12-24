@@ -1,42 +1,61 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
-import styles from './Notice.module.css'; 
+import styles from './Notice.module.css';
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import { FaSave, FaTrash } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { faBullhorn, faBell } from "@fortawesome/free-solid-svg-icons";
 import Pagination from '../../Pagination/Pagination';
+import axios from 'axios';
 
 const Notice = () => {
+  const now = new Date();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-
-  const [columnWidths] = useState(
-    isAuthenticated
-      ? { 번호: '7%', 구분: '15%', 제목: '30%', 게시일: '20%', 조회: '15%', '수정/삭제': '20%' }
-      : { 번호: '7%', 구분: '15%', 제목: '30%', 게시일: '20%', 조회: '15%' }
-  );
-
-  // 샘플 데이터 5개
-  const [data] = useState([
-    { id: 1, type: "공지", title: "작업안내", date: "2024-12-23", views: 123 },
-    { id: 2, type: "공지", title: "서비스 점검", date: "2024-12-22", views: 98 },
-    { id: 3, type: "알림", title: "긴급 공지", date: "2024-12-20", views: 156 },
-    { id: 4, type: "일반", title: "서비스 정책 변경 안내", date: "2024-12-19", views: 76 },
-    { id: 5, type: "일반", title: "FAQ 업데이트 소식", date: "2024-12-18", views: 85 },
-  ]);
-
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 7;
+  const [data, setData] = useState([]); // 서버에서 가져올 데이터
+  const itemsPerPage = 10;
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  // 서버에서 데이터 가져오기
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8001/api/noticeboard");
+        if (response.data.success) {
+          // console.log("데이터 가져오기 성공!"); // 성공 메시지
+          // console.log("가져온 데이터:", response.data.notices); // 데이터 출력
+          setData(response.data.notices);
+        } else {
+          console.error("공지사항 데이터를 불러오지 못했습니다.");
+        }
+      } catch (error) {
+        console.error("데이터 가져오기 실패:", error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const currentItems = data ? data?.slice(indexOfFirstItem, indexOfLastItem) : [];
+
+  const [columnWidths] = useState(
+    isAuthenticated
+      ? { 번호: '7%', 구분: '10%', 제목: '50%', 게시일: '13%', 조회: '10%', '수정/삭제': '10%' }
+      : { 번호: '7%', 구분: '10%', 제목: '50%', 게시일: '13%', 조회: '10%' }
+  );
+
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 
+  const handleRowClick = (item) => {
+    navigate(`/DataRoom/NoticeUnitView/${item.id}`);
+  };
 
   const getTagClass = (type) => {
     if (type === "공지") return `${styles.tag} ${styles.notice}`;
@@ -58,7 +77,7 @@ const Notice = () => {
 
         {/* 자료 추가 버튼 */}
         {isAuthenticated && (
-          <Link to="/DataRoom/CreateFile" className={styles.addDataNoticeButton}>
+          <Link to="/DataRoom/Notice" className={styles.addDataNoticeButton}>
             게시물 추가
           </Link>
         )}
@@ -76,54 +95,100 @@ const Notice = () => {
           </tr>
         </thead>
         <tbody>
-          {currentItems.map((item) => (
-            <tr key={item.id}>
-              <td>
-                {item.type === "공지" || item.type === "알림" ? (
-                  <span className={getTagClass(item.type)}>{item.type}</span>
-                ) : (
-                  item.id
-                )}
-              </td>
-              <td>{item.type}</td>
-              <td>{item.title}</td>
-              <td>{item.date}</td>
-              <td>{item.views}</td>
-              {isAuthenticated && (
-                <td>
-                  <div className={styles.actionsColumn}>
-                    {/* 수정 아이콘 */}
-                    <div
-                      className={`${styles.iconButton} ${styles.editIcon}`}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        // handleEdit(item.job_id); // 수정 핸들러 호출
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faPenToSquare} />
-                    </div>
+          {currentItems
+            .sort((a, b) => {
+              // 공지 > 알림 > 일반 순으로 정렬
+              const typeOrder = { "공지": 1, "알림": 2, "일반": 3 };
+              return typeOrder[a.notice_type] - typeOrder[b.notice_type];
+            })
+            .map((item, index, sortedItems) => {
+              // "일반" 타입에 대한 순번 계산
+              const generalIndex =
+                item.notice_type === "일반"
+                  ? sortedItems.filter((x) => x.notice_type === "일반").indexOf(item) + 1
+                  : null;
 
-                    {/* 삭제 아이콘 (role === 1일 경우에만 표시) */}
-                    {isAuthenticated  && (
-                      <div
-                        className={`${styles.iconButton} ${styles.deleteIcon}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          //handleDelete(item.job_id); // 삭제 핸들러 호출
-                        }}
-                      >
-                        <FaTrash />
-                      </div>
+              return (
+                <tr key={item.id_num} onClick={() => handleRowClick(item)}>
+                  <td>
+                    {/* 공지와 알림은 notice_type 표시, 일반은 순번 */}
+                    {item.notice_type === "공지" || item.notice_type === "알림" ? (
+                      <span className={getTagClass(item.notice_type)}>{item.notice_type}</span>
+                    ) : (
+                      generalIndex // 일반 타입에 대한 순번
                     )}
-                  </div>
-                </td>
-              )}
-            </tr>
-          ))}
+                  </td>
+                  <td>{item.notice_type}</td>
+                  <td>
+                    {item.notice_type === "공지" ? (
+                      <>
+                        <FontAwesomeIcon
+                          icon={faBullhorn} // 스피커 아이콘
+                          style={{ color: "#ffc107", marginRight: "8px" }}
+                        />
+                        {item.title}
+                      </>
+                    ) : item.notice_type === "알림" ? (
+                      <>
+                        <FontAwesomeIcon
+                          icon={faBell} // 종 아이콘
+                          style={{ color: "#17a2b8", marginRight: "8px" }}
+                        />
+                        {item.title}
+                      </>
+                    ) : (
+                      item.title // 일반일 경우 제목만 표시
+                    )}
+                  </td>
+                  <td>
+                    {new Date(item.created_time)
+                      .toLocaleString("en-CA", {
+                        timeZone: "Asia/Seoul",
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                        hourCycle: "h23",
+                      })
+                      .replace(",", "")}
+                  </td>
+                  <td>{item.view_count}</td>
+                  {isAuthenticated && (
+                    <td>
+                      <div className={styles.actionsColumn}>
+                        {/* 수정 아이콘 */}
+                        <div
+                          className={`${styles.iconButton} ${styles.editIcon}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            // handleEdit(item.job_id); // 수정 핸들러 호출
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faPenToSquare} />
+                        </div>
+
+                        {/* 삭제 아이콘 */}
+                        {isAuthenticated && (
+                          <div
+                            className={`${styles.iconButton} ${styles.deleteIcon}`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              // handleDelete(item.job_id); // 삭제 핸들러 호출
+                            }}
+                          >
+                            <FaTrash />
+                          </div>
+                        )}
+                      </div>
+                    </td>
+                  )}
+                </tr>
+              );
+            })}
         </tbody>
       </table>
-      
-
       <div className={styles.searchSection}>
         <select className={styles.searchCategory}>
           <option>제목</option>
