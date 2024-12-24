@@ -246,3 +246,62 @@
   background-color: #f0f0f0; /* 호버 시 배경색 회색 */
   color: #3c5a88; /* 호버 시 글자 색 변경 */
 }
+
+/* 드롭다운 컨테이너 */
+.dropdownContainer {
+  position: relative;
+  width: 99%;
+  margin-bottom: 1rem;
+}
+
+/* 드롭다운 스타일 */
+.dropdown {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  appearance: none; /* 기본 화살표 제거 */
+  transition: border-color 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+/* 드롭다운 포커스 상태 */
+.dropdown:focus {
+  border-color: #3448f8;
+  outline: none;
+}
+
+/* 기본 화살표 및 구분선 */
+.dropdownContainer::after {
+  content: "▼"; /* 닫힌 상태 기본 화살표 */
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #666;
+  pointer-events: none; /* 클릭 불가 */
+  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* 구분선 추가 */
+.dropdownContainer::before {
+  content: "";
+  position: absolute;
+  right: 45px; /* 화살표와의 거리 설정 */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 50%; /* 컨테이너 높이의 50% */
+  background-color: #ccc; /* 구분선 색상 */
+  pointer-events: none;
+}
+
+/* 드롭다운 열렸을 때 화살표 변경 */
+.dropdown:focus ~ .dropdownContainer::after,
+.dropdownContainer:focus-within::after {
+  content: "▲"; /* 열림 상태 화살표 */
+  color: #1f83f5; /* 강조 색상 */
+}

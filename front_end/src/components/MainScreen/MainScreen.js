@@ -21,6 +21,8 @@ import DataDetail from '../Body/main_CustomerSupport/DataDetails';
 import DataCorrection from '../Body/main_CustomerSupport/DataCorrection.js';
 import LoginPage from '../User/LoginPage.js';
 import JoinPage from '../User/JoinPage.js';
+import NoticeCreateFile from '../Body/main_CustomerSupport/NoticeCreateFile.js';
+import NoticeUnitView from '../Body/main_CustomerSupport/NoticeUnitView.js';
 import Inquire from '../Body/main_CustomerSupport/Inquire.js';
 
 const MainScreen = () => {
@@ -96,6 +98,8 @@ const MainScreen = () => {
         <Route path="/DataRoom/CreateFile" element={<DataCreateFile />} />
         <Route path="/DataRoom/Detail/:id" element={<DataDetail />} />
         <Route path="/DataRoom/DataCorrection/:id" element={<DataCorrection />} />
+        <Route path="/DataRoom/Notice" element={<NoticeCreateFile />} />
+        <Route path="/DataRoom/NoticeUnitView/:id" element={<NoticeUnitView />} />
         <Route path="/Login" element={<LoginPage />} />
         <Route path="/Join" element={<JoinPage />} />
         <Route path="/Inquire" element={<Inquire />} />
