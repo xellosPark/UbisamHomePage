@@ -1,29 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import styles from './Notice.module.css'; 
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
+import { FaSave, FaTrash } from "react-icons/fa";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 
 const Notice = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated } = useAuth();
+
+  
+
+  const [columnWidths] = useState(
+    isAuthenticated
+      ? { 번호: '7%', 구분: '15%', 제목: '30%', 게시일: '20%', 조회: '15%', '수정/삭제': '20%' }
+      : { 번호: '7%', 구분: '15%', 제목: '30%', 게시일: '20%', 조회: '15%' }
+  );
+
+  // 샘플 데이터 5개
+  const [data] = useState([
+    { id: 1, type: "공지", title: "작업안내", date: "2024-12-23", views: 123 },
+    { id: 2, type: "공지", title: "서비스 점검", date: "2024-12-22", views: 98 },
+    { id: 3, type: "알림", title: "긴급 공지", date: "2024-12-20", views: 156 },
+    { id: 4, type: "일반", title: "서비스 정책 변경 안내", date: "2024-12-19", views: 76 },
+    { id: 5, type: "일반", title: "FAQ 업데이트 소식", date: "2024-12-18", views: 85 },
+  ]);
+
+  const getTagClass = (type) => {
+    if (type === "공지") return `${styles.tag} ${styles.notice}`;
+    if (type === "알림") return `${styles.tag} ${styles.alert}`;
+    return null; // 일반일 경우 스타일 없음
+  };
 
   return (
     <div className={styles.noticeBoardContainer}>
       <div className={styles.noticeOverviewHeader}>
-        <FaCheckCircle className={styles.checkIcon} /> 
+        <FaCheckCircle className={styles.checkIcon} />
         <h1 className={styles.noticeOverviewTitle}>공지사항 / 뉴스</h1>
       </div>
 
       <div className={styles.tableInfoContainer}>
         <div className={styles.tableInfo}>
-          Total <strong>0</strong>건 1 페이지
+          Total <strong>{data.length}</strong>건 게시물 있습니다.
         </div>
 
         {/* 자료 추가 버튼 */}
         {isAuthenticated && (
           <Link to="/DataRoom/CreateFile" className={styles.addDataNoticeButton}>
-            + 자료 추가
+            게시물 추가
           </Link>
         )}
       </div>
@@ -31,17 +57,59 @@ const Notice = () => {
       <table className={styles.noticeTable}>
         <thead>
           <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>글쓴이</th>
-            <th>날짜</th>
-            <th>조회</th>
+            <th style={{ width: columnWidths.번호 }}>번호</th>
+            <th style={{ width: columnWidths.구분 }}>구분</th>
+            <th style={{ width: columnWidths.제목 }}>제목</th>
+            <th style={{ width: columnWidths.게시일 }}>게시일</th>
+            <th style={{ width: columnWidths.조회 }}>조회</th>
+            {isAuthenticated && <th style={{ width: columnWidths['수정/삭제'] }}>수정/삭제</th>}
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td colSpan="5" className={styles.noData}>게시물이 없습니다.</td>
-          </tr>
+          {data.map((item) => (
+            <tr key={item.id}>
+              <td>
+                {item.type === "공지" || item.type === "알림" ? (
+                  <span className={getTagClass(item.type)}>{item.type}</span>
+                ) : (
+                  item.id
+                )}
+              </td>
+              <td>{item.type}</td>
+              <td>{item.title}</td>
+              <td>{item.date}</td>
+              <td>{item.views}</td>
+              {isAuthenticated && (
+                <td>
+                  <div className={styles.actionsColumn}>
+                    {/* 수정 아이콘 */}
+                    <div
+                      className={`${styles.iconButton} ${styles.editIcon}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        // handleEdit(item.job_id); // 수정 핸들러 호출
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faPenToSquare} />
+                    </div>
+
+                    {/* 삭제 아이콘 (role === 1일 경우에만 표시) */}
+                    {isAuthenticated  && (
+                      <div
+                        className={`${styles.iconButton} ${styles.deleteIcon}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          //handleDelete(item.job_id); // 삭제 핸들러 호출
+                        }}
+                      >
+                        <FaTrash />
+                      </div>
+                    )}
+                  </div>
+                </td>
+              )}
+            </tr>
+          ))}
         </tbody>
       </table>
 
@@ -50,7 +118,7 @@ const Notice = () => {
           <option>제목</option>
           <option>내용</option>
           <option>제목+내용</option>
-          <option>글쓴이</option>
+          <option>구분</option>
         </select>
         <input
           type="text"

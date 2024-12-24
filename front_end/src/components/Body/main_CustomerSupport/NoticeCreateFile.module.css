@@ -1,0 +1,248 @@
+/* 컨테이너 스타일 */
+.createContainer {
+  max-width: 800px;
+  margin: 0rem auto;
+  padding: 0.1rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+}
+
+/* 파일 업로드 폼 */
+.createFile {
+  width: 100%;
+  max-width: 900px; /* 최대 너비 설정 */
+  padding: 0.5rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  transition: all 0.3s ease-in-out; /* 부드러운 애니메이션 */
+}
+
+.createFile:hover {
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2); /* 호버 시 그림자 강화 */
+}
+
+/* 제목 */
+.createFile h4 {
+  text-align: center;
+  font-size: 1.7rem;
+  color: #2e7d32;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  /* text-decoration: underline; 
+  text-decoration-color: #2e7d32;  */
+}
+
+/* 설명 텍스트 */
+/* .createFile p {
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #555;
+} */
+
+/* 레이블 스타일 */
+.createFile label {
+  display: block;
+  font-size: 1rem;
+  color: #444;
+  font-weight: bold;
+  margin-left: 10px;
+  margin-bottom: 0.8rem;
+}
+
+/* 입력 필드 스타일 */
+.createFile input,
+.createFile textarea {
+  width: 97%; /* 100% 너비 */
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.createFile input:focus,
+.createFile textarea:focus {
+  border-color: #2eb872; /* 포커스 시 테두리 색상 */
+  outline: none;
+}
+
+/* 파일 선택 버튼 스타일 */
+.createFile input[type="file"] {
+  padding: 0.5rem;
+  background-color: #f0f8ff;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.createFile input[type="file"]:hover {
+  border-color: #2eb872;
+}
+
+/* 파일 목록 테이블 */
+.fileListTable {
+  width: 100%; /* 테이블 너비 100% */
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  
+}
+
+/* 테이블 헤더 스타일 */
+/* .fileListTable th {
+  background-color: #2eb872;
+  color: white;
+  padding: 0.4rem;
+  text-align: left;
+  font-weight: normal;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  border-bottom: 2px solid #ccc;
+} */
+
+/* 테이블 셀 스타일 */
+.fileListTable td {
+  padding: 0.1rem;
+  border: 1px solid #eee;
+  text-align: left;
+  font-size: 1rem;
+}
+
+/* 파일 항목의 가운데 정렬 */
+.fileListTable td:nth-child(1){
+  text-align: center; /* 가운데 정렬 */
+  width: 5%;
+}
+.fileListTable td:nth-child(3) {
+  text-align: center; /* 가운데 정렬 */
+  width: 10%;
+}
+
+/* 2번째 열 왼쪽 정렬 */
+.fileListTable td:nth-child(2) {
+  text-align: left; /* 왼쪽 정렬 */
+  padding: 0px 5px;
+}
+
+/* 삭제 버튼 스타일 */
+.deleteButton {
+  width: 100%;
+  background-color: #e74c3c;
+  color: white;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.deleteButton:hover {
+  background-color: #c0392b; /* 호버 시 어두운 빨간색 */
+}
+
+/* 파일 목록 컨테이너 (세로 스크롤) */
+.fileListContainer {
+  max-height: 200px; /* 최대 높이를 200px로 설정하여 충분히 항목들이 표시되도록 설정 */
+  overflow-y: auto; /* 세로 스크롤 활성화 */
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+
+/* 버튼 컨테이너 스타일 */
+.buttoncontainer {
+  display: flex; /* flexbox 사용하여 버튼들을 배치 */
+  justify-content: space-between; /* 양쪽 끝에 배치 */
+  align-items: center; /* 세로 가운데 정렬 */
+  margin-top: 1rem; /* 위쪽 여백 */
+}
+
+/* 목록으로 돌아가기 버튼 스타일 */
+.backbutton{
+  display: inline-block;
+  padding: 0.7rem 4rem;
+  background-color: #2eb872; /* 초록색 배경 */
+  color: white; /* 흰색 글자 */
+  text-decoration: none; /* 밑줄 제거 */
+  border-radius: 8px; /* 둥근 모서리 */
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer; /* 포인터 커서 */
+  transition: background-color 0.3s ease; /* 배경색 전환 효과 */
+  margin-left: 5px;
+}
+
+/* 목록으로 돌아가기 버튼 호버 효과 */
+.backbutton:hover {
+  background-color: #249a63; /* 어두운 초록색 배경 */
+}
+
+/* 업로드 버튼 스타일 */
+.upLodeButton {
+  padding: 0.7rem 4rem;
+  background-color: #4F7EB9; /* 업로드 버튼 색상 */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 5px;
+}
+
+/* 업로드 버튼 호버 시 색상 변경 */
+.upLodeButton:hover {
+  background-color: #3c5a88; /* 어두운 파란색 배경 */
+}
+
+.fileContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* 버튼 사이 간격 */
+}
+
+/* 커스텀 파일 선택 버튼 */
+.customFileButton {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: #2eb872;
+  color: white;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.customFileButton:hover {
+  background-color: #249a63; /* 호버 시 색상 변경 */
+}
+
+/* ADD 버튼 스타일 */
+.addButton {
+  padding: 0rem 1.5rem;
+  background-color: white; /* 배경색 흰색 */
+  color: #4F7EB9; /* 글자 색 초록색 */
+  border: 1px solid #222; /* 테두리 초록색 */
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px;
+}
+
+.addButton:hover {
+  background-color: #f0f0f0; /* 호버 시 배경색 회색 */
+  color: #3c5a88; /* 호버 시 글자 색 변경 */
+}
