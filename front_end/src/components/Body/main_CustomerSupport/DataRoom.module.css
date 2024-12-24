@@ -104,3 +104,10 @@
 .deleteIcon {
   background-color: #e74c3c; /* 빨간색 배경 */
 }
+
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.7rem;
+}

@@ -7,12 +7,20 @@ const api = axios.create({
   //timeout: 5000,
 });
 
+let logoutCallback = null;
+
+export const setLogoutCallback = (callback) => {
+  logoutCallback = callback;
+};
+
 // Axios 요청 인터셉터
 api.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
+      console.log('access 있음');
+      
     }
     return config;
   },
@@ -40,6 +48,9 @@ api.interceptors.response.use(
         return api(originalRequest); // 원래 요청 재시도
       } catch (refreshError) {
         console.error('Failed to refresh token:', refreshError.message);
+        if (logoutCallback) logoutCallback();
+        // 페이지를 로그인 화면으로 리다이렉트 (선택적)
+        window.location.href = '/main';
         return Promise.reject(refreshError);
       }
     }

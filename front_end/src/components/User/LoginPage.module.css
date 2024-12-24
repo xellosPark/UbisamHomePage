@@ -53,6 +53,7 @@
     border-radius: 0.2rem;
     background-color: #2E97F7;
     color: white;
+    cursor: pointer;
 }
 
 .loginOptions {

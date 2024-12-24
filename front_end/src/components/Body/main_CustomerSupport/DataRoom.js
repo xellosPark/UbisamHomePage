@@ -7,6 +7,7 @@ import axios from "axios";
 import styles from "./DataRoom.module.css"; // CSS Modules import
 import { useAuth } from "../../../context/AuthContext";
 import Pagination from '../../Pagination/Pagination';
+import api from "../../../api/api";
 
 const DataRoom = () => {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const DataRoom = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8001/api/dataroom");
+        const response = await api.get("/api/dataroom");
 
         // delete_time이 null인 데이터만 필터링
         const filteredData = response.data.filter((item) => !item.delete_time);
@@ -66,7 +67,7 @@ const DataRoom = () => {
 
   const handleRowClick = async (JobId) => {
     try {
-      const response = await axios.post("http://localhost:8001/api/dataroom/update-views", { id: JobId });
+      const response = await api.post("/api/dataroom/update-views", { id: JobId });
       const selectedData = response.data.data.find((row) => row.job_id === JobId);
       if (selectedData) {
         navigate(`/DataRoom/Detail/${selectedData.job_id}`, { state: { data: selectedData } });
@@ -80,7 +81,7 @@ const DataRoom = () => {
 
   const handleEdit = async (JobId) => {
     try {
-      const response = await axios.post("http://localhost:8001/api/dataroom/update-views", { id: JobId });
+      const response = await api.post("/api/dataroom/update-views", { id: JobId });
       const selectedData = response.data.data.find((row) => row.job_id === JobId);
       //console.log('선택된 데이터:', selectedData);
       if (selectedData) {
@@ -98,7 +99,7 @@ const DataRoom = () => {
       console.log(`🗑️ 삭제 클릭: ${JobId}`);
 
       // 서버에 삭제 요청 보내기
-      const response = await axios.post("http://localhost:8001/api/dataroom/delete", { job_id: JobId });
+      const response = await api.post("/api/dataroom/delete", { job_id: JobId });
 
       if (response.status === 200) {
         //console.log("✅ 삭제 완료:", jobId);
@@ -112,6 +113,9 @@ const DataRoom = () => {
       }
     } catch (error) {
       console.error("❌ 삭제 실패:", error.message);
+      if (error.status === 403) {
+        alert('사용자 인증이 만료되었습니다. 로그인 후 다시 시도해 주십시오');
+      }
     }
   };
 
@@ -138,23 +142,23 @@ const DataRoom = () => {
         </thead>
         <tbody>
           {currentItems.map((item, index) => (
-            <tr key={item.id} onClick={() => handleRowClick(item.job_id)}>
-              <td>{`${(currentPage - 1) * itemsPerPage + index + 1}`}</td>
+            <tr key={index} onClick={() => handleRowClick(item.job_id)}>
+              <td>{`${data.length - (currentPage - 1) * itemsPerPage - index}`}</td>
               <td className={styles.titleColumn}>
                 {item.file_title}
                 {item.file_count > 0 && <FaSave style={{ color: "#DB7093", marginLeft: "5px" }} />}
               </td>
               <td>Admin</td>
-                  <td>
-                      {item.date
-                          ? new Date(item.date)
-                              .toISOString()
-                              .replace("T", " ")
-                              .slice(0, 16)
-                              .replace(/-/g, ".")
-                          : ""}
-                  </td>
-                  <td>{item.view_count}</td>
+              <td>
+                {item.date
+                  ? new Date(item.date)
+                    .toISOString()
+                    .replace("T", " ")
+                    .slice(0, 16)
+                    .replace(/-/g, ".")
+                  : ""}
+              </td>
+              <td>{item.view_count}</td>
               {isAuthenticated && (
                 <td>
                   <div className={styles.actionsColumn}>
@@ -178,7 +182,6 @@ const DataRoom = () => {
                         <FaTrash />
                       </div>
                     }
-
                   </div>
                 </td>
               )}
@@ -186,11 +189,9 @@ const DataRoom = () => {
           ))}
         </tbody>
       </table>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <div className="pagination-container" style={{ textAlign: "center", flexGrow: 1, marginTop: '20px' }}>
-                    <Pagination postsPerPage={itemsPerPage} totalPosts={data.length} paginate={paginate} currentPage={currentPage} />
-                </div>
-            </div>
+      <div className={styles.paginationContainer}>
+        <Pagination postsPerPage={itemsPerPage} totalPosts={data.length} paginate={paginate} currentPage={currentPage} />
+      </div>
     </div>
   );
 };

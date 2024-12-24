@@ -17,19 +17,18 @@ let userDatas = [
 
 // Access Token 생성 함수
 const generateAccessToken = (user) => {
-    return jwt.sign({ user }, 'ubisam7788', { expiresIn: '30s' });  // 15분 유효기간
+    return jwt.sign({ user }, 'ubisam7788', { expiresIn: '1h' });  // 15분 유효기간
 };
 
 // Refresh Token 생성 함수
 const generateRefreshToken = (user) => {
-    return jwt.sign({ user }, 'ubisam7788', { expiresIn: '1m' });  // 7일 유효기간
+    return jwt.sign({ user }, 'ubisam7788', { expiresIn: '24h' });  // 7일 유효기간
 };
 
 // 로그인 처리 함수
 async function login(req, res) {
     const { user_id, user_password } = req.body;
     //console.log('로그인 진행', user_id, user_password);
-
 
     try {
         // 사용자 이름으로 데이터베이스에서 사용자 찾기

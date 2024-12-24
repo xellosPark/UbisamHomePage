@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 import styles from "./DataCorrection.module.css"; // CSS 모듈 import
 import axios from "axios";
+import api from "../../../api/api";
 
 const BASE_PATH = "Storege/Category/dataroom";
 
@@ -106,8 +107,7 @@ const DataCorrection = () => {
   const downloadFile = async (title, fileName) => {
     try {
       const filePath = `${BASE_PATH}/${title}/${fileName}`;
-      const response = await axios.post(
-        "http://localhost:8001/api/download",
+      const response = await api.post("/api/download",
         { path: filePath },
         { responseType: "blob" }
       );
@@ -168,7 +168,7 @@ const DataCorrection = () => {
   
     // 서버로 전송
     try {
-      const response = await axios.post("http://localhost:8001/api/Editupload", formDataToSend, {
+      const response = await api.post("/api/Editupload", formDataToSend, {
         headers: { "Content-Type": "multipart/form-data" },
       });
   
@@ -182,7 +182,12 @@ const DataCorrection = () => {
       }
     } catch (error) {
       // console.error("업로드 중 에러:", error);
+      if (error.status === 403) {
+        alert('사용자 인증이 만료되었습니다. 로그인 후 다시 시도해 주십시오');
+        return
+      }
       alert("업로드 중 오류가 발생했습니다.");
+      
     }
   };
 
