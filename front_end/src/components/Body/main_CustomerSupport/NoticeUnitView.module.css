@@ -74,6 +74,19 @@
   .contentCell::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
+ 
+  .descriptionTextarea {
+    width: 100%; /* .contentCell의 너비와 동일하게 설정 */
+    height: 98%; /* .contentCell의 높이와 동일하게 설정 */
+    border: none; /* .contentCell과 일치하도록 테두리를 제거 */
+    padding: 0.75rem; /* .contentCell의 padding과 동일하게 설정 */
+    font-size: 1rem; /* .contentCell의 글꼴 크기와 동일하게 설정 */
+    line-height: 1.5; /* .contentCell의 줄 간격과 동일하게 설정 */
+    box-sizing: border-box; /* padding이 크기에 영향을 주지 않도록 설정 */
+    background-color: transparent; /* .contentCell 배경색과 동일하게 설정 */
+    overflow-y: auto; /* 내용이 높이를 초과하면 세로 스크롤 활성화 */
+    resize: none; /* 일관된 모양을 위해 크기 조절을 비활성화 */
+  }
   
   /* 첨부 파일 버튼 스타일 */
   .downloadButton {
@@ -121,3 +134,22 @@
     border: 1px solid #ddd;
     text-align: left;
   }
+
+  /* 업로드 버튼 스타일 */
+.upLodeButton {
+  padding: 0.7rem 4rem;
+  background-color: #4F7EB9; /* 업로드 버튼 색상 */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 5px;
+}
+
+/* 업로드 버튼 호버 시 색상 변경 */
+.upLodeButton:hover {
+  background-color: #3c5a88; /* 어두운 파란색 배경 */
+}

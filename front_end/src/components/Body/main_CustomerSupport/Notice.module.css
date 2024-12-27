@@ -45,19 +45,21 @@
   font-weight: bold;
   border-radius: 20px; /* 둥근 테두리 */
   text-align: center;
-  color: white;
+  /* color: white; */
 }
 
 /* 공지 스타일 */
 .tag.notice {
-  background-color: #007bff; /* 파란색 배경 */
-  border: 2px solid #0056b3; /* 진한 파란색 테두리 */
+  color: #006ae2;
+  background-color: #ebf3ff; /* 파란색 배경 */
+  border: 2px solid #b4c4f7; /* 진한 파란색 테두리 */
 }
 
 /* 알림 스타일 */
 .tag.alert {
-  background-color: #ff9800; /* 주황색 배경 */
-  border: 2px solid #e65100; /* 진한 주황색 테두리 */
+  color: #e91e63; /* 핑크 텍스트 */
+  background-color: #fce4ec; /* 연한 핑크 배경 */
+  border: 2px solid #f48fb1; /* 진한 핑크 테두리 */
 }
 
 /* 테이블 정보 스타일 */
@@ -69,7 +71,7 @@
 }
 
 .tableInfo {
-  font-size: 1rem;
+  font-size: 1.3rem;
   color: #666;
 }
 

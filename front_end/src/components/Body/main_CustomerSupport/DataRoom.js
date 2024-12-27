@@ -95,9 +95,13 @@ const DataRoom = () => {
   };
 
   const handleDelete = async (JobId) => {
+     // 사용자에게 확인 대화상자 표시
+     const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
+     if (!isConfirmed) {
+         console.log("🚫 삭제 취소됨");
+         return; // 사용자가 아니오를 선택했을 경우 함수 종료
+     }
     try {
-      console.log(`🗑️ 삭제 클릭: ${JobId}`);
-
       // 서버에 삭제 요청 보내기
       const response = await api.post("/api/dataroom/delete", { job_id: JobId });
 

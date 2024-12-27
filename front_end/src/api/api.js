@@ -19,7 +19,7 @@ api.interceptors.request.use(
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
-      console.log('access 있음');
+      // console.log('access 있음');
       
     }
     return config;

@@ -471,6 +471,67 @@ app.post("/api/notice/delete", verifyAccessToken, async (req, res) => {
   }
 });
 
+//자료실 데이터 조회수 증가하는
+app.post("/api/DataRoom/NoticeUnitView", (req, res) => {
+  const { id } = req.body;
+
+  const updateQuery = `
+      UPDATE noticeboardTable
+      SET view_count = view_count + 1
+      WHERE job_id = ?;
+  `;
+
+  connection.query(updateQuery, [id], (err) => {
+      if (err) {
+          console.error("❌ 조회수 업데이트 오류:", err.message);
+          return res.status(500).json({ error: "조회수 업데이트 실패" });
+      }
+
+      // 조회수 업데이트 후 전체 데이터를 반환
+      const selectQuery = "SELECT * FROM noticeboardTable";
+
+      connection.query(selectQuery, (err, results) => {
+          if (err) {
+              console.error("❌ 데이터 조회 오류:", err.message);
+              return res.status(500).json({ error: "데이터 조회 실패" });
+          }
+          res.status(200).json({
+              message: "조회수 업데이트 및 데이터 조회 성공!",
+              data: results, // 전체 데이터 반환
+          });
+      });
+  });
+});
+
+// 데이터 업데이트 API
+app.post("/api/dataroom/Notice/update", upload.none(), (req, res) => {
+  const { job_id, description } = req.body;
+
+  if (!job_id || !description) {
+      return res.status(400).json({ error: "job_id 또는 description이 누락되었습니다." });
+  }
+
+  // 업데이트 쿼리 생성
+  const query = "UPDATE noticeboardTable SET description = ? WHERE job_id = ?";
+  const values = [description, job_id];
+
+  // 쿼리 실행
+  connection.query(query, values, (err, results) => {
+      if (err) {
+          console.error("데이터베이스 업데이트 실패:", err);
+          return res.status(500).json({ error: "데이터베이스 업데이트 실패" });
+      }
+
+      if (results.affectedRows === 0) {
+          return res.status(404).json({ error: "job_id에 해당하는 데이터가 없습니다." });
+      }
+
+      console.log("데이터 업데이트 성공:", results);
+      res.status(200).json({ message: "데이터 수정 성공", job_id });
+    });
+  });
+
+
 // 파일 저장 디렉토리 경로 (다운로드할 파일들이 저장된 경로)
 //const FILE_DIRECTORY = path.join(__dirname, "Storege/Category/dataroom/UbiGEMSECS");
 

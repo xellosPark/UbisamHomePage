@@ -53,7 +53,7 @@ const Notice = () => {
           const filteredData = response.data.notices.filter((item) => !item.delete_time);
 
           // 콘솔에 필터링된 데이터 출력
-          console.log("📥 필터링된 데이터:", filteredData);
+          //console.log("📥 필터링된 데이터:", filteredData);
 
           // 상태에 필터링된 데이터 저장
           setData(filteredData);
@@ -75,13 +75,21 @@ const Notice = () => {
       ? { 번호: '7%', 구분: '10%', 제목: '50%', 게시일: '13%', 조회: '10%', '수정/삭제': '10%' }
       : { 번호: '7%', 구분: '10%', 제목: '50%', 게시일: '13%', 조회: '10%' }
   );
-
-
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-
-  const handleRowClick = (item) => {
-    navigate(`/DataRoom/NoticeUnitView/${item.id}`);
+  const handleRowClick = async (JobId) => {
+    // navigate(`/DataRoom/NoticeUnitView/${item.id}`);
+    try {
+      const response = await api.post("/api/DataRoom/NoticeUnitView", { id: JobId });
+      const selectedData = response.data.data.find((row) => row.job_id === JobId);
+      if (selectedData) {
+        navigate(`/DataRoom/NoticeUnitView/${selectedData.job_id}`, { state: { data: selectedData } });
+      } else {
+        console.error("❌ 일치하는 데이터가 없습니다.");
+      }
+    } catch (error) {
+      console.error("❌ 서버 요청 실패:", error.message);
+    }
   };
 
   const getTagClass = (type) => {
@@ -91,6 +99,12 @@ const Notice = () => {
   };
 
   const handleDelete = async (JobId) => {
+     // 사용자에게 확인 대화상자 표시
+     const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
+     if (!isConfirmed) {
+         console.log("🚫 삭제 취소됨");
+         return; // 사용자가 아니오를 선택했을 경우 함수 종료
+     }
     try {
       console.log(`🗑️ 삭제 클릭: ${JobId}`);
 
@@ -112,6 +126,22 @@ const Notice = () => {
       if (error.status === 403) {
         alert('사용자 인증이 만료되었습니다. 로그인 후 다시 시도해 주십시오');
       }
+    }
+  };
+
+  const handleEdit = async (JobId) => {
+    try {
+      const response = await api.post("/api/DataRoom/NoticeUnitView", { id: JobId });
+      const selectedData = response.data.data.find((row) => row.job_id === JobId);
+      //console.log('선택된 데이터:', selectedData);
+    
+      if (selectedData) {
+        navigate(`/DataRoom/NoticeUnitView/${selectedData.job_id}`, { state: { data: selectedData, mode: 'edit'} });  // 'view' 또는 'edit' 권한 정보 추가
+      } else {
+        console.error("❌ 일치하는 데이터가 없습니다.");
+      }
+    } catch (error) {
+      console.error("❌ 서버 요청 실패:", error.message);
     }
   };
 
@@ -173,7 +203,7 @@ const Notice = () => {
             const descendingOrder = totalItems - currentIndex; // 총 데이터에서 현재 인덱스를 뺀 값으로 내림차순 계산
 
             return (
-              <tr key={item.id_num} onClick={() => handleRowClick(item)}>
+              <tr key={item.id_num} onClick={() => handleRowClick(item.job_id)}>
                 <td>
                   {/* 공지와 알림은 notice_type 표시, 일반은 순번 */}
                   {item.notice_type === "공지" || item.notice_type === "알림" ? (
@@ -229,7 +259,7 @@ const Notice = () => {
                           className={`${styles.iconButton} ${styles.editIcon}`}
                           onClick={(e) => {
                             e.stopPropagation();
-                            // handleEdit(item.job_id); // 수정 핸들러 호출
+                            handleEdit(item.job_id); // 수정 핸들러 호출
                           }}
                         >
                           <FontAwesomeIcon icon={faPenToSquare} />
