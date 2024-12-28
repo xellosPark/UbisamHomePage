@@ -285,7 +285,7 @@ const Notice = () => {
             })}
         </tbody>
       </table>
-      <div className={styles.searchSection}>
+      {/* <div className={styles.searchSection}>
         <select className={styles.searchCategory}>
           <option>제목</option>
           <option>내용</option>
@@ -298,7 +298,7 @@ const Notice = () => {
           placeholder="검색어를 입력하세요"
         />
         <button className={styles.searchButton}>검색</button>
-      </div>
+      </div> */}
       <div className={styles.paginationContainer}>
         <Pagination postsPerPage={itemsPerPage} totalPosts={data.length} paginate={paginate} currentPage={currentPage} />
       </div>
