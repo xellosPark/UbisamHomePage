@@ -30,13 +30,13 @@ export const refreshAccessToken = async (refreshToken) => {
 };
 
 
-export const onTest = async () => {
+export const loginCheck = async () => {
   try {
-      const response = await api.get(`/api/auth/test`);
+      const response = await api.get(`/api/auth/login-check`);
       
       return response;
     } catch (error) {
-      console.log('login error', error);
+      console.log('login check error', error);
       
       if (error.response) {
         return error.response;

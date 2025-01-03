@@ -19,6 +19,7 @@ const multer = require("multer");
 const { checkDatabaseConnection, CreateTable } = require("./back_end/query/tableQuery.js");
 const authRoutes = require("./back_end/routes/authRoutes.js");
 const userRoutes = require("./back_end/routes/userRoutes.js");
+const dataRoutes = require("./back_end/routes/dataRoutes.js");
 const { verifyAccessToken } = require('./back_end/middlewares/authMiddleware.js');
 
 const app = express(); // Express 애플리케이션 생성
@@ -161,6 +162,7 @@ connection.query(createNoticeboardTableQuery, (err, results) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/data", dataRoutes);
 
 // POST 요청 처리
 // app.post("/api/dataroom", (req, res) => {

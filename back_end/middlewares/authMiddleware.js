@@ -4,6 +4,7 @@ function verifyAccessToken(req, res, next) {
     const authHeader = req.headers['authorization'];
   
     if (!authHeader) {
+      console.log('header에 토큰이 없음');
       return res.status(401).json({ message: 'No token provided' });
     }
   

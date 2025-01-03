@@ -15,20 +15,6 @@ const DataRoom = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [columnWidths] = useState(isAuthenticated ? {
-    id: 50,
-    title: 500,
-    author: 100,
-    date: 100,
-    views: 50,
-    actions: 100,
-  } : {
-    id: 50,
-    title: 550,
-    author: 100,
-    date: 150,
-    views: 50,
-  });
   const [isAdmin, setIsAdmin] = useState(true);
 
 
@@ -40,6 +26,12 @@ const DataRoom = () => {
   const currentItems = data ? data?.slice(indexOfFirstItem, indexOfLastItem) : [];
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const [columnWidths] = useState(
+      isAuthenticated
+        ? { 번호: '7%', 제목: '50%', 등록자: '10%', 게시일: '13%', 조회: '10%', '수정/삭제': '10%' }
+        : { 번호: '7%', 제목: '50%', 등록자: '10%', 게시일: '13%', 조회: '10%' }
+    );
 
 
   useEffect(() => {
@@ -136,12 +128,12 @@ const DataRoom = () => {
       <table className={styles.dataTable}>
         <thead>
           <tr>
-            <th style={{ width: columnWidths.id }}>ID</th>
-            <th style={{ width: columnWidths.title }} className={styles.titleColumn}>제목</th>
-            <th style={{ width: columnWidths.author }}>등록자</th>
-            <th style={{ width: columnWidths.date }}>날짜</th>
-            <th style={{ width: columnWidths.views }}>조회수</th>
-            {isAuthenticated && <th style={{ width: columnWidths.actions }}>수정 / 삭제</th>}
+            <th style={{ width: columnWidths.번호 }}>ID</th>
+            <th style={{ width: columnWidths.제목 }} className={styles.titleColumn}>제목</th>
+            <th style={{ width: columnWidths.등록자 }}>등록자</th>
+            <th style={{ width: columnWidths.게시일 }}>날짜</th>
+            <th style={{ width: columnWidths.조회 }}>조회수</th>
+            {isAuthenticated && <th style={{ width: columnWidths['수정/삭제'] }}>수정 / 삭제</th>}
           </tr>
         </thead>
         <tbody>

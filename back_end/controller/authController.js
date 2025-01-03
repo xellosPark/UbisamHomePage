@@ -71,11 +71,9 @@ function refreshToken(req, res) {
     try {
         const decoded = jwt.verify(refreshToken, 'ubisam7788'); //'REFRESH_SECRET'
         
-        const newAccessToken = jwt.sign({ id: decoded.id }, 'ubisam7788', { expiresIn: '30s' }); //'ACCESS_SECRET'
+        const newAccessToken = jwt.sign({ id: decoded.id }, 'ubisam7788', { expiresIn: '1h' }); //'ACCESS_SECRET'
     
-        const newAccessTokenExp = new Date().getTime() + 30 * 1000; // 15분 후
-    
-        res.status(200).json({ accessToken: newAccessToken, accessTokenExp: newAccessTokenExp });
+        res.status(200).json({ accessToken: newAccessToken});
       } catch (error) {
         res.status(403).json({ message: 'Invalid refresh token' });
       }
@@ -88,13 +86,13 @@ function logout(req, res) {
 }
 
 
-function Test(req, res) {
-    res.status(200).json({data: 'test 진행'});
+function loginCheck(req, res) {
+    res.status(200).json({data: '로그인 상태 확인'});
 }
 
 module.exports = {
     login,
     refreshToken,
     logout,
-    Test,
+    loginCheck,
 };

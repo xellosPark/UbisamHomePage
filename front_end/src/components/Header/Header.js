@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Header.css';
 import logo from '../../images/icon/ubisamlogo.png';
 import { useAuth } from '../../context/AuthContext';
+import { loginCheck } from '../../api/authApi';
 
 const Header = () => {
   const [hoveredMenu, setHoveredMenu] = useState(null);
@@ -23,6 +24,19 @@ const Header = () => {
   const handleJoin = () => {
     navigate(`/join`);
   }
+
+  const loginedCheck = async () => {
+    const response = await loginCheck();
+    if (response.status === 403) {
+      alert('사용자 인증이 만료되었습니다. 로그인 후 다시 시도해 주십시오');
+    }
+  }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      loginedCheck();
+    }
+  }, [isAuthenticated]);
 
   return (
     <header className="header">
