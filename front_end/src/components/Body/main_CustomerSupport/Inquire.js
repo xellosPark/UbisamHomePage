@@ -135,6 +135,7 @@ const Inquire = () => {
                                 <option value="">선택하기</option>
                                 <option value="소프트웨어">소프트웨어</option>
                                 <option value="하드웨어">하드웨어</option>
+                                <option value="기타">기타</option>
                             </select>
                         </td>
                     </tr>
