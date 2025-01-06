@@ -56,7 +56,7 @@
 /* 입력 필드 스타일 */
 .createFile input,
 .createFile textarea {
-  width: 97.7%; /* 100% 너비 */
+  width: 97.9%; /* 100% 너비 */
   padding: 0.5rem;
   margin-bottom: 1rem;
   border: 1px solid #ccc;
@@ -247,7 +247,6 @@
   color: #3c5a88; /* 호버 시 글자 색 변경 */
 }
 
-
 .qlEditor {
   color: inherit;
 }
@@ -261,11 +260,14 @@ h1, p {
   color: inherit;
 }
 
+p {
+  font-size: 14px;
+}
+
 .qlEditor strong {
   font-weight: bold;
   color: inherit; /* 블루 색상 제거 */
 }
-
 
 .ql-editor img {
   max-width: 100%; /* 부모 컨테이너에 맞춤 */

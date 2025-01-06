@@ -55,11 +55,10 @@
 /* 입력 필드 스타일 */
 .createFile input,
 .createFile textarea {
-  width: 97%; /* 100% 너비 */
+  width: 97.9%; /* 100% 너비 */
   padding: 0.5rem;
   margin-bottom: 1rem;
   border: 1px solid #ccc;
-  border-radius: 8px;
   font-size: 1rem;
   background-color: #f9f9f9;
   transition: border-color 0.3s ease-in-out;
@@ -163,7 +162,7 @@
   display: flex; /* flexbox 사용하여 버튼들을 배치 */
   justify-content: space-between; /* 양쪽 끝에 배치 */
   align-items: center; /* 세로 가운데 정렬 */
-  margin-top: 1rem; /* 위쪽 여백 */
+  margin-top: 3.5rem; /* 위쪽 여백 */
 }
 
 /* 목록으로 돌아가기 버튼 스타일 */
@@ -250,7 +249,7 @@
 /* 드롭다운 컨테이너 */
 .dropdownContainer {
   position: relative;
-  width: 99%;
+  width: 100%;
   margin-bottom: 1rem;
 }
 
@@ -259,7 +258,6 @@
   width: 100%;
   padding: 0.5rem;
   border: 1px solid #ccc;
-  border-radius: 8px;
   font-size: 1rem;
   background-color: #f9f9f9;
   appearance: none; /* 기본 화살표 제거 */
@@ -304,4 +302,32 @@
 .dropdownContainer:focus-within::after {
   content: "▲"; /* 열림 상태 화살표 */
   color: #1f83f5; /* 강조 색상 */
+}
+
+.qlEditor {
+  color: inherit;
+}
+
+.qlEditor h1, h2 {
+  font-weight: normal; /* 굵기 제거 */
+
+}
+
+h1, p {
+  color: inherit;
+}
+
+p {
+  font-size: 14px;
+}
+
+.qlEditor strong {
+  font-weight: bold;
+  color: inherit; /* 블루 색상 제거 */
+}
+
+
+.ql-editor img {
+  max-width: 100%; /* 부모 컨테이너에 맞춤 */
+  height: auto; /* 비율 유지 */
 }

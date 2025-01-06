@@ -1,13 +1,11 @@
 import React, { useMemo, useRef, useState } from "react";
 import style from './DataCreateFile.module.css'; // CSS 모듈 불러오기
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios"; // axios 모듈을 불러옵니다.
 import { v4 as uuidv4 } from "uuid"; // uuid 라이브러리 임포트
 import api from "../../../api/api";
 
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-
 import { ImageResize } from "quill-image-resize-module-ts";
 
 if (typeof window !== 'undefined' && window.Quill) {
@@ -26,7 +24,6 @@ const DataCreateFile = () => {
     user_id: "Admin",
     date: dateTime,
     file_title: "",
-    file_description: "",
     file_name: [], // 파일 이름 목록
     files: [],     // 실제 선택된 파일 객체
     file_count: 0,
@@ -36,47 +33,8 @@ const DataCreateFile = () => {
     delete_time: "",
   });
   const navigate = useNavigate();
-
-
-  // const [formData, setFormData] = useState({
-  //   title: "",
-  //   description: "",
-  //   files: [], // 선택된 파일들
-  // });
-
-  // 입력 값이 변경될 때마다 formData 상태를 업데이트
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData({ ...formData, [name]: value });
-  // };
-
-  // // 파일 선택 시 처리하는 함수
-  // const handleFileChange = (e) => {
-  //   const files = e.target.files;
-  //   console.log("handleFileChange files", files);
-
-  //   if (!files) {
-  //     return; // 파일이 없다면 아무것도 하지 않음
-  //   }
-  //   // 선택한 파일들을 기존 파일 목록에 추가
-  //   const selectedFiles = Array.from(e.target.files);
-
-  //   // 기존 파일 목록에 새로 선택한 파일을 추가하여 상태 업데이트
-  //   setFormData({
-  //     ...formData,
-  //     files: [...formData.files, ...selectedFiles], // 기존 파일 목록 + 새로 선택한 파일
-  //   });
-
-  //   // 파일 선택 후 파일 탐색기 다시 닫는 방식 (자동으로 처리)
-  //   e.target.value = null;
-  // };
-  // // 파일 삭제 함수
-  // const handleFileDelete = (fileName) => {
-  //   setFormData({
-  //     ...formData,
-  //     files: formData.files.filter((file) => file.name !== fileName), // 해당 파일 삭제
-  //   });
-  // };
+  const quillRef = useRef(null); // ReactQuill의 ref 생성
+  const [content, setContent] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -199,11 +157,6 @@ const DataCreateFile = () => {
     }
   };
 
-
-  const quillRef = useRef(null); // ReactQuill의 ref 생성
-  //const quillRef = useRef<ReactQuill | null>(null);
-  const [content, setContent] = useState('');
-
   // 이미지 업로드 핸들러 (새로운 이미지가 추가될때만 실행)
   const handleImageUpload = async () => {
     const input = document.createElement('input');
@@ -295,14 +248,13 @@ const DataCreateFile = () => {
 
           <label>설명</label>
           <ReactQuill
-          ref={quillRef}
-          modules={modules}
-          theme="snow" className={style.qlEditor} style={{ height: '400px'}}
-          value={content}
-          onChange={handleContentChange}
-        //formats={formats}
-
-        />
+            ref={quillRef}
+            modules={modules}
+            formats={formats}
+            theme="snow" className={style.qlEditor} style={{ height: '400px'}}
+            value={content}
+            onChange={handleContentChange}
+          />
           {/* 파일 업로드 */}
           <div className={style.fileContainer}>
             <label>첨부 파일</label>

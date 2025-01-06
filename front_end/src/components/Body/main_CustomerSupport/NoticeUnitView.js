@@ -1,8 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './NoticeUnitView.module.css';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import api from "../../../api/api";
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { ImageResize } from "quill-image-resize-module-ts";
+
+if (typeof window !== 'undefined' && window.Quill) {
+  window.Quill = Quill;
+} //2. Quill을 window 전역 객체에 할당하여 전역으로 사용
+
+Quill.register('modules/ImageResize', ImageResize);
 
 const NoticeUnitView = () => {
   const navigate = useNavigate(); // useNavigate 훅 사용
@@ -17,17 +26,19 @@ const NoticeUnitView = () => {
     notice_type: "",       // 공지 유형 (공지, 알림, 일반)
     title: "",             // 제목
     view_count: 0,         // 조회수
-    description: "",       // 설명
+    // description: "",       // 설명
     created_time: "",      // 생성 시간
     update_time: "",       // 수정 시간
     delete_time: "",       // 삭제 시간
   });
+  const quillRef = useRef(null); // ReactQuill의 ref 생성
+  const [content, setContent] = useState('');
 
 
   useEffect(() => {
     if (data && Object.keys(data).length > 0) {
       const { id_num, user_id, job_id, notice_type, title, view_count, description, created_time, update_time, delete_time } = data;
-
+      
       const formatDateTime = (date) => {
         const dateSet = new Date(date);
         return (
@@ -64,11 +75,13 @@ const NoticeUnitView = () => {
         notice_type: notice_type || "",
         title: title || "",
         view_count: view_count || 0,
-        description: description || "",
+        // description: description || "",
         created_time: created_time ? formatDateTime(created_time) : "",
         update_time: update_time ? formatDateTime(update_time) : "",
         delete_time: delete_time ? formatDateTime(delete_time) : "",
       });
+
+      setContent(description);
     }
   }, [data]);
 
@@ -76,7 +89,7 @@ const NoticeUnitView = () => {
     try {
         const formDataToSend = new FormData();
         formDataToSend.append("job_id", data.job_id); // job_id 추가
-        formDataToSend.append("description", formData.description); // 수정된 description 추가
+        formDataToSend.append("description", content); // 수정된 description 추가
 
         // 서버로 POST 요청
         const response = await api.post("/api/dataroom/Notice/update", formDataToSend, {
@@ -100,9 +113,111 @@ const NoticeUnitView = () => {
 };
 
   const handleDescriptionChange = (e) => {
-    setFormData(prev => ({ ...prev, description: e.target.value }));
+    //setFormData(prev => ({ ...prev, description: e.target.value }));
+    setContent(e);
   };
 
+  const parseHTML = (html) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const elements = [];
+
+    // 이미지 태그 추출
+    const images = doc.querySelectorAll('img');
+    images.forEach((img) => {
+      elements.push(
+        <img
+          key={img.src}
+          src={img.src}
+          alt="이미지"
+          width={img.width || 'auto'}
+          style={{ ...img.style }}
+        />
+      );
+    });
+
+    // 텍스트 추출 (p 태그 안의 텍스트)
+    const paragraphs = doc.querySelectorAll('p');
+    paragraphs.forEach((p) => {
+      const text = p.textContent.trim();
+      if (text) {
+        elements.push(<p key={text}>{text}</p>);
+      }
+    });
+
+    return elements;
+  };
+
+  // 이미지 업로드 핸들러 (새로운 이미지가 추가될때만 실행)
+  const handleImageUpload = async () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.onchange = async () => {
+      const file = input.files[0];
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const response = await fetch('http://localhost:8001/api/data/board/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+      const imageUrl = data.imageUrl;
+
+      // 반환된 URL 확인
+      console.log('이미지 URL:', imageUrl);
+
+      // Quill 인스턴스 가져오기
+      const quill = quillRef.current.getEditor();
+      const range = quill.getSelection();
+      quill.insertEmbed(range.index, 'image', imageUrl);
+    };
+  };
+
+  const modules = useMemo(() => {
+        return {
+          toolbar: {
+            container: [
+              [{ header: [1, 2, false] }, ], //{ header: "2" }, { font: [String] }],
+              // [{ size: [String] }],
+              ["bold", "italic", "underline", "strike", "blockquote"],
+              [
+                { list: "ordered" },
+                { list: "bullet" },
+                { indent: "-1" },
+                { indent: "+1" },
+              ],
+              ["link", "image", "code-block"],
+              ["clean"],
+            ],
+            handlers: {
+              image: handleImageUpload, // 이미지 업로드 핸들러 연결
+            },
+          },
+          ImageResize: {
+            modules: ['Resize', 'DisplaySize']
+          },
+    
+        };
+      }, []);
+    
+      // ReactQuill에서 사용할 포맷 정의
+      const formats = [
+        'header',
+        'bold',
+        'italic',
+        'underline',
+        'strike',
+        'link',
+        'image',
+        'list',
+        'bullet',
+        'align',
+      ];
 
   return (
     <div className={styles.dataDetailContainer}>
@@ -111,10 +226,10 @@ const NoticeUnitView = () => {
       </div>
       <table className={styles.detailTable}>
         <tbody>
-          <tr>
+          {/* <tr>
             <td className={styles.detailLabel}>ID</td>
             <td>{formData.job_id}</td>
-          </tr>
+          </tr> */}
           <tr>
             <td className={styles.detailLabel}>제목</td>
             <td>{formData.title}</td>
@@ -137,13 +252,21 @@ const NoticeUnitView = () => {
             <td className={styles.detailLabel}>내용</td>
             <td className={styles.contentCell}>
               {mode === 'edit' ? (
-                <textarea
-                  defaultValue={data?.description}
-                  onChange={handleDescriptionChange}
-                  className={styles.descriptionTextarea}
-                />
+                // <textarea
+                //   defaultValue={parseHTML(data?.description)}
+                //   onChange={handleDescriptionChange}
+                //   className={styles.descriptionTextarea}
+                // />
+                <ReactQuill
+                            ref={quillRef}
+                            modules={modules}
+                            formats={formats}
+                            theme="snow" className={styles.qlEditor} style={{ height: '400px'}}
+                            value={content || ""}
+                            onChange={handleDescriptionChange}
+                          />
               ) : (
-                data?.description
+                parseHTML(content)
               )}
             </td>
           </tr>

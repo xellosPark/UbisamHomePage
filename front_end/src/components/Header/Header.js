@@ -120,7 +120,7 @@ const Header = () => {
             <Link to="/support" className="nav_title">고객지원</Link>
             {hoveredMenu === 'support' && (
               <div className="dropdown">
-                <Link to="/support" className="menu-item">고객지원</Link>
+                <Link to="/support" className="menu-item">공지사항</Link>
                 <Link to="/DataRoom" className="menu-item">자료실</Link>
                 {/* <div onClick={() => handleNavigate('support')} className="menu-item">공지사항 / 뉴스</div> */}
                 {/* <div onClick={() => handleNavigate('DataRoom')} className="menu-item">자료실</div> */}

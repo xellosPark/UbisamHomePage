@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation, Link } from "react-router-dom";
 import styles from "./DataDetails.module.css"; // CSS 모듈 import
-import axios from "axios";
 import api from "../../../api/api";
 
 const BASE_PATH = "Storege/Category/dataroom";

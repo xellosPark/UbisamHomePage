@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import style from './NoticeCreateFile.module.css';
 import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
 import api from '../../../api/api';
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { ImageResize } from "quill-image-resize-module-ts";
+
+if (typeof window !== 'undefined' && window.Quill) {
+  window.Quill = Quill;
+} //2. Quill을 window 전역 객체에 할당하여 전역으로 사용
+
+Quill.register('modules/ImageResize', ImageResize);
 
 const NoticeCreateFile = () => {
   const now = new Date();
@@ -23,6 +31,8 @@ const NoticeCreateFile = () => {
     update_time: formattedTime,  // 수정 시간
     delete_time: null,      // 삭제 시간
   });
+  const quillRef = useRef(null); // ReactQuill의 ref 생성
+  const [content, setContent] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -37,7 +47,7 @@ const NoticeCreateFile = () => {
     try {
       // 고유한 `job_id` 생성
       const uniqueJobId = uuidv4().replace(/-/g, "").slice(0, 5); // UUID를 5자리로 잘라 사용
-      const updatedFormData = { ...formData, job_id: uniqueJobId };
+      const updatedFormData = { ...formData, description: content, job_id: uniqueJobId };
 
       // 콘솔 로그로 확인 (한글 메시지)
       // console.log("=== 서버로 전송할 데이터 확인 ===");
@@ -65,6 +75,81 @@ const NoticeCreateFile = () => {
       alert("업로드에 실패했습니다.");
     }
   };
+
+  // 이미지 업로드 핸들러 (새로운 이미지가 추가될때만 실행)
+  const handleImageUpload = async () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.onchange = async () => {
+      const file = input.files[0];
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const response = await fetch('http://localhost:8001/api/data/board/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+      const imageUrl = data.imageUrl;
+
+      // 반환된 URL 확인
+      console.log('이미지 URL:', imageUrl);
+
+      // Quill 인스턴스 가져오기
+      const quill = quillRef.current.getEditor();
+      const range = quill.getSelection();
+      quill.insertEmbed(range.index, 'image', imageUrl);
+    };
+  };
+
+  const handleContentChange = (value) => {
+    setContent(value);
+  };
+
+  const modules = useMemo(() => {
+      return {
+        toolbar: {
+          container: [
+            [{ header: [1, 2, false] }, ], //{ header: "2" }, { font: [String] }],
+            // [{ size: [String] }],
+            ["bold", "italic", "underline", "strike", "blockquote"],
+            [
+              { list: "ordered" },
+              { list: "bullet" },
+              { indent: "-1" },
+              { indent: "+1" },
+            ],
+            ["link", "image", "code-block"],
+            ["clean"],
+          ],
+          handlers: {
+            image: handleImageUpload, // 이미지 업로드 핸들러 연결
+          },
+        },
+        ImageResize: {
+          modules: ['Resize', 'DisplaySize']
+        },
+  
+      };
+    }, []);
+  
+    // ReactQuill에서 사용할 포맷 정의
+    const formats = [
+      'header',
+      'bold',
+      'italic',
+      'underline',
+      'strike',
+      'link',
+      'image',
+      'list',
+      'bullet',
+      'align',
+    ];
 
   return (
     <div className={style.createContainer}>
@@ -100,12 +185,20 @@ const NoticeCreateFile = () => {
 
           {/* 설명 입력 */}
           <label>설명</label>
-          <textarea
+          {/* <textarea
             name="description"
             value={formData.description}
             onChange={handleInputChange}
             rows={10}
             required
+          /> */}
+          <ReactQuill
+            ref={quillRef}
+            modules={modules}
+            formats={formats}
+            theme="snow" className={style.qlEditor} style={{ height: '400px'}}
+            value={content}
+            onChange={handleContentChange}
           />
 
           {/* 버튼 컨테이너 */}
