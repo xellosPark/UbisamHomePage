@@ -1,4 +1,5 @@
 const { pool, query } = require("../query/tableQuery.js");
+const path = require('path');
 
 async function createInquire(req, res) {
     const { data, phone_number } = req.body;
@@ -23,7 +24,23 @@ async function createInquire(req, res) {
 
 
 
+// 이미지 업로드 처리
+async function uploadImage(req, res) {
+  if (!req.file) {
+    return res.status(400).json({ error: '이미지가 업로드되지 않았습니다.' });
+  }
+  const uploadPath = path.join(__dirname, `../../Storege/Category/Board/${req.file.filename}`);
+  //const uploadPath = path.join("http://localhost:8001/Storege/Category/Board", req.file.filename);
+  //const filePath = `${req.protocol}://${req.get('host')}/'${uploadPath}`;
+  //const filePath = `${req.protocol}://${req.get('host')}/${req.file.filename}`;
+  //const filePath = `${uploadPath}\'${req.file.filename}`;
+  const filePath = `http://localhost:8001/storege/Category/Board/${req.file.filename}`;
+  console.log('반환 path', filePath);
+  
+  res.json({ imageUrl: filePath }); // 업로드된 이미지 URL 반환
+};
 
 module.exports = {
     createInquire,
+    uploadImage,
 };

@@ -38,6 +38,10 @@ app.use(
 app.use(express.json()); // JSON 요청 데이터 파싱
 app.use(express.urlencoded({ extended: true })); // URL-encoded 데이터 파싱
 
+// storege 폴더 정적 제공
+// 이렇게 사용하지 않음 기본 path는 http://localhost:8001/build 가 기본 path로 정해짐
+app.use('/Storege', express.static(path.join(__dirname, 'Storege')));
+
 // 파일 저장 경로 설정
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {

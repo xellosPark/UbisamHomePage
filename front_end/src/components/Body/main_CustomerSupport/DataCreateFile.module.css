@@ -56,13 +56,11 @@
 /* 입력 필드 스타일 */
 .createFile input,
 .createFile textarea {
-  width: 97%; /* 100% 너비 */
+  width: 97.7%; /* 100% 너비 */
   padding: 0.5rem;
   margin-bottom: 1rem;
   border: 1px solid #ccc;
-  border-radius: 8px;
   font-size: 1rem;
-  background-color: #f9f9f9;
   transition: border-color 0.3s ease-in-out;
 }
 
@@ -210,6 +208,7 @@
   display: flex;
   align-items: center;
   gap: 10px; /* 버튼 사이 간격 */
+  margin-top: 90px;
 }
 
 /* 커스텀 파일 선택 버튼 */
@@ -246,4 +245,29 @@
 .addButton:hover {
   background-color: #f0f0f0; /* 호버 시 배경색 회색 */
   color: #3c5a88; /* 호버 시 글자 색 변경 */
+}
+
+
+.qlEditor {
+  color: inherit;
+}
+
+.qlEditor h1, h2 {
+  font-weight: normal; /* 굵기 제거 */
+
+}
+
+h1, p {
+  color: inherit;
+}
+
+.qlEditor strong {
+  font-weight: bold;
+  color: inherit; /* 블루 색상 제거 */
+}
+
+
+.ql-editor img {
+  max-width: 100%; /* 부모 컨테이너에 맞춤 */
+  height: auto; /* 비율 유지 */
 }

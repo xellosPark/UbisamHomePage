@@ -75,6 +75,37 @@ const DataDetail = () => {
     }
   };
 
+  const parseHTML = (html) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const elements = [];
+
+    // 이미지 태그 추출
+    const images = doc.querySelectorAll('img');
+    images.forEach((img) => {
+      elements.push(
+        <img
+          key={img.src}
+          src={img.src}
+          alt="이미지"
+          width={img.width || 'auto'}
+          style={{ ...img.style }}
+        />
+      );
+    });
+
+    // 텍스트 추출 (p 태그 안의 텍스트)
+    const paragraphs = doc.querySelectorAll('p');
+    paragraphs.forEach((p) => {
+      const text = p.textContent.trim();
+      if (text) {
+        elements.push(<p key={text}>{text}</p>);
+      }
+    });
+
+    return elements;
+  };
+
   return (
     <div className={styles.dataDetailContainer}>
       <div className={styles.detailTitleContainer}>
@@ -82,10 +113,10 @@ const DataDetail = () => {
       </div>
       <table className={styles.detailTable}>
         <tbody>
-          <tr>
+          {/* <tr>
             <td className={styles.detailLabel}>ID</td>
             <td>{formData.job_id}</td>
-          </tr>
+          </tr> */}
           <tr>
             <td className={styles.detailLabel}>제목</td>
             <td>{formData.file_title}</td>
@@ -138,7 +169,7 @@ const DataDetail = () => {
           </tr>
           <tr>
             <td className={styles.detailLabel}>내용</td>
-            <td className={styles.contentCell}>{formData.file_description}</td>
+            <td className={styles.contentCell}>{parseHTML(formData.file_description)}</td>
           </tr>
         </tbody>
       </table>

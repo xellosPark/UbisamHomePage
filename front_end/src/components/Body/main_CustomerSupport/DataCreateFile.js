@@ -1,9 +1,20 @@
-import React, { useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import style from './DataCreateFile.module.css'; // CSS 모듈 불러오기
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // axios 모듈을 불러옵니다.
 import { v4 as uuidv4 } from "uuid"; // uuid 라이브러리 임포트
 import api from "../../../api/api";
+
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
+import { ImageResize } from "quill-image-resize-module-ts";
+
+if (typeof window !== 'undefined' && window.Quill) {
+  window.Quill = Quill;
+} //2. Quill을 window 전역 객체에 할당하여 전역으로 사용
+
+Quill.register('modules/ImageResize', ImageResize);
 
 const DataCreateFile = () => {
   const now = new Date();
@@ -25,6 +36,7 @@ const DataCreateFile = () => {
     delete_time: "",
   });
   const navigate = useNavigate();
+
 
   // const [formData, setFormData] = useState({
   //   title: "",
@@ -48,13 +60,13 @@ const DataCreateFile = () => {
   //   }
   //   // 선택한 파일들을 기존 파일 목록에 추가
   //   const selectedFiles = Array.from(e.target.files);
-  
+
   //   // 기존 파일 목록에 새로 선택한 파일을 추가하여 상태 업데이트
   //   setFormData({
   //     ...formData,
   //     files: [...formData.files, ...selectedFiles], // 기존 파일 목록 + 새로 선택한 파일
   //   });
-  
+
   //   // 파일 선택 후 파일 탐색기 다시 닫는 방식 (자동으로 처리)
   //   e.target.value = null;
   // };
@@ -77,16 +89,16 @@ const DataCreateFile = () => {
   const handleFileChange = (e) => {
     const files = e.target.files;
     if (!files) return;
-  
+
     const selectedFiles = Array.from(files);
-  
+
     setFormData((prev) => ({
       ...prev,
       files: [...prev.files, ...selectedFiles], // 파일 객체 추가
       file_name: [...prev.file_name, ...selectedFiles.map((file) => file.name)], // 파일 이름 추가
       file_count: prev.file_count + selectedFiles.length, // 파일 개수 업데이트
     }));
-  
+
     e.target.value = null; // 파일 선택기 초기화
   };
 
@@ -94,15 +106,15 @@ const DataCreateFile = () => {
     setFormData((prev) => {
       // file_name에서 해당 파일을 제외한 새로운 배열 생성
       const updatedFileNames = prev.file_name.filter((name) => name !== fileName);
-  
+
       // files 배열에서도 fileName에 해당하는 파일을 제외
       const updatedFiles = prev.files.filter((file) => file.name !== fileName);
-  
+
       // console.log("삭제된 파일:", fileName); // 삭제된 파일 이름 로그
       // console.log("업데이트된 파일 목록:", updatedFiles); // 업데이트된 파일 객체 로그
       // console.log("업데이트된 파일 이름 목록:", updatedFileNames); // 업데이트된 파일 이름 목록 로그
       // console.log("파일 개수:", updatedFiles.length); // 파일 개수 로그
-  
+
       // 업데이트된 상태 반환
       return {
         ...prev,
@@ -136,12 +148,15 @@ const DataCreateFile = () => {
     uploadData.append("user_id", formData.user_id);
     uploadData.append("date", formData.date);
     uploadData.append("file_title", formData.file_title);
-    uploadData.append("file_description", formData.file_description);
+    uploadData.append("file_description", content);//formData.file_description);
     uploadData.append("file_count", formData.file_count);
     uploadData.append("view_count", formData.view_count);
     uploadData.append("create_time", formattedTime);
     uploadData.append("update_time", formattedTime);
     uploadData.append("delete_time", formData.delete_time);
+
+    console.log('file_description', formData.file_description);
+    
 
     // 파일 이름 목록 생성
     const fileNames = formData.files.map((file) => file.name);
@@ -184,6 +199,86 @@ const DataCreateFile = () => {
     }
   };
 
+
+  const quillRef = useRef(null); // ReactQuill의 ref 생성
+  //const quillRef = useRef<ReactQuill | null>(null);
+  const [content, setContent] = useState('');
+
+  // 이미지 업로드 핸들러 (새로운 이미지가 추가될때만 실행)
+  const handleImageUpload = async () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.onchange = async () => {
+      const file = input.files[0];
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const response = await fetch('http://localhost:8001/api/data/board/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+      const imageUrl = data.imageUrl;
+
+      // 반환된 URL 확인
+      console.log('이미지 URL:', imageUrl);
+
+      // Quill 인스턴스 가져오기
+      const quill = quillRef.current.getEditor();
+      const range = quill.getSelection();
+      quill.insertEmbed(range.index, 'image', imageUrl);
+    };
+  };
+
+  const handleContentChange = (value) => {
+    setContent(value);
+  };
+
+  const modules = useMemo(() => {
+    return {
+      toolbar: {
+        container: [
+          [{ header: [1, 2, false] }, ], //{ header: "2" }, { font: [String] }],
+          // [{ size: [String] }],
+          ["bold", "italic", "underline", "strike", "blockquote"],
+          [
+            { list: "ordered" },
+            { list: "bullet" },
+            { indent: "-1" },
+            { indent: "+1" },
+          ],
+          ["link", "image", "code-block"],
+          ["clean"],
+        ],
+        handlers: {
+          image: handleImageUpload, // 이미지 업로드 핸들러 연결
+        },
+      },
+      ImageResize: {
+        modules: ['Resize', 'DisplaySize']
+      },
+
+    };
+  }, []);
+
+  // ReactQuill에서 사용할 포맷 정의
+  const formats = [
+    'header',
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'link',
+    'image',
+    'list',
+    'bullet',
+    'align',
+  ];
+
   return (
     <div className={style.createContainer}>
       <div className={style.createFile}>
@@ -199,13 +294,15 @@ const DataCreateFile = () => {
           />
 
           <label>설명</label>
-          <textarea
-            name="file_description"
-            value={formData.file_description}
-            onChange={handleInputChange}
-            rows={10}
-            required
-          />
+          <ReactQuill
+          ref={quillRef}
+          modules={modules}
+          theme="snow" className={style.qlEditor} style={{ height: '400px'}}
+          value={content}
+          onChange={handleContentChange}
+        //formats={formats}
+
+        />
           {/* 파일 업로드 */}
           <div className={style.fileContainer}>
             <label>첨부 파일</label>
